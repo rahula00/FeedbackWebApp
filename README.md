@@ -21,4 +21,4 @@ This displays if the branch you're in is up to date
 3. `git commit -m "MESSAGE DESCRIBING WHAT YOU DID"`
 4. `git push`... sometimes you may need to copy the upstream command because it hasn't been created yet, just copy and paste the prompted one in console
 
-Django ....
+Django edit edit
