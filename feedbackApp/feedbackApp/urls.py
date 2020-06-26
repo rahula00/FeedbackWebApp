@@ -15,13 +15,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from mainApp.views import index
+from mainApp.views import home
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-<<<<<<< HEAD
-    path('index/', index),
-=======
-    path('home/',  index),
->>>>>>> benBranch
+    path('index/', home),
 ]
