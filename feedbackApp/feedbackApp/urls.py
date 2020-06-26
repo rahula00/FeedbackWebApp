@@ -19,5 +19,9 @@ from mainApp.views import index
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+<<<<<<< HEAD
     path('index/', index),
+=======
+    path('home/',  index),
+>>>>>>> benBranch
 ]

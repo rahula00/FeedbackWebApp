@@ -2,6 +2,7 @@ import random
 import json
 from django.shortcuts import render
 
+<<<<<<< HEAD
 def index(request):
     names = ("bob", "dan", "jack", "lizzy", "susan")
 
@@ -17,3 +18,11 @@ def index(request):
     context["items_json"] = json.dumps(items)
 
     return render(request, 'list.html', context)
+=======
+
+# Create your views here.
+
+def index(request):
+    context = {}
+    return render(request, 'index.html', context)
+>>>>>>> benBranch
