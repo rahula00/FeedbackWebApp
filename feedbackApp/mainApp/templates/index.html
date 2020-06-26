@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,7 +10,7 @@
     <title>Feedback Portal</title>
     
     <!-- Favicon-->
-    <link rel="icon" type="image/x-icon" href="assets/img/icon.jpg" />
+    <link rel="icon" type="image/x-icon" href="{% static 'mainApp/img/icon.jpg' %}" />
     <!-- Font Awesome icons (free version)-->
     <script src="https://use.fontawesome.com/releases/v5.13.0/js/all.js" crossorigin="anonymous"></script>
     <!-- Google fonts-->
@@ -20,7 +21,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.min.css"
         rel="stylesheet" />
     <!-- Core theme CSS (includes Bootstrap)-->
-    <link href="css/styles.css" rel="stylesheet" />
+    <link href="{% static 'mainApp/styles.css' %}" rel="stylesheet" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -114,15 +115,21 @@
                 <div class="col-lg-10 align-self-end">
                     <h1 class="text-uppercase text-white font-weight-bold">Manager Feedback Portal </h1>
                     <hr class="divider my-4" />
+                    <hr class="divider my-4" />
+                    <hr class="divider my-4" />
                 </div>
                 <div class="col-lg-8 align-self-baseline">
                     <a class="btn btn-outline-danger btn-lg waves-effect" href="#about"
                         style="margin-bottom: 30px;">Continue</a>
                     <br>
-                    
                     <button href="#myModal" type="button" class="btn btn-outline-danger  waves-effect"
-                        data-toggle="modal">Login as a Manager</button>
+                        data-toggle="modal">Login as a Manager
+                    </button>
+                    <br>
+                    <img src="{% static 'mainApp/img/logo.png' %}" width="50%" height="50%">
+                    
                 </div>
+                
             </div>
         </div>
     </header>
