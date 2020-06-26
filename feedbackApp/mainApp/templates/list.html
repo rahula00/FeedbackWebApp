@@ -1,34 +1,115 @@
-{% if items %}
-  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-  <script type='text/javascript'>
-    var people = {{ items_json|safe }};
-  </script>
 
-  <div id="app">
-    [[message]]
 
-    <ul>
-      <li v-for="person in people">
-        <a v-bind:href="person.url">[[ person.name ]]</a> <button v-on:click="greet(person.name)">hey</button>
-      </li>
-    </ul>
+<!-- vue import dev version. REPLACE BEFORE RELEASE -->
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<!-- <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11"></script> -->
+
+<!-- Bulma + FontAwesome -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.0/css/bulma.min.css">
+<script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+
+<!-- Background color -->
+<div style ="background-color:#f3f3f3; height: 100%;">
+
+  <div id="vue-target">
+
+    <!-- TITLE -->
+    <section class="section">
+      <div class="title">Submit Anonymous Feedback</div>
+    </section>
+
+    <section class="section">
+      <div class="">
+
+
+        <!-- Manager Dropdown -->
+        <div class="field">
+          <div class="control">
+            <div class="select is-danger is-rounded">
+              <select v-model="selectedValue">
+                <option value="Manager">Manager</option>
+                <option value="Steve Smith">Steve Smith</option>
+                <option value="Also Steve">Also Steve</option>
+                <option value="Steve Again">Steve Again</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Issue type dropdown -->
+        <div v-if="selectedValue !== 'Manager'" class="field">
+          <div class="control">
+            <div class="select is-danger is-rounded">
+              <select v-model="selectedValue2">
+                <option value="Type of Issue">Type of Issue</option>
+                <option>Manager not managing enough</option>
+                <option>Manager managing too much</option>
+                <option>Other</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+
+        <!-- Feedback submission box -->
+        <div v-if="(selectedValue2 !== 'Type of Issue')&(selectedValue !== 'Manager')" class="is-fullwidth">
+          <div class="field">
+            <textarea v-model="feedback_text" class="textarea is-fullwidth" placeholder="Enter feedback here"></textarea>
+          </div>
+
+          <button v-bind:disabled="feedback_text.trim().length == 0" class="button is-danger is-rounded is-size-6">Submit</button>
+          <!--
+          <button  
+              style="
+              border: 1px solid #fc0000;
+              border-radius: 24.5rem;
+              border-top-left-radius: 24.5rem;
+              border-top-right-radius: 24.5rem;
+              border-bottom-right-radius: 24.5rem;
+              border-bottom-left-radius: 24.5rem;
+              font-weight: 600;
+              "@click="post" class="button is-size-6">Submit
+          </button>
+          -->
+        </div>
+
+
+        <!-- button + fontawesome reference
+        <div>
+          <button @click="switchPost" v-if="!showPosts" class="button is-primary is-size-6">
+            <i class="fa fa-plus fa-fw"></i>
+          </button>
+        </div>
+         -->
+
+
+      </div>
+    </section>
+
+
   </div>
 
-  <script>
-    var app = new Vue({
-      delimiters: ['[[', ']]'],
-      el: '#app',
-      data: {
-          message: 'Hello Vue!',
-          people: people,
-      },
-      methods: {
-          greet: function(name) {
-              console.log('Hello from ' + name + '!')
-          }
-      }
-    });
-  </script>
-{% else %}
-  <p>No items available.</p>
-{% endif %}
+                  <script>
+                    var app = new Vue({
+                      delimiters: ['[[', ']]'],
+                      el: '#vue-target',
+                      data: {
+                        selectedValue : "Manager",
+                        selectedValue2 : "Type of Issue",
+                        showSecond:false,
+                        showTextBox:false,
+                        feedback_text:"",
+                      },
+                      methods: {
+                        onChange:function(event){
+                          console.log(this.selectedValue);
+                        },
+                        showSecondFunction:function(){
+                          app.showSecond = true;
+                        },
+                        showTextBoxFunction:function(){
+                          app.showTextBox = true;
+                        }
+                      }
+                    });
+                  </script>
