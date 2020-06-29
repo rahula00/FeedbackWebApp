@@ -23,3 +23,8 @@ def index(request):
     context = {}
     context["items_json"] = json.dumps(items)
     return render(request, 'list.html', context)
+
+
+def manager(request):
+    context = {}
+    return render(request, 'manager.html', context)
