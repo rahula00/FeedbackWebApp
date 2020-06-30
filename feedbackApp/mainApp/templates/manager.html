@@ -1,5 +1,3 @@
-
-
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
@@ -32,7 +30,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 
     <!-- Bulma-->
-    
+
 
 
 </head>
@@ -45,13 +43,14 @@
             $('.toast').toast('show');
         });
     </script>
-    <div class="toast" data-delay="2000" style="position: absolute; top: 0; right: 0; margin-right: 60px; margin-top: 60px; ">
+    <div class="toast" data-delay="2000"
+        style="position: absolute; top: 0; right: 0; margin-right: 60px; margin-top: 60px; ">
         <div class="toast-header">
             <strong class="mr-auto">Message</strong>
             <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
+                <span aria-hidden="true">&times;</span>
             </button>
-          </div>
+        </div>
         <div class="toast-body">
             {{message}}
         </div>
@@ -71,37 +70,46 @@
                     <br>
                 </div>
                 <div class="col-lg-8 align-self-baseline">
-                    
+
                     <!-- Table-->
                     <table class="table table-dark table-hover">
                         <thead>
                             <tr>
                                 <th><abbr title="Position">Submitted By</abbr></th>
-                                <th>Feedback</th>
+                                <th>Category</th>
                                 <th><abbr title="Played">Date Added</abbr></th>
+                                <th style="display:none;" >Feedback</th>
 
                             </tr>
                         </thead>
                         <tbody>
                             {% block content %}
                                 {% for feedback in feedbacks %}
-                                <!-- 
-                            <tr class='clickable-row' data-href='https://google.com' style="cursor: pointer;"> 
-                                -->
-                            <tr style="cursor: pointer;"> 
+                                
+                            <!-- Modal HTML -->
+                            <div id="myModal" class="modal fade">
+                                <div class="modal-dialog modal-login">
+                                    <div class="modal-content">
+                                        <div class="modal-body">
+                                            <input id="txtfname"></input>
+                                            <p id="txtfname"></p>
+                                          </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <tr data-toggle="modal"  data-target="#myModal" style="cursor: pointer;">
+
                                 <td>{{feedback.submitted_by}}</td>
-                                <td v-if="showFeedback" @click="showFeedback = !showFeedback">
-                                    Type: {{feedback.type_choice}}
-                                </td>
-                                <td v-else @click="showFeedback = !showFeedback">{{feedback.feedback}}</td>
-                                <!--<td>{{feedback.feedback}}</td>-->
+                                <td>{{feedback.type_choice}}</td>
                                 <td>{{feedback.created_at}}</td>
+                                <td style="display:none;">  {{feedback.feedback}}</td>
                             </tr>
-                                {% endfor %}
+                            {% endfor %}
                             {% endblock content %}
                         </tbody>
                     </table>
-                        
+
                     <a class="btn btn-outline-danger btn-lg waves-effect" href="logout"
                         style="margin-bottom: 30px;">Logout</a>
                     <br>
@@ -116,42 +124,33 @@
     </header>
 
 
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11"></script> -->
 
+    <script>
+        var app = new Vue({
+            delimiters: ['[[', ']]'],
+            el: '#vue-target',
+            data: {
+                showFeedback: false,
 
+            },
+            methods: {
 
-<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-<!-- <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11"></script> -->
-
-<script>
-    var app = new Vue({
-      delimiters: ['[[', ']]'],
-      el: '#vue-target',
-      data: {
-        showFeedback: false,
-
-      },
-      methods: {
-
-      }
-    });
-  </script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <script>jQuery(document).ready(function($) {
-        $(".clickable-row").click(function() {
-            window.location = $(this).data("href");
+            }
         });
+    </script>
+
+
+    <script>jQuery(document).ready(function ($) {
+            $(".clickable-row").click(function () {
+                window.location = $(this).data("href");
+            });
+        });</script>
+
+    <script>$('table tbody tr  td').on('click',function(){
+        $("#myModal").modal("show");
+        $("#txtfname").val($(this).closest('tr').children()[3].textContent);
     });</script>
 
 
