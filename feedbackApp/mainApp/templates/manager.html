@@ -85,6 +85,7 @@
                         <tbody>
                             {% block content %}
                                 {% for feedback in feedbacks %}
+<<<<<<< HEAD
                                 
                             <!-- Modal HTML -->
                             <div id="myModal" class="modal fade">
@@ -102,6 +103,18 @@
 
                                 <td>{{feedback.submitted_by}}</td>
                                 <td>{{feedback.type_choice}}</td>
+=======
+                                <!-- 
+                            <tr class='clickable-row' data-href='https://google.com' style="cursor: pointer;"> 
+                                -->
+                            <tr style="cursor: pointer;" @click="showFeedback = !showFeedback"> 
+                                <td>{{feedback.submitted_by}}</td>
+                                <td v-if="showFeedback" >
+                                    Type: {{feedback.type_choice}}
+                                </td>
+                                <td v-else>{{feedback.feedback}}</td>
+                                <!--<td>{{feedback.feedback}}</td>-->
+>>>>>>> b512906bba2abef3c723dfb07830768972141246
                                 <td>{{feedback.created_at}}</td>
                                 <td style="display:none;">  {{feedback.feedback}}</td>
                             </tr>
