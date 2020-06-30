@@ -1,19 +1,22 @@
+{% load static %}
 <!-- vue import dev version. REPLACE BEFORE RELEASE -->
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <!-- <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11"></script> -->
+<link href="{% static 'mainApp/styles.css' %}" rel="stylesheet" />
 
 <!-- Bulma + FontAwesome -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.0/css/bulma.min.css">
 <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
 
+
 <!-- Background color -->
-<div style="background-color:#f3f3f3; height: 100%;">
+<header class="masthead">
 
   <div id="vue-target">
 
     <!-- TITLE -->
     <section class="section">
-      <div class="title">Submit Anonymous Feedback</div>
+      <h1 style="color:white;" class="text-uppercase text-white font-weight-bold">Submit Anonymous Feedback </h1>
     </section>
 
     <section class="section">
@@ -88,6 +91,7 @@
 
 
   </div>
+</header>
 
   <script>
     var app = new Vue({
