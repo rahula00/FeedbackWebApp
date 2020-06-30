@@ -85,7 +85,7 @@
                                 {% for feedback in feedbacks %}
                             <tr class='clickable-row' data-href='https://google.com' style="cursor: pointer;"> 
                                 <td>{{feedback.manager.first_name}}</td>
-                                <td>Issue</td>
+                                <td>{{feedback.type_choice}}</td>
                                 <!--<td>{{feedback.feedback}}</td>-->
                                 <td>{{feedback.created_at}}</td>
                             </tr>

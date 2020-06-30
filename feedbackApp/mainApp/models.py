@@ -13,10 +13,10 @@ class Feedback(models.Model):
 	manager = models.ForeignKey(Managers, blank=True, null=True, on_delete=models.CASCADE)
 	created_at = models.DateTimeField(auto_now_add=True)
 	TYPE_CHOICES = [
-        ('S', 'Sales'),
-        ('T', 'Technical'),
-        ('C', 'Coaching'),
-        ('O', 'Other'),
+        ('Sales', 'Sales'),
+        ('Technical', 'Technical'),
+        ('Coaching', 'Coaching'),
+        ('Other', 'Other'),
     ]
-	type_choice = models.CharField(max_length=1, choices=TYPE_CHOICES, default=0)
+	type_choice = models.CharField(max_length=10, choices=TYPE_CHOICES, default='Other')
 	submitted_by = models.CharField(max_length=60, default="Anonymous")
