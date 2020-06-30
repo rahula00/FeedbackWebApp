@@ -1,3 +1,5 @@
+
+
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
@@ -60,7 +62,7 @@
 
     <!-- Masthead-->
     <header class="masthead">
-        <div class="container h-100">
+        <div id="vue-target" class="container h-100">
             <div class="row h-100 align-items-center justify-content-center text-center">
                 <div class="col-lg-10 align-self-end">
                     <h1 class="text-uppercase text-white font-weight-bold">Welcome {{request.user.get_full_name}} </h1>
@@ -74,8 +76,8 @@
                     <table class="table table-dark">
                         <thead>
                             <tr>
-                                <th><abbr title="Position">Name</abbr></th>
-                                <th>Category</th>
+                                <th><abbr title="Position">Submitted By</abbr></th>
+                                <th>Feedback</th>
                                 <th><abbr title="Played">Date Added</abbr></th>
 
                             </tr>
@@ -83,9 +85,15 @@
                         <tbody>
                             {% block content %}
                                 {% for feedback in feedbacks %}
+                                <!-- 
                             <tr class='clickable-row' data-href='https://google.com' style="cursor: pointer;"> 
-                                <td>{{feedback.manager.first_name}}</td>
-                                <td>{{feedback.type_choice}}</td>
+                                -->
+                            <tr style="cursor: pointer;"> 
+                                <td>{{feedback.submitted_by}}</td>
+                                <td v-if="showFeedback" @click="showFeedback = !showFeedback">
+                                    Type: {{feedback.type_choice}}
+                                </td>
+                                <td v-else @click="showFeedback = !showFeedback">{{feedback.feedback}}</td>
                                 <!--<td>{{feedback.feedback}}</td>-->
                                 <td>{{feedback.created_at}}</td>
                             </tr>
@@ -106,6 +114,46 @@
             </div>
         </div>
     </header>
+
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<!-- <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11"></script> -->
+
+<script>
+    var app = new Vue({
+      delimiters: ['[[', ']]'],
+      el: '#vue-target',
+      data: {
+        showFeedback: false,
+        feedback_text: "",
+      },
+      methods: {
+        onChange: function (event) {
+          console.log(this.selectedValue);
+        },
+        showSecondFunction: function () {
+          app.showSecond = true;
+        },
+        showTextBoxFunction: function () {
+          app.showTextBox = true;
+        }
+      }
+    });
+  </script>
+
+
+
+
+
+
+
+
+
+
+
 
 
     <script>jQuery(document).ready(function($) {
