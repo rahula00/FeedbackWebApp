@@ -88,12 +88,12 @@
                                 <!-- 
                             <tr class='clickable-row' data-href='https://google.com' style="cursor: pointer;"> 
                                 -->
-                            <tr style="cursor: pointer;"> 
+                            <tr style="cursor: pointer;" @click="showFeedback = !showFeedback"> 
                                 <td>{{feedback.submitted_by}}</td>
-                                <td v-if="showFeedback" @click="showFeedback = !showFeedback">
+                                <td v-if="showFeedback" >
                                     Type: {{feedback.type_choice}}
                                 </td>
-                                <td v-else @click="showFeedback = !showFeedback">{{feedback.feedback}}</td>
+                                <td v-else>{{feedback.feedback}}</td>
                                 <!--<td>{{feedback.feedback}}</td>-->
                                 <td>{{feedback.created_at}}</td>
                             </tr>
