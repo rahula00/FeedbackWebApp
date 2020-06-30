@@ -45,7 +45,10 @@ def index(request):
 
 @login_required(login_url='homepage')
 def manager(request):
-    context = {}
+    
+    context = {
+        'feedbacks': Feedback.objects.all()
+    }
     return render(request, 'manager.html', context)
 
 def logout_request(request):
