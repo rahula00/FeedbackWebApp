@@ -47,8 +47,8 @@ def index(request):
 def manager(request):
     
     context = {
-        'feedbacks': Feedback.objects.all()
-    }
+        'feedbacks': Feedback.objects.filter(manager__first_name__contains="Steve")
+    } 
     return render(request, 'manager.html', context)
 
 def logout_request(request):
