@@ -21,6 +21,11 @@
 
     <section class="section">
       <div class="">
+        {% csrf_token %}
+        {{form.manager}}
+        {{form.type_choice}}
+        {{form.feedback}}
+        {{form.submitted_by}}
 
 
         <!-- Manager Dropdown -->
@@ -31,7 +36,7 @@
                 <option value="Manager">Select Manager</option>
                 {% block content %}
                 {% for manager in managers %}
-                  <option value="manager">{{manager.first_name}} {{manager.last_name}}</option>
+                  <option v-model="managerChoice" value="manager">{{manager.first_name}} {{manager.last_name}}</option>
                 {% endfor %}
               
                 
@@ -122,3 +127,8 @@
       }
     });
   </script>
+
+
+<script>
+
+</script>

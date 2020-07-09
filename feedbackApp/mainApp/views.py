@@ -6,6 +6,7 @@ from django.contrib.auth import logout, authenticate, login
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .models import Managers, Feedback
+from mainApp.forms import CreateFeedbackForm
 
 
 def home(request):
@@ -30,10 +31,18 @@ def home(request):
 
 
 def index(request):
-    
+    if request.method == 'POST':
+        form = CreateFeedbackForm(request=request, data=request.POST)
+        if form.is_valid():
+            new_feedback = form.save()
+            
+
+
+    form = CreateFeedbackForm()
     context = {
         'managers': Managers.objects.all(),
-        'type_choice': Feedback.TYPE_CHOICES
+        'type_choice': Feedback.TYPE_CHOICES,
+        'form': form
     }
     return render(request, 'list.html', context)
 
