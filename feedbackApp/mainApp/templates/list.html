@@ -21,57 +21,59 @@
 
     <section class="section">
       <div class="">
-        {% csrf_token %}
-        {{form.manager}}
-        {{form.type_choice}}
-        {{form.feedback}}
-        {{form.submitted_by}}
+        <form method="POST">{% csrf_token %}
+          <p>Manager is: [[feedback_text]]</p>
+          
+          {{form.manager}}
+          {{form.type_choice}}
+          {{form.feedback}}
+          {{form.submitted_by}}
 
 
-        <!-- Manager Dropdown -->
-        <div class="field">
-          <div class="control">
-            <div class="select is-danger is-rounded">
-              <select v-model="selectedValue">
-                <option value="Manager">Select Manager</option>
-                {% block content %}
-                {% for manager in managers %}
-                  <option v-model="managerChoice" value="manager">{{manager.first_name}} {{manager.last_name}}</option>
-                {% endfor %}
-              
-                
-              </select>
-            </div>
-          </div>
-        </div>
-
-        <!-- Issue type dropdown -->
-        <div v-if="selectedValue !== 'Manager'" class="field">
-          <div class="control">
-            <div class="select is-danger is-rounded">
-              <select v-model="selectedValue2">
-                <option value="Type of Issue">Select Type of Issue</option>
-                
-                {% for choice in type_choice %}
-                  <option value="issue">{{choice.0}}</option>
-                {% endfor %}
-              {% endblock content %}
-              </select>
-            </div>
-          </div>
-        </div>
-
-
-        <!-- Feedback submission box -->
-        <div v-if="(selectedValue2 !== 'Type of Issue')&(selectedValue !== 'Manager')" class="is-fullwidth">
+          <!-- Manager Dropdown -->
           <div class="field">
-            <textarea v-model="feedback_text" class="textarea is-fullwidth"
-              placeholder="Enter feedback here"></textarea>
+            <div class="control">
+              <div class="select is-danger is-rounded">
+                <select v-model="selectedValue">
+                  <option value="Manager">Select Manager</option>
+                  {% block content %}
+                  {% for manager in managers %}
+                  <option v-model="managerChoice" value="manager">{{manager.first_name}} {{manager.last_name}}</option>
+                  {% endfor %}
+
+
+                </select>
+              </div>
+            </div>
           </div>
 
-          <button v-bind:disabled="feedback_text.trim().length == 0"
-            class="button is-danger is-rounded is-size-6">Submit</button>
-          <!--
+          <!-- Issue type dropdown -->
+          <div v-if="selectedValue !== 'Manager'" class="field">
+            <div class="control">
+              <div class="select is-danger is-rounded">
+                <select v-model="selectedValue2">
+                  <option value="Type of Issue">Select Type of Issue</option>
+
+                  {% for choice in type_choice %}
+                  <option value="issue">{{choice.0}}</option>
+                  {% endfor %}
+                  {% endblock content %}
+                </select>
+              </div>
+            </div>
+          </div>
+
+
+          <!-- Feedback submission box -->
+          <div v-if="(selectedValue2 !== 'Type of Issue')&(selectedValue !== 'Manager')" class="is-fullwidth">
+            <div class="field">
+              <textarea v-model="feedback_text" class="textarea is-fullwidth"
+                placeholder="Enter feedback here"></textarea>
+            </div>
+
+            <button type="submit" v-bind:disabled="feedback_text.trim().length == 0"
+              class="button is-danger is-rounded is-size-6">Submit</button>
+            <!--
           <button  
               style="
               border: 1px solid #fc0000;
@@ -84,10 +86,10 @@
               "@click="post" class="button is-size-6">Submit
           </button>
           -->
-        </div>
+          </div>
 
 
-        <!-- button + fontawesome reference
+          <!-- button + fontawesome reference
         <div>
           <button @click="switchPost" v-if="!showPosts" class="button is-primary is-size-6">
             <i class="fa fa-plus fa-fw"></i>
@@ -95,7 +97,7 @@
         </div>
          -->
 
-
+        </form>
       </div>
     </section>
 
@@ -103,32 +105,27 @@
   </div>
 </header>
 
-  <script>
-    var app = new Vue({
-      delimiters: ['[[', ']]'],
-      el: '#vue-target',
-      data: {
-        selectedValue: "Manager",
-        selectedValue2: "Type of Issue",
-        showSecond: false,
-        showTextBox: false,
-        feedback_text: "",
-      },
-      methods: {
-        onChange: function (event) {
-          console.log(this.selectedValue);
-        },
-        showSecondFunction: function () {
-          app.showSecond = true;
-        },
-        showTextBoxFunction: function () {
-          app.showTextBox = true;
-        }
-      }
-    });
-  </script>
-
-
 <script>
-
+  var app = new Vue({
+    delimiters: ['[[', ']]'],
+    el: '#vue-target',
+    data: {
+      selectedValue: "Manager",
+      selectedValue2: "Type of Issue",
+      showSecond: false,
+      showTextBox: false,
+      feedback_text: "",
+    },
+    methods: {
+      onChange: function (event) {
+        console.log(this.selectedValue);
+      },
+      showSecondFunction: function () {
+        app.showSecond = true;
+      },
+      showTextBoxFunction: function () {
+        app.showTextBox = true;
+      }
+    }
+  });
 </script>

@@ -32,12 +32,10 @@ def home(request):
 
 def index(request):
     if request.method == 'POST':
-        form = CreateFeedbackForm(request=request, data=request.POST)
-        if form.is_valid():
-            new_feedback = form.save()
+        F = CreateFeedbackForm(request.POST)
+        if F.is_valid():
+            new_feedback = F.save()
             
-
-
     form = CreateFeedbackForm()
     context = {
         'managers': Managers.objects.all(),
