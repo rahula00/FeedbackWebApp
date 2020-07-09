@@ -30,16 +30,11 @@ def home(request):
 
 
 def index(request):
-    names = ("bob", "dan", "jack", "lizzy", "susan")
-    items = []
-    for i in range(100):
-        items.append({
-            "name": random.choice(names),
-            "age": random.randint(20,80),
-            "url": "https://example.com",
-        })
-    context = {}
-    context["items_json"] = json.dumps(items)
+    
+    context = {
+        'managers': Managers.objects.all(),
+        'type_choice': Feedback.TYPE_CHOICES
+    }
     return render(request, 'list.html', context)
 
 
@@ -47,7 +42,7 @@ def index(request):
 def manager(request):
     
     context = {
-        'feedbacks': Feedback.objects.filter(manager__first_name__contains="Steve")
+        'feedbacks': Feedback.objects.filter(manager__first_name__contains="Steve") #Change this to the name / id of the logged in user/manager
     } 
     return render(request, 'manager.html', context)
 

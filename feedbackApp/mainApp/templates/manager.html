@@ -85,25 +85,6 @@
                         <tbody>
                             {% block content %}
                                 {% for feedback in feedbacks %}
-<<<<<<< HEAD
-                                
-                            <!-- Modal HTML -->
-                            <div id="myModal" class="modal fade">
-                                <div class="modal-dialog modal-login">
-                                    <div class="modal-content">
-                                        <div class="modal-body">
-                                            <input id="txtfname"></input>
-                                            <p id="txtfname"></p>
-                                          </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <tr data-toggle="modal"  data-target="#myModal" style="cursor: pointer;">
-
-                                <td>{{feedback.submitted_by}}</td>
-                                <td>{{feedback.type_choice}}</td>
-=======
                                 <!-- 
                             <tr class='clickable-row' data-href='https://google.com' style="cursor: pointer;"> 
                                 -->
@@ -114,7 +95,6 @@
                                 </td>
                                 <td v-else>{{feedback.feedback}}</td>
                                 <!--<td>{{feedback.feedback}}</td>-->
->>>>>>> b512906bba2abef3c723dfb07830768972141246
                                 <td>{{feedback.created_at}}</td>
                                 <td style="display:none;">  {{feedback.feedback}}</td>
                             </tr>

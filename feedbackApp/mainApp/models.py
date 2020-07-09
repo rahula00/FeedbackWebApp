@@ -18,5 +18,6 @@ class Feedback(models.Model):
         ('Coaching', 'Coaching'),
         ('Other', 'Other'),
     ]
+	
 	type_choice = models.CharField(max_length=10, choices=TYPE_CHOICES, default='Other')
 	submitted_by = models.CharField(max_length=60, default="Anonymous")
