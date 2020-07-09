@@ -5,9 +5,9 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import logout, authenticate, login
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from .models import Managers, Feedback
+from .models import  Feedback
 from mainApp.forms import CreateFeedbackForm
-
+from django.contrib.auth.models import User
 
 def home(request):
     if request.method == 'POST':
@@ -38,7 +38,7 @@ def index(request):
             
     form = CreateFeedbackForm()
     context = {
-        'managers': Managers.objects.all(),
+        'managers': User.objects.all(),
         'type_choice': Feedback.TYPE_CHOICES,
         'form': form
     }
@@ -49,7 +49,7 @@ def index(request):
 def manager(request):
     
     context = {
-        'feedbacks': Feedback.objects.filter(manager__first_name__contains="Steve") #Change this to the name / id of the logged in user/manager
+        'feedbacks': Feedback.objects.filter(manager=request.user)
     } 
     return render(request, 'manager.html', context)
 

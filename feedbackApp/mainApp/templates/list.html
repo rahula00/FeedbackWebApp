@@ -24,7 +24,7 @@
         <form method="POST">{% csrf_token %}
           <p>Manager is: [[feedback_text]]</p>
           
-          {{form.manager}}
+          {{form.manager}} <!--How to display the full name, not username-->
           {{form.type_choice}}
           {{form.feedback}}
           {{form.submitted_by}}
@@ -38,7 +38,9 @@
                   <option value="Manager">Select Manager</option>
                   {% block content %}
                   {% for manager in managers %}
-                  <option v-model="managerChoice" value="manager">{{manager.first_name}} {{manager.last_name}}</option>
+                    {% if manager.first_name %}
+                      <option v-model="managerChoice" value="manager">{{manager.first_name}} {{manager.last_name}}</option>
+                    {%endif %}
                   {% endfor %}
 
 
