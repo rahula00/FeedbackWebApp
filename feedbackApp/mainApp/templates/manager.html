@@ -29,11 +29,6 @@
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
-
-    <!-- Bulma-->
-
-
-
 </head>
 
 <body id="page-top">
@@ -83,13 +78,14 @@
 
                     <br>
 
+
                     <!-- Table-->
-                    <table class="table table-dark table-hover">
-                        <thead>
+                    <table id="feedbackTable" class="tablesorter table table-dark  table-hover sortable" >
+                        <thead class="thead-light">
                             <tr>
-                                <th title="Position">Submitted By <i class="fa fa-fw fa-sort"></i></th>
-                                <th>Category <i class="fa fa-fw fa-sort"></i></th>
-                                <th title="Played">Date Added <i class="fa fa-fw fa-sort"></i></th>
+                                <th onclick="sortTable(0)" style="cursor: pointer;" >Submitted By <i class="fa fa-fw fa-sort"></i></th>
+                                <th onclick="sortTable(1)" style="cursor: pointer;" >Category <i class="fa fa-fw fa-sort"></i></th>
+                                <th onclick="sortTable(2)" style="cursor: pointer;" >Date Added <i class="fa fa-fw fa-sort"></i></th>
                                 <th style="display:none;" >Feedback</th>
 
                             </tr>
@@ -97,20 +93,16 @@
                         <tbody>
                             {% block content %}
                                 {% for feedback in feedbacks %}
-                                <!-- 
-                            <tr class='clickable-row' data-href='https://google.com' style="cursor: pointer;"> 
-                                -->
                             <tr style="cursor: pointer;" @click="showFeedback = !showFeedback"> 
-                                <td>{{feedback.submitted_by}}</td>
-                                <td v-if="showFeedback" >
-                                    Type: {{feedback.type_choice}}
+                                <td >{{feedback.submitted_by}}</td>
+                                <td  >
+                                    {{feedback.type_choice}}
                                 </td>
-                                <td v-else>{{feedback.feedback}}</td>
                                 <!--<td>{{feedback.feedback}}</td>-->
                                 <td>{{feedback.created_at}}</td>
                                 <td style="display:none;">  {{feedback.feedback}}</td>
                             </tr>
-                            {% endfor %}
+                                {% endfor %}
                             {% endblock content %}
                         </tbody>
                     </table>
@@ -146,19 +138,6 @@
         });
     </script>
 
-
-    <script>jQuery(document).ready(function ($) {
-            $(".clickable-row").click(function () {
-                window.location = $(this).data("href");
-            });
-        });</script>
-
-    <script>$('table tbody tr  td').on('click',function(){
-        $("#myModal").modal("show");
-        $("#txtfname").val($(this).closest('tr').children()[3].textContent);
-    });</script>
-
-
     <!-- Footer-->
     <footer class="bg-light py-5">
         <div class="container">
@@ -173,6 +152,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>
     <!-- Core theme JS-->
     <script src="{% static 'mainApp/scripts.js' %}"></script>
+    <script src="{% static 'mainApp/tablesort.js' %}"></script>
 </body>
 
 </html>
