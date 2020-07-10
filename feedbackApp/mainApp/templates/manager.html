@@ -73,10 +73,11 @@
 
                     <!-- Search Bar -->
                     <div class="input-group md-form form-sm form-2 pl-0">
-                        <input class="form-control my-0 py-1 amber-border" type="text" placeholder="Search" aria-label="Search">
+                        <input id="myInput" class="form-control my-0 py-1 amber-border" type="text" placeholder="Search"
+                            aria-label="Search">
                         <div class="input-group-append">
-                          <span class="input-group-text amber lighten-3" id="basic-text1"><i class="fas fa-search text-grey"
-                              aria-hidden="true"></i></span>
+                            <span class="input-group-text amber lighten-3" id="basic-text1"><i
+                                    class="fas fa-search text-grey" aria-hidden="true"></i></span>
                         </div>
                     </div>
 
@@ -84,31 +85,29 @@
 
 
                     <!-- Table-->
-                    <table data-sortable id="feedbackTable" class=" sortable-theme-bootstrap table table-hover " >
-                        <thead >
+                    <table data-sortable id="feedbackTable" class=" sortable-theme-bootstrap table table-hover ">
+                        <thead>
                             <tr>
-                                <th  style="cursor: pointer;" >Submitted By </th>
-                                <th  style="cursor: pointer;" >Category </th>
-                                <th  style="cursor: pointer;" >Date Added </th>
-                                <th style="display:none;" >Feedback</th>
+                                <th style="cursor: pointer;">Submitted By </th>
+                                <th style="cursor: pointer;">Category </th>
+                                <th style="cursor: pointer;">Date Added </th>
+                                <th style="display:none;">Feedback</th>
 
                             </tr>
                         </thead>
                         <tbody>
                             {% block content %}
-                                {% for feedback in feedbacks %}
-                            <tr style="cursor: pointer; padding-bottom: 1em;"> 
-                                <td >{{feedback.submitted_by}}</td>
-                                <td  >
+                            {% for feedback in feedbacks %}
+                            <tr style="cursor: pointer;">
+                                <td>{{feedback.submitted_by}}</td>
+                                <td>
                                     {{feedback.type_choice}}
                                 </td>
-                                <!--<td>{{feedback.feedback}}</td>-->
+
                                 <td>{{feedback.created_at}}</td>
-                                <td style="display:none;">  {{feedback.feedback}}</td>
+                                <td style="display:none;">{{feedback.feedback}}</td>
                             </tr>
-                            
-                            
-                                {% endfor %}
+                            {% endfor %}
                             {% endblock content %}
                         </tbody>
                     </table>
@@ -144,6 +143,26 @@
         });
     </script>
 
+
+    <!--If this script is getting called to often and causing performance issues, look into implementing Debounce-->
+    <!--https://stackoverflow.com/questions/9127498/how-to-perform-a-real-time-search-and-filter-on-a-html-table-->
+    <script>
+        var $rows = $('#feedbackTable tr');
+        $('#myInput').keyup(function () {
+
+            var val = '^(?=.*\\b' + $.trim($(this).val()).split(/\s+/).join('\\b)(?=.*\\b') + ').*$',
+                reg = RegExp(val, 'i'),
+                text;
+
+            $rows.show().filter(function () {
+                text = $(this).text().replace(/\s+/g, ' ');
+                return !reg.test(text);
+            }).hide();
+        });
+
+
+    </script>
+
     <!-- Footer-->
     <footer class="bg-light py-5">
         <div class="container">
@@ -157,8 +176,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>
     <!-- Core theme JS-->
-    <script src="{% static 'mainApp/scripts.js' %}"></script>
-    
+
+
 </body>
 
 </html>
