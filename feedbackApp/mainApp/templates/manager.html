@@ -85,17 +85,14 @@
 
 
                     <!-- Table-->
-                    <table data-sortable id="feedbackTable" class=" sortable-theme-bootstrap table table-hover ">
+                    <table data-sortable  class=" sortable-theme-bootstrap table table-hover ">
                         <thead>
-                            <tr>
                                 <th style="cursor: pointer;">Submitted By </th>
                                 <th style="cursor: pointer;">Category </th>
                                 <th style="cursor: pointer;">Date Added </th>
                                 <th style="display:none;">Feedback</th>
-
-                            </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="feedbackTable">
                             {% block content %}
                             {% for feedback in feedbacks %}
                             <tr style="cursor: pointer;">
@@ -144,11 +141,11 @@
     </script>
 
 
-    <!--If this script is getting called to often and causing performance issues, look into implementing Debounce-->
+    
     <!--https://stackoverflow.com/questions/9127498/how-to-perform-a-real-time-search-and-filter-on-a-html-table-->
     <script>
         var $rows = $('#feedbackTable tr');
-        $('#myInput').keyup(function () {
+        $('#myInput').keyup(debounce(function () {
 
             var val = '^(?=.*\\b' + $.trim($(this).val()).split(/\s+/).join('\\b)(?=.*\\b') + ').*$',
                 reg = RegExp(val, 'i'),
@@ -158,9 +155,23 @@
                 text = $(this).text().replace(/\s+/g, ' ');
                 return !reg.test(text);
             }).hide();
-        });
+        }, 100));
 
-
+        function debounce(func, wait, immediate) {
+            var timeout;
+            return function () {
+                var context = this,
+                    args = arguments;
+                var later = function () {
+                    timeout = null;
+                    if (!immediate) func.apply(context, args);
+                };
+                var callNow = immediate && !timeout;
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+                if (callNow) func.apply(context, args);
+            };
+        };
     </script>
 
     <!-- Footer-->
