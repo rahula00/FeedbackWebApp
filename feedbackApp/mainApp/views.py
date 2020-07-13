@@ -61,9 +61,10 @@ def adminPage(request):
     
     
     if request.method == "POST":
-        user_id = int(request.POST['id'])
-        user = User.objects.get(id=user_id)
-        F = UpdateUserForm(request.POST, instance=user)
+        # Get a user ID from the post
+        # Find user with that ID
+        # Update user 
+        F = UpdateUserForm(request.POST, instance=request.user)
         if F.is_valid():
             F.save()
 
