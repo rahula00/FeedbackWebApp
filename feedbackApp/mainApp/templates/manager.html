@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>Manager</title>
+    <title>{{request.user.get_full_name}}'s Dashboard</title>
 
     <!-- Favicon-->
     <link rel="icon" type="image/x-icon" href="{% static 'mainApp/img/icon.jpg' %}" />
@@ -85,25 +85,34 @@
 
 
                     <!-- Table-->
-                    <table data-sortable  class=" sortable-theme-bootstrap table table-hover ">
+                    <table data-sortable class=" sortable-theme-bootstrap table table-hover ">
                         <thead>
-                                <th style="cursor: pointer;">Submitted By </th>
-                                <th style="cursor: pointer;">Category </th>
-                                <th style="cursor: pointer;">Date Added </th>
-                                <th style="display:none;">Feedback</th>
+                            <th style="cursor: pointer;">Submitted By </th>
+                            <th style="cursor: pointer;">Category </th>
+                            <th style="cursor: pointer;">Date Added </th>
+                            <th style="display:none;">Feedback</th>
                         </thead>
                         <tbody id="feedbackTable">
                             {% block content %}
                             {% for feedback in feedbacks %}
-                            <tr style="cursor: pointer;">
-                                <td>{{feedback.submitted_by}}</td>
+                            {% if feedback.isRead %}
+                            <tr style="cursor: pointer; ">
+                                <td >{{feedback.submitted_by}}</td>
                                 <td>
                                     {{feedback.type_choice}}
                                 </td>
-
                                 <td>{{feedback.created_at}}</td>
                                 <td style="display:none;">{{feedback.feedback}}</td>
                             </tr>
+                            {% else %}
+                            <tr style="cursor: pointer; color: rgb(15, 112, 36);">
+                                <td style="font-weight: bold; font-style: italic;"> {{feedback.submitted_by}}</td>
+                                <td style="font-weight: bold; font-style: italic;">{{feedback.type_choice}}</td>
+                                <td style="font-weight: bold; font-style: italic;">{{feedback.created_at}}</td>
+                                <td style="display:none; font-style: italic;">{{feedback.feedback}}</td>
+                            </tr>
+
+                            {% endif %}
                             {% endfor %}
                             {% endblock content %}
                         </tbody>
@@ -141,7 +150,7 @@
     </script>
 
 
-    
+
     <!--https://stackoverflow.com/questions/9127498/how-to-perform-a-real-time-search-and-filter-on-a-html-table-->
     <script>
         var $rows = $('#feedbackTable tr');

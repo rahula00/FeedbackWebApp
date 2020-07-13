@@ -10,7 +10,8 @@ from django.contrib.auth.models import User
 class Feedback(models.Model):
 	feedback = models.CharField(blank=False, max_length=2000)
 	#manager = models.ForeignKey(Managers, blank=True, null=True, on_delete=models.CASCADE)
-	manager = models.ForeignKey(User, blank=True, null=True, on_delete=models.CASCADE)
+	manager = models.ForeignKey(User, blank=False, null=True, on_delete=models.CASCADE)
+	isRead = models.BooleanField(default=False)
 	created_at = models.DateTimeField(auto_now_add=True)
 	TYPE_CHOICES = [
         ('Sales', 'Sales'),
