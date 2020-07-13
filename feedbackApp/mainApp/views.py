@@ -80,6 +80,14 @@ def feedback_delete(request, id=None):
     return redirect('/manager')
 
 
+@login_required(login_url='homepage')
+def mark_read(request, id=None):
+    obj = Feedback.objects.get(pk=id)
+    obj.isRead = True
+    obj.save()
+    return redirect('/manager')
+
+
 
 @login_required(login_url='homepage')
 def add_manager(request):
