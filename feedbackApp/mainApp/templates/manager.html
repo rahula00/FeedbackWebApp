@@ -119,7 +119,13 @@
                     </table>
 
                     <a class="btn btn-outline-danger btn-lg waves-effect" href="logout"
-                        style="margin-bottom: 30px;">Logout</a>
+                        style="margin-bottom: 30px;">Logout
+                    </a>
+                    <br>
+                    {% if request.user.is_superuser %}
+                        <a class="btn btn-outline-danger btn-lg waves-effect" href="administrate"
+                        style="margin-bottom: 30px;">Admin Dashboard</a>
+                    {%endif%}
                     <br>
                     <br>
 

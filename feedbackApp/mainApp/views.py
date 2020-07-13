@@ -1,13 +1,14 @@
 import random
 import json
 from django.shortcuts import render, redirect
-from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.forms import AuthenticationForm, UserChangeForm
 from django.contrib.auth import logout, authenticate, login
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .models import  Feedback
-from mainApp.forms import CreateFeedbackForm
+from mainApp.forms import CreateFeedbackForm, UpdateUserForm
 from django.contrib.auth.models import User
+
 
 def home(request):
     if request.method == 'POST':
@@ -52,6 +53,28 @@ def manager(request):
         'feedbacks': Feedback.objects.filter(manager=request.user)
     } 
     return render(request, 'manager.html', context)
+
+
+@login_required(login_url='homepage')
+def adminPage(request):
+
+    
+    
+    if request.method == "POST":
+        user_id = int(request.POST['id'])
+        user = User.objects.get(id=user_id)
+        F = UpdateUserForm(request.POST, instance=user)
+        if F.is_valid():
+            F.save()
+
+
+    form = UpdateUserForm()
+    context = {
+        'managers': User.objects.all(),
+        'form': form
+    } 
+    return render(request, 'admin.html', context)
+
 
 def logout_request(request):
     messages.info(request, f"{request.user.username} has been logged out")
