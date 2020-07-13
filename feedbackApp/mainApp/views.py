@@ -74,6 +74,14 @@ def adminPage(request):
     return render(request, 'admin.html', context)
 
 @login_required(login_url='homepage')
+def feedback_delete(request, id=None):
+    obj = Feedback.objects.get(pk=id)
+    obj.delete()
+    return redirect('/manager')
+
+
+
+@login_required(login_url='homepage')
 def add_manager(request):
 
     if request.method == "POST":

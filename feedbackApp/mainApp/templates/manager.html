@@ -109,6 +109,14 @@
                                 <td style="font-weight: bold; font-style: italic;"> {{feedback.submitted_by}}</td>
                                 <td style="font-weight: bold; font-style: italic;">{{feedback.type_choice}}</td>
                                 <td style="font-weight: bold; font-style: italic;">{{feedback.created_at}}</td>
+                                <td>
+                                    <form action="{% url 'fb_delete' feedback.id %}" method="post" class="d-inline">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn">
+                                            <i class="far fa-trash-alt fa-lg text-danger float-right"></i>
+                                        </button>
+                                    </form>
+                                </td>       
                                 <td style="display:none; font-style: italic;">{{feedback.feedback}}</td>
                             </tr>
 

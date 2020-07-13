@@ -15,15 +15,16 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from mainApp.views import home, index, manager, logout_request, adminPage, add_manager
+from mainApp.views import *
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('manager/administrate/', adminPage, name="adminPage"),
-    path('add_manager', add_manager, name="add_manager"),
     path('', home, name="homepage"),
     path('default/', index, name="default"),
     path('manager/', manager, name="manager"),
     path('manager/logout/', logout_request, name="logout"),
+    path('delete/<int:id>/',feedback_delete,name='fb_delete'),
 ]
+                                                            
