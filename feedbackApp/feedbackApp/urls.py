@@ -25,6 +25,6 @@ urlpatterns = [
     path('default/', index, name="default"),
     path('manager/', manager, name="manager"),
     path('manager/logout/', logout_request, name="logout"),
+    path('add_manager', add_manager, name="add_manager"),
     path('delete/<int:id>/',feedback_delete,name='fb_delete'),
 ]
-                                                            
