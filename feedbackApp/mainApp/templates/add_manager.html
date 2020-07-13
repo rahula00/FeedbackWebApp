@@ -72,75 +72,43 @@
 
                     <h1 class="text-uppercase text-white font-weight-bold">Admin Dashboard</h1>
                     <hr class="divider my-4" />
+                    <hr class="divider my-4" />
+                    <hr class="divider my-4" />
                 </div>
                 <div class="col-lg-8 align-self-baseline">
-                    <a class="btn btn-success" href="/add_manager"
-                        style="margin-bottom: 30px;">Add Manager
-                    </a>
-                    <!-- Table-->
-                    <table data-sortable class=" sortable-theme-bootstrap table table-hover " style=" display: block; height: 300px; overflow-y: scroll;">
-                        <thead>
-                            <th style="display: none;" ;>ID</th>
-                            <th style="cursor: pointer;">Username</th>
-                            <th style="cursor: pointer;">First Name</th>
-                            <th style="cursor: pointer;">Last Name</th>
-                            <th style="cursor: pointer;">Email</th>
-                            <th style="cursor: pointer;">Last Login</th>
-                            <th style="cursor: pointer;">Date Joined</th>
-                        </thead>
-                        <tbody id="feedbackTable">
-                            {% block content %}
-                            {% for manager in managers %}
-                            <tr style="cursor: pointer;" href="#myModal" data-toggle="modal">
-                                <td style="display: none;">{% if manager.username %} {{manager.id}} {% endif %}</td>
-                                <td>{% if manager.username %} {{manager.username}} {% endif %}</td>
-                                <td>{% if manager.first_name %} {{manager.first_name}} {% endif %}</td>
-                                <td>{% if manager.last_name %} {{manager.last_name}} {% endif %}</td>
-                                <td>{% if manager.email %} {{manager.email}} {% endif %}</td>
-                                <td>{% if manager.last_login %} {{manager.last_login}} {% endif %}</td>
-                                <td>{% if manager.date_joined %} {{manager.date_joined}} {% endif %}</td>
-                            </tr>
+
+                    <form method="POST" style="color:white">{% csrf_token %}
+                        <!--Change this when making login-->
+
+                        <div class="modal-header">
+                            <h4 class="modal-title">Create Manager</h4>
+                            <button type="button" class="close" data-dismiss="modal"
+                                aria-hidden="true">&times;</button>
+                        </div>
 
 
+                        <div class="modal-body" >
+                            
+                            <div>Username: {{form.username}}</div>
+                            <div>Password: {{form.password1}}</div>
+                            <div>Confirm Password: {{form.password2}}</div>
+                            <div>First Name: {{form.first_name}}</div>
+                            <div>Last Name: {{form.last_name}}</div>
 
-                            <!-- Modal HTML -->
-                            <div id="myModal" class="modal fade">
-                                <div class="modal-dialog modal-login">
-                                    <div class="modal-content">
-                                        <form method="POST">{% csrf_token %}
-                                            <!--Change this when making login-->
+                        </div>
 
-                                            <div class="modal-header">
-                                                <h4 class="modal-title">Update User Info</h4>
-                                                <button type="button" class="close" data-dismiss="modal"
-                                                    aria-hidden="true">&times;</button>
-                                            </div>
+                        <input type='hidden' value='{{manager.pk}}' name='id'>
 
-
-                                            <div class="modal-body">
-                                                <div class="form-group">{{form.as_p}}</div>
-                                            </div>
-
-                                            <input type='hidden' value='{{manager.pk}}' name='id'>
-
-                                            <div class="modal-footer justify-content-between">
-                                                <input type="submit" class="btn btn-primary" value="Submit">
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-
-
-
-                            {% endfor %}
-                            {% endblock content %}
-                        </tbody>
-                    </table>
+                        <div class="modal-footer justify-content-between">
+                            <input type="submit" class="btn btn-primary" value="Submit">
+                            <a class="btn btn-warning" href="/manager/administrate"
+                        style="margin-bottom: 30px;">Cancel</a>
+                        </div>
+                        
+                        
+                    </form>
                     <br>
-                    <a class="btn btn-outline-danger btn-lg waves-effect" href=".." style="margin-bottom: 30px;">Manager
-                        Dashboard
-                    </a>
+                    
 
                     <br>
                     <a class="btn btn-outline-danger btn-lg waves-effect" href="../logout"
@@ -149,6 +117,7 @@
                     <br>
 
                     <img src="{% static 'mainApp/img/logo.png' %}" width="50%" height="50%">
+                    <br>
 
                 </div>
 

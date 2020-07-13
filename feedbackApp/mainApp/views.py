@@ -1,12 +1,12 @@
 import random
 import json
 from django.shortcuts import render, redirect
-from django.contrib.auth.forms import AuthenticationForm, UserChangeForm
+from django.contrib.auth.forms import AuthenticationForm, UserChangeForm, UserCreationForm
 from django.contrib.auth import logout, authenticate, login
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .models import  Feedback
-from mainApp.forms import CreateFeedbackForm, UpdateUserForm
+from mainApp.forms import CreateFeedbackForm, UpdateUserForm, CreateUserForm
 from django.contrib.auth.models import User
 
 
@@ -58,23 +58,39 @@ def manager(request):
 @login_required(login_url='homepage')
 def adminPage(request):
 
-    
-    
     if request.method == "POST":
-        # Get a user ID from the post
-        # Find user with that ID
-        # Update user 
-        F = UpdateUserForm(request.POST, instance=request.user)
-        if F.is_valid():
-            F.save()
+        pk = request.POST.get('id') # Get a user ID from the post
+        user = User.objects.get(id=pk) # Find user with that ID
+        form = UpdateUserForm(request.POST, instance=user)
+        if form.is_valid():
+            form.save() # Update user 
+    else:
+        form = UpdateUserForm(instance=request.user)
 
-
-    form = UpdateUserForm()
     context = {
         'managers': User.objects.all(),
         'form': form
     } 
     return render(request, 'admin.html', context)
+
+@login_required(login_url='homepage')
+def add_manager(request):
+
+    if request.method == "POST":
+        form = CreateUserForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('adminPage') #Not sure 
+
+    else:
+        form = CreateUserForm()
+
+    context = {
+        'form': form
+    }
+
+    return render(request, 'add_manager.html', context)
+
 
 
 def logout_request(request):

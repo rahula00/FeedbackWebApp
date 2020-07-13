@@ -85,7 +85,7 @@
 
 
                     <!-- Table-->
-                    <table data-sortable class=" sortable-theme-bootstrap table table-hover ">
+                    <table data-sortable class=" sortable-theme-bootstrap table table-hover " >
                         <thead>
                             <th style="cursor: pointer;">Submitted By </th>
                             <th style="cursor: pointer;">Category </th>
@@ -125,9 +125,10 @@
                     {% if request.user.is_superuser %}
                         <a class="btn btn-outline-danger btn-lg waves-effect" href="administrate"
                         style="margin-bottom: 30px;">Admin Dashboard</a>
+                        <br>
                     {%endif%}
-                    <br>
-                    <br>
+                 
+              
 
                     <img src="{% static 'mainApp/img/logo.png' %}" width="50%" height="50%">
 
