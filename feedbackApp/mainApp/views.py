@@ -1,13 +1,37 @@
 import random
 import json
+
 from django.shortcuts import render, redirect
+
+from django.http import JsonResponse
+
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 from django.contrib.auth.forms import AuthenticationForm, UserChangeForm, UserCreationForm
 from django.contrib.auth import logout, authenticate, login
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required
+
 from .models import  Feedback
 from mainApp.forms import CreateFeedbackForm, UpdateUserForm, CreateUserForm
-from django.contrib.auth.models import User
+
+from rest_framework import viewsets, filters
+from .serializers import FeedbackSerializer
+from django.views.decorators.csrf import csrf_exempt
+
+def get_feedback(request=None):
+    id = request.GET.get('id', None)
+    obj = Feedback.objects.get(pk=id)
+    fb = obj.feedback
+    data={
+        'feedbacks' : fb
+    }
+    return JsonResponse(data)
+
+@csrf_exempt
+def get_feedbacks(request=None):
+    objs = Feedback.objects.all().order_by('-created_at')
+    serializer = FeedbackSerializer(objs, many=True)
+    return JsonResponse(serializer.data, safe=False)
 
 
 def home(request):

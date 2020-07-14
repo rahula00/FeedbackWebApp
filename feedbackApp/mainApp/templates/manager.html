@@ -13,7 +13,7 @@
     <link rel="icon" type="image/x-icon" href="{% static 'mainApp/img/icon.jpg' %}" />
     <!-- Font Awesome icons (free version)-->
     <script src="https://use.fontawesome.com/releases/v5.13.0/js/all.js" crossorigin="anonymous"></script>
-    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <!-- Google fonts-->
     <link href="https://fonts.googleapis.com/css?family=Merriweather+Sans:400,700" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic"
@@ -34,6 +34,22 @@
     <script src="{% static 'mainApp/sortable.js' %}"></script>
     <link href="{% static 'mainApp/sortable-theme-bootstrap.css' %}" rel="stylesheet" />
 </head>
+
+<script>
+                $.ajax({
+                    url: '/ajax/get_feedbacks/',
+                    dataType: 'json',
+                    data: {
+                      'id': 10
+                    },
+                    success: function (data) {
+                      console.log(data)
+                    },
+                    error: function (data) {
+                      console.log("failure")
+                    }
+                });
+</script>
 
 <body id="page-top">
     {% if messages %}
@@ -90,6 +106,9 @@
                             <th style="cursor: pointer;">Submitted By </th>
                             <th style="cursor: pointer;">Category </th>
                             <th style="cursor: pointer;">Date Added </th>
+                            <th style="cursor: pointer;">Delete</th>
+                            <th style="cursor: pointer;">Read</th>
+                            <th style="cursor: pointer;">Show fb</th>
                             <th style="display:none;">Feedback</th>
                         </thead>
                         <tbody id="feedbackTable">
@@ -121,6 +140,7 @@
                                     <td style="font-weight: bold; font-style: italic;"> {{feedback.submitted_by}}</td>
                                     <td style="font-weight: bold; font-style: italic;">{{feedback.type_choice}}</td>
                                     <td style="font-weight: bold; font-style: italic;">{{feedback.created_at}}</td>
+
                                     <td>
                                         <form action="{% url 'fb_delete' feedback.id %}" method="post" class="d-inline">
                                             {% csrf_token %}
@@ -128,7 +148,8 @@
                                                 <i class="far fa-trash-alt fa-lg text-danger float-right"></i>
                                             </button>
                                         </form>
-                                    </td>    
+                                    </td> 
+
                                     <td>
                                         <form action="{% url 'mark_fb_read' feedback.id %}" method="post" class="d-inline">
                                             {% csrf_token %}
@@ -137,6 +158,13 @@
                                             </button>
                                         </form>
                                     </td> 
+
+                                    <td>
+                                        <button type="submit" class="btn">
+                                            <i class="fa fa-plus fa-lg text-danger float-right"></i>
+                                        </button>
+                                    </td> 
+
                                     <td style="display:none; font-style: italic;">{{feedback.feedback}}</td>
                                 </tr>
 
@@ -178,11 +206,25 @@
             delimiters: ['[[', ']]'],
             el: '#vue-target',
             data: {
-                showFeedback: false,
 
             },
             methods: {
-
+                vueGetFeedback: function () {
+                  console.log("start")
+                  $.ajax({
+                    url: '/ajax/get_feedback/',
+                    dataType: 'json',
+                    data: {
+                      'id': 10
+                    },
+                    success: function (data) {
+                      console.log(data)
+                    },
+                    error: function (data) {
+                      console.log("failure")
+                    }
+                  });
+                },
             }
         });
     </script>
@@ -233,6 +275,7 @@
     <!-- Third party plugin JS-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
     <!-- Core theme JS-->
 
 
