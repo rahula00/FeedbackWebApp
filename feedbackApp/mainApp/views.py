@@ -18,6 +18,7 @@ from rest_framework import viewsets, filters
 from .serializers import FeedbackSerializer
 from django.views.decorators.csrf import csrf_exempt
 
+@login_required(login_url='homepage')
 def get_feedback(request=None):
     id = request.GET.get('id', None)
     obj = Feedback.objects.get(pk=id)
@@ -28,15 +29,38 @@ def get_feedback(request=None):
     return JsonResponse(data)
 
 @csrf_exempt
+@login_required(login_url='homepage')
 def get_feedbacks(request=None):
     objs = Feedback.objects.filter(manager=request.user).order_by('-created_at')
     serializer = FeedbackSerializer(objs, many=True)
     return JsonResponse(serializer.data, safe=False)
 
+@login_required(login_url='homepage')
 def delete_feedback(request):
     id = request.GET.get('id', None)
     obj = Feedback.objects.get(pk=id)
     obj.delete()
+
+
+@login_required(login_url='homepage')
+def feedback_delete(request, id=None):
+    obj = Feedback.objects.get(pk=id)
+    obj.delete()
+    return redirect('/manager')
+
+@login_required(login_url='homepage')
+def mark_read(request, id=None):
+    id = request.GET.get('id', None)
+    obj = Feedback.objects.get(pk=id)
+    obj.isRead = True
+    obj.save()
+
+@login_required(login_url='homepage')
+def mark_read_old(request, id=None):
+    obj = Feedback.objects.get(pk=id)
+    obj.isRead = True
+    obj.save()
+    return redirect('/manager')
     
 
 def home(request):
@@ -101,20 +125,6 @@ def adminPage(request):
         'form': form
     } 
     return render(request, 'admin.html', context)
-
-@login_required(login_url='homepage')
-def feedback_delete(request, id=None):
-    obj = Feedback.objects.get(pk=id)
-    obj.delete()
-    return redirect('/manager')
-
-
-@login_required(login_url='homepage')
-def mark_read(request, id=None):
-    obj = Feedback.objects.get(pk=id)
-    obj.isRead = True
-    obj.save()
-    return redirect('/manager')
 
 
 

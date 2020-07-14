@@ -96,7 +96,7 @@
                             <th style="display:none;">Feedback</th>
                         </thead>
                         <tbody v-for="feedback in feedbacks" id="feedbackTable">
-                                <tr v-if="!feedback.isRead" @click="feedback.show = !feedback.show" style="cursor: pointer; color: rgb(15, 112, 36);">
+                                <tr v-if="!feedback.isRead" @click="feedback.show = !feedback.show; mark_read(feedback);" style="cursor: pointer; color: rgb(15, 112, 36);">
                                     <td style="font-weight: bold; font-style: italic;"> [[feedback.submitted_by]]</td>
                                     <td v-if="!feedback.show" style="font-weight: bold; font-style: italic;">[[feedback.type_choice]]</td>
                                     <td v-if="feedback.show" style="font-weight: bold; font-style: italic;">[[feedback.feedback]]</td>
@@ -179,7 +179,6 @@ let init = (app) => {
             success: function (data) {
 
                 app.vue.feedbacks = app.reindex(app.setShow(data))
-                console.log(app.vue.feedbacks)
 
             },
             error: function (data) {
@@ -196,7 +195,23 @@ let init = (app) => {
                 'id':data.id
             },
             success: function (data) {
-                app.get_feedbacks();
+                console.log("successfully deleted")
+            },
+            error: function (data) {
+                console.log("failure")
+            }
+        })
+    };
+
+    app.mark_read = (data) => {
+        $.ajax({
+            url: '/ajax/mark_read/',
+            dataType: 'json',
+            data:{
+                'id':data.id
+            },
+            success: function (data) {
+                console.log("successfully marked read")
             },
             error: function (data) {
                 console.log("failure")
@@ -222,6 +237,7 @@ let init = (app) => {
    app.methods = {
         get_feedbacks: app.get_feedbacks,
         delete_feedback: app.delete_feedback,
+        mark_read: app.mark_read,
     };
 
     app.vue = new Vue({
