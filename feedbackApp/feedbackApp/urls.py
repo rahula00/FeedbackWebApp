@@ -31,4 +31,5 @@ urlpatterns = [
     path('mr/<int:id>',mark_read,name="mark_fb_read"),
     url(r'^ajax/get_feedback/$', get_feedback, name='get_feedback'),
     url(r'^ajax/get_feedbacks/$', get_feedbacks, name='get_feedbacks'),
+    url(r'^ajax/delete_feedback/$', delete_feedback, name='delete_feedback'),
 ]

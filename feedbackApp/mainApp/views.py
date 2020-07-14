@@ -33,6 +33,11 @@ def get_feedbacks(request=None):
     serializer = FeedbackSerializer(objs, many=True)
     return JsonResponse(serializer.data, safe=False)
 
+def delete_feedback(request):
+    id = request.GET.get('id', None)
+    obj = Feedback.objects.get(pk=id)
+    obj.delete()
+    
 
 def home(request):
     if request.method == 'POST':
