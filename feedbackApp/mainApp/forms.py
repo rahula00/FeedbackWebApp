@@ -15,6 +15,7 @@ class CreateUserForm(UserCreationForm):
         fields = ('username', 'first_name', 'last_name')
         
 class UpdateUserForm(UserChangeForm):
+    password = None
     class Meta:
         model = User
         fields = ('username','first_name', 'last_name',  'email', 'is_superuser')    

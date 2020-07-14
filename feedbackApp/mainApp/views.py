@@ -4,10 +4,11 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.forms import AuthenticationForm, UserChangeForm, UserCreationForm
 from django.contrib.auth import logout, authenticate, login
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 from .models import  Feedback
 from mainApp.forms import CreateFeedbackForm, UpdateUserForm, CreateUserForm
 from django.contrib.auth.models import User
+
 
 
 def home(request):
@@ -80,6 +81,7 @@ def feedback_delete(request, id=None):
     return redirect('/manager')
 
 
+
 @login_required(login_url='homepage')
 def mark_read(request, id=None):
     obj = Feedback.objects.get(pk=id)
@@ -87,7 +89,29 @@ def mark_read(request, id=None):
     obj.save()
     return redirect('/manager')
 
+@login_required(login_url='homepage')
+def manager_delete(request, id=None):
+    if request.method == "POST":
+        user = User.objects.get(pk=id)
+        user.delete()
+        return redirect('adminPage')
+    else:
+        context = {}
+        return render(request, 'admin.html', context)
 
+@user_passes_test(lambda u: u.is_superuser)
+@login_required(login_url='homepage')
+def manager_update(request, id=None):
+    user = User.objects.get(pk=id)
+    user.save()
+    if request.method == "POST":
+        form = UpdateUserForm(request.POST, instance=user)
+        form.save()
+        return redirect('adminPage')
+    else:
+        form = UpdateUserForm(instance=user)
+        context = {'form': form}
+        return render(request, 'update_manager.html', context)
 
 @login_required(login_url='homepage')
 def add_manager(request):

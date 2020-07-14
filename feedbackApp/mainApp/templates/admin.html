@@ -91,14 +91,23 @@
                         <tbody id="feedbackTable">
                             {% block content %}
                             {% for manager in managers %}
-                            <tr style="cursor: pointer;" href="#myModal" data-toggle="modal">
+                            <tr style="cursor: pointer;" href="manager.html" data-toggle="modal" action="manager.html">
                                 <td style="display: none;">{% if manager.username %} {{manager.id}} {% endif %}</td>
-                                <td>{% if manager.username %} {{manager.username}} {% endif %}</td>
+                                <td> {% if manager.username %} {{manager.username}} {% endif %}</td>
                                 <td>{% if manager.first_name %} {{manager.first_name}} {% endif %}</td>
                                 <td>{% if manager.last_name %} {{manager.last_name}} {% endif %}</td>
                                 <td>{% if manager.email %} {{manager.email}} {% endif %}</td>
                                 <td>{% if manager.last_login %} {{manager.last_login}} {% endif %}</td>
                                 <td>{% if manager.date_joined %} {{manager.date_joined}} {% endif %}</td>
+                                <td><a href="{% url 'manager_update' manager.id %}">Edit</a></td>
+                                <td>
+                                    <form action="{% url 'manager_delete' manager.id %}" method="post" class="d-inline">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn">
+                                            <i class="far fa-trash-alt fa-lg text-danger float-right"></i>
+                                        </button>
+                                    </form>
+                                </td>   
                             </tr>
 
 
