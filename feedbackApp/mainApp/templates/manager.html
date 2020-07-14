@@ -102,18 +102,13 @@
                                     <td v-if="feedback.show" style="font-weight: bold; font-style: italic;">[[feedback.feedback]]</td>
                                     <td style="font-weight: bold; font-style: italic;">[[feedback.created_at]]</td>
 
-                                    <td>
-                                        <span @click="delete_feedback(feedback)">
-                                            <i class="far fa-trash-alt fa-lg text-danger float-right"></i>
-                                        </span>
+                                    <td @click="delete_feedback(feedback)">
+
+                                            <i class="far fa-trash-alt fa-lg text-danger float-center"></i>
+
                                     </td>
                                     <td>
-                                        <form action="" method="post" class="d-inline">
-                                            {% csrf_token %}
-                                            <button type="submit" class="btn">
-                                                <i class="far fa-check-square fa-lg text-danger float-right"></i>
-                                            </button>
-                                        </form>
+                                            <i class="far fa-check-square fa-lg text-danger float-center"></i>
                                     </td> 
 
                                     <td style="display:none; font-style: italic;">[[feedback.feedback]]</td>
@@ -127,16 +122,11 @@
 
                                     <td @click="delete_feedback(feedback)">
 
-                                            <i class="far fa-trash-alt fa-lg text-danger float-right"></i>
+                                            <i class="far fa-trash-alt fa-lg text-danger"></i>
 
                                     </td>
                                     <td>
-                                        <form action="" method="post" class="d-inline">
-                                            {% csrf_token %}
-                                            <button type="submit" class="btn">
-                                                <i class="far fa-check-square fa-lg text-danger float-right"></i>
-                                            </button>
-                                        </form>
+                                            <i class="far fa-check-square fa-lg text-danger"></i>
                                     </td> 
 
                                     <td style="display:none; font-style: italic;">[[feedback.feedback]]</td>
@@ -188,7 +178,8 @@ let init = (app) => {
             dataType: 'json',
             success: function (data) {
 
-                app.vue.feedbacks = app.organize(data)
+                app.vue.feedbacks = app.reindex(app.setShow(data))
+                console.log(app.vue.feedbacks)
 
             },
             error: function (data) {
@@ -213,11 +204,19 @@ let init = (app) => {
         })
     };
 
-    app.organize = (data) => {
+    app.setShow = (data) => {
         for (feedback of data){
             feedback.show = false;
         }
         return data  
+    };
+
+    app.reindex = (a) => {
+        let idx = 0;
+        for (p of a) {
+            p._idx = idx++;
+        }
+        return a;
     };
 
    app.methods = {
