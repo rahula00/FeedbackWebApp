@@ -103,13 +103,10 @@
                                     <td style="font-weight: bold; font-style: italic;">[[feedback.created_at]]</td>
 
                                     <td>
-                                        <form action="" method="post" class="d-inline">
-                                            {% csrf_token %}
-                                            <button onclick="return confirm('Are you sure you want to delete this item?');" type="submit" class="btn">
-                                                <i class="far fa-trash-alt fa-lg text-danger float-right"></i>
-                                            </button>
-                                        </form>
-                                    </td>    
+                                        <span @click="delete_feedback(feedback)">
+                                            <i class="far fa-trash-alt fa-lg text-danger float-right"></i>
+                                        </span>
+                                    </td>
                                     <td>
                                         <form action="" method="post" class="d-inline">
                                             {% csrf_token %}
@@ -128,14 +125,11 @@
                                     <td v-if="feedback.show" style="font-weight: bold; font-style: italic;">[[feedback.feedback]]</td>
                                     <td style="font-weight: bold; font-style: italic;">[[feedback.created_at]]</td>
 
-                                    <td>
-                                        <form action="" method="post" class="d-inline">
-                                            {% csrf_token %}
-                                            <button onclick="return confirm('Are you sure you want to delete this item?');" type="submit" class="btn">
-                                                <i class="far fa-trash-alt fa-lg text-danger float-right"></i>
-                                            </button>
-                                        </form>
-                                    </td>    
+                                    <td @click="delete_feedback(feedback)">
+
+                                            <i class="far fa-trash-alt fa-lg text-danger float-right"></i>
+
+                                    </td>
                                     <td>
                                         <form action="" method="post" class="d-inline">
                                             {% csrf_token %}
@@ -186,10 +180,7 @@ let init = (app) => {
         feedbacks: [],
     };
 
-    app.methods = {
-        get_feedbacks: app.get_feedbacks,
-        delete_feedback: app.delete_feedback,
-    };
+    
 
     app.get_feedbacks = () => {
         $.ajax({
@@ -206,12 +197,12 @@ let init = (app) => {
         })
     };
 
-    app.delete_feedback = (feedback) => {
+    app.delete_feedback = (data) => {
         $.ajax({
             url: '/ajax/delete_feedback/',
             dataType: 'json',
             data:{
-                'id':feedback.id
+                'id':data.id
             },
             success: function (data) {
                 app.get_feedbacks();
@@ -229,7 +220,10 @@ let init = (app) => {
         return data  
     };
 
-   
+   app.methods = {
+        get_feedbacks: app.get_feedbacks,
+        delete_feedback: app.delete_feedback,
+    };
 
     app.vue = new Vue({
         el: "#vue-target",
