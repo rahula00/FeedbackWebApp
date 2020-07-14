@@ -92,8 +92,11 @@ def mark_read(request, id=None):
 @login_required(login_url='homepage')
 def manager_delete(request, id=None):
     if request.method == "POST":
-        user = User.objects.get(pk=id)
-        user.delete()
+        try:
+            user = User.objects.get(pk=id)
+            user.delete()
+        except:
+            messages.info(request, f"Cannot Delete User")
         return redirect('adminPage')
     else:
         context = {}

@@ -121,7 +121,7 @@
                                     <td>
                                         <form action="{% url 'fb_delete' feedback.id %}" method="post" class="d-inline">
                                             {% csrf_token %}
-                                            <button type="submit" class="btn">
+                                            <button onclick="return confirm('Are you sure you want to delete this item?');" type="submit" class="btn">
                                                 <i class="far fa-trash-alt fa-lg text-danger float-right"></i>
                                             </button>
                                         </form>
