@@ -35,21 +35,6 @@
     <link href="{% static 'mainApp/sortable-theme-bootstrap.css' %}" rel="stylesheet" />
 </head>
 
-<script>
-                $.ajax({
-                    url: '/ajax/get_feedbacks/',
-                    dataType: 'json',
-                    data: {
-                      'id': 10
-                    },
-                    success: function (data) {
-                      console.log(data)
-                    },
-                    error: function (data) {
-                      console.log("failure")
-                    }
-                });
-</script>
 
 <body id="page-top">
     {% if messages %}
@@ -111,52 +96,24 @@
                             <th style="cursor: pointer;">Show fb</th>
                             <th style="display:none;">Feedback</th>
                         </thead>
-                        <tbody id="feedbackTable">
-                            {% block content %}
-                            {% for feedback in feedbacks %}
-
-                            
-
-
-                                {% if feedback.isRead %}
-                                <tr style="cursor: pointer; ">
-                                    <td >{{feedback.submitted_by}}</td>
-                                    <td>
-                                        {{feedback.type_choice}}
-                                    </td>
-                                    <td>{{feedback.created_at}}</td>
-                                    <td>
-                                        <form action="{% url 'fb_delete' feedback.id %}" method="post" class="d-inline">
-                                            {% csrf_token %}
-                                            <button type="submit" class="btn">
-                                                <i class="far fa-trash-alt fa-lg text-danger float-right"></i>
-                                            </button>
-                                        </form>
-                                    </td>   
-                                    <td style="display:none;">{{feedback.feedback}}</td>
-                                </tr>
-                                {% else %}
-                                <tr style="cursor: pointer; color: rgb(15, 112, 36);">
-                                    <td style="font-weight: bold; font-style: italic;"> {{feedback.submitted_by}}</td>
-                                    <td style="font-weight: bold; font-style: italic;">{{feedback.type_choice}}</td>
-                                    <td style="font-weight: bold; font-style: italic;">{{feedback.created_at}}</td>
+                        <tbody v-for="feedback in feedbacks" id="feedbackTable">
+                                <tr @click="feedback.show = !feedback.show" style="cursor: pointer; color: rgb(15, 112, 36);">
+                                    <td style="font-weight: bold; font-style: italic;"> [[feedback.submitted_by]]</td>
+                                    <td v-if="!feedback.show" style="font-weight: bold; font-style: italic;">[[feedback.type_choice]]</td>
+                                    <td v-if="feedback.show" style="font-weight: bold; font-style: italic;">[[feedback.feedback]]</td>
+                                    <td style="font-weight: bold; font-style: italic;">[[feedback.created_at]]</td>
 
                                     <td>
-                                        <form action="{% url 'fb_delete' feedback.id %}" method="post" class="d-inline">
-                                            {% csrf_token %}
-                                            <button type="submit" class="btn">
-                                                <i class="far fa-trash-alt fa-lg text-danger float-right"></i>
-                                            </button>
-                                        </form>
+                                         <button type="submit" class="btn">
+                                            <i class="far fa-trash-alt fa-lg text-danger float-right"></i>
+                                         </button>
                                     </td> 
 
                                     <td>
-                                        <form action="{% url 'mark_fb_read' feedback.id %}" method="post" class="d-inline">
-                                            {% csrf_token %}
-                                            <button type="submit" class="btn">
-                                                <i class="far fa-check-square fa-lg text-danger float-right"></i>
-                                            </button>
-                                        </form>
+                                        <button type="submit" class="btn">
+                                            <i class="far fa-check-square fa-lg text-danger float-right"></i>
+                                        </button>
+
                                     </td> 
 
                                     <td>
@@ -165,15 +122,9 @@
                                         </button>
                                     </td> 
 
-                                    <td style="display:none; font-style: italic;">{{feedback.feedback}}</td>
+                                    <td style="display:none; font-style: italic;">[[feedback.feedback]]</td>
                                 </tr>
 
-
-
-
-                            {% endif %}
-                            {% endfor %}
-                            {% endblock content %}
                         </tbody>
                     </table>
 
@@ -202,31 +153,59 @@
     <!-- <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11"></script> -->
 
     <script>
-        var app = new Vue({
-            delimiters: ['[[', ']]'],
-            el: '#vue-target',
-            data: {
+let app = {};
 
+let init = (app) => {
+
+    // This is the Vue data.
+    app.data = {
+        feedbacks: [],
+    };
+
+    app.methods = {
+        get_feedbacks: app.get_feedbacks,
+    };
+
+    app.get_feedbacks = () => {
+        $.ajax({
+            url: '/ajax/get_feedbacks/',
+            dataType: 'json',
+            success: function (data) {
+
+                app.vue.feedbacks = app.organize(data)
+                console.log(app.vue.feedbacks)
             },
-            methods: {
-                vueGetFeedback: function () {
-                  console.log("start")
-                  $.ajax({
-                    url: '/ajax/get_feedback/',
-                    dataType: 'json',
-                    data: {
-                      'id': 10
-                    },
-                    success: function (data) {
-                      console.log(data)
-                    },
-                    error: function (data) {
-                      console.log("failure")
-                    }
-                  });
-                },
+            error: function (data) {
+                console.log("failure")
             }
-        });
+        })
+    };
+
+    app.organize = (data) => {
+        for (feedback of data){
+            feedback.show = false;
+        }
+        return data  
+    };
+
+   
+
+    app.vue = new Vue({
+        el: "#vue-target",
+        data: app.data,
+        methods: app.methods,
+        delimiters: ['[[', ']]']
+    });
+
+    app.init = () => {
+        app.get_feedbacks();
+    };
+
+    app.init();
+};
+
+init(app);
+
     </script>
 
 

@@ -29,7 +29,7 @@ def get_feedback(request=None):
 
 @csrf_exempt
 def get_feedbacks(request=None):
-    objs = Feedback.objects.all().order_by('-created_at')
+    objs = Feedback.objects.filter(manager=request.user).order_by('-created_at')
     serializer = FeedbackSerializer(objs, many=True)
     return JsonResponse(serializer.data, safe=False)
 
