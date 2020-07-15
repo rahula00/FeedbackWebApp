@@ -67,12 +67,14 @@
                 <div class="col-lg-10 align-self-end">
                     <h1 class="text-uppercase text-white font-weight-bold">Welcome {{request.user.get_full_name}} </h1>
                     <br>
+                    <br>
+                    <br>
                 </div>
-                <div class="col-lg-8 align-self-baseline">
+                <div class="col-lg-9 align-self-baseline">
 
                     <!-- Search Bar -->
                     <div class="input-group md-form form-sm form-2 pl-0">
-                        <input id="myInput" class="form-control my-0 py-1 amber-border" type="text" placeholder="Search"
+                        <input id="myInput" class="form-control my-0 py-1 amber-border" type="text" onkeyup="myFunction()" type="text" placeholder="Search"
                             aria-label="Search">
                         <div class="input-group-append">
                             <span class="input-group-text amber lighten-3" id="basic-text1"><i
@@ -80,19 +82,20 @@
                         </div>
                     </div>
 
-                    <br>
-
 
                     <!-- Table-->
-                    <table data-sortable class="sortable-theme-bootstrap table table-hover " >
+                    <table id="feedbackTable" data-sortable class=" sortable-theme-bootstrap table table-hover " >
                         <thead>
                             <th style="cursor: pointer;">Submitted By </th>
                             <th style="cursor: pointer;">Feedback </th>
                             <th style="cursor: pointer;">Date Added </th>
                             <th style="cursor: pointer;">Delete</th>
                         </thead>
-                        <tbody  id="feedbackTable" v-for="feedback in feedbacks" >
-                                <tr v-if="!feedback.isRead" @click="feedback.isRead=true; mark_read(feedback); feedback.show = !feedback.show;" style="cursor: pointer; color: rgb(15, 112, 36);">
+
+
+                        <tbody>
+
+                                <tr  v-for="feedback in feedbacks" v-if="!feedback.isRead" @click="feedback.isRead=true; mark_read(feedback); feedback.show = !feedback.show;" style="cursor: pointer; color: rgb(15, 112, 36);">
                                     <td style="font-weight: bold; font-style: italic;"> [[feedback.submitted_by]]</td>
                                     <td v-if="!feedback.show" style="font-weight: bold; font-style: italic;">Type: [[feedback.type_choice]]</td>
                                     <td v-if="feedback.show" style="font-weight: bold; font-style: italic;">[[feedback.feedback]]</td>
@@ -102,9 +105,9 @@
                                     </td>
                                 </tr>
 
-                                <tr v-else @click="feedback.show = !feedback.show" style="">
+                                <tr v-for="feedback in feedbacks" v-if="feedback.isRead" @click="feedback.show = !feedback.show" style="">
                                     <td > [[feedback.submitted_by]]</td>
-                                    <td v-if="!feedback.show">[[feedback.type_choice]]</td>
+                                    <td v-if="!feedback.show">Type: [[feedback.type_choice]]</td>
                                     <td v-if="feedback.show" >[[feedback.feedback]]</td>
                                     <td >[[feedback.created_at]]</td>
 
@@ -112,6 +115,7 @@
                                             <i class="far fa-trash-alt fa-lg text-danger"></i>
                                     </td>
                                 </tr>
+
 
                         </tbody>
 
@@ -138,39 +142,6 @@
     </header>
 
 
-     <!--https://stackoverflow.com/questions/9127498/how-to-perform-a-real-time-search-and-filter-on-a-html-table-->
-     <script>
-        var $rows = $('#feedbackTable tr');
-        $('#myInput').keyup(debounce(function () {
-
-            var val = '^(?=.*\\b' + $.trim($(this).val()).split(/\s+/).join('\\b)(?=.*\\b') + ').*$',
-                reg = RegExp(val, 'i'),
-                text;
-
-            $rows.show().filter(function () {
-                text = $(this).text().replace(/\s+/g, ' ');
-                return !reg.test(text);
-            }).hide();
-        }, 100));
-
-        function debounce(func, wait, immediate) {
-            var timeout;
-            return function () {
-                var context = this,
-                    args = arguments;
-                var later = function () {
-                    timeout = null;
-                    if (!immediate) func.apply(context, args);
-                };
-                var callNow = immediate && !timeout;
-                clearTimeout(timeout);
-                timeout = setTimeout(later, wait);
-                if (callNow) func.apply(context, args);
-            };
-        };
-    </script>
-
-
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <!-- REPLACE THIS LATER <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11"></script> -->
 
@@ -180,7 +151,49 @@
    
 
 
-   
+    <!--https://stackoverflow.com/questions/9127498/how-to-perform-a-real-time-search-and-filter-on-a-html-table-->
+    <script>
+
+
+
+
+function myFunction() {
+
+  // Declare variables 
+  var input = document.getElementById("myInput");
+  var filter = input.value.toUpperCase();
+  var table = document.getElementById("feedbackTable");
+  var trs = table.tBodies[0].getElementsByTagName("tr");
+
+  // Loop through first tbody's rows
+  for (var i = 0; i < trs.length; i++) {
+
+    // define the row's cells
+    var tds = trs[i].getElementsByTagName("td");
+
+    // hide the row
+    trs[i].style.display = "none";
+
+    // loop through row cells
+    for (var i2 = 0; i2 < tds.length-1; i2++) {
+
+      // if there's a match
+      if (tds[i2].innerHTML.toUpperCase().indexOf(filter) > -1) {
+
+        // show the row
+        trs[i].style.display = "";
+
+        // skip to the next row
+        continue;
+
+      }
+    }
+  }
+
+}
+
+
+</script>
 
     <!-- Footer-->
     <footer class="bg-light py-5">
