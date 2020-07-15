@@ -99,18 +99,18 @@
                                     <td v-if="!feedback.show" style="font-weight: bold; font-style: italic;">[[feedback.type_choice]]</td>
                                     <td v-if="feedback.show" style="font-weight: bold; font-style: italic;">[[feedback.feedback]]</td>
                                     <td style="font-weight: bold; font-style: italic;">[[feedback.created_at]]</td>
-                                    <td @click="delete_feedback(feedback)">
+                                    <td onclick="return confirm('Are you sure you want to delete this item?');" @click="delete_feedback(feedback)">
                                             <i class="far fa-trash-alt fa-lg text-danger float-center"></i>
                                     </td>
                                 </tr>
 
                                 <tr v-else @click="feedback.show = !feedback.show" style="">
-                                    <td style="font-weight: bold; font-style: italic;"> [[feedback.submitted_by]]</td>
-                                    <td v-if="!feedback.show" style="font-weight: bold; font-style: italic;">[[feedback.type_choice]]</td>
-                                    <td v-if="feedback.show" style="font-weight: bold; font-style: italic;">[[feedback.feedback]]</td>
-                                    <td style="font-weight: bold; font-style: italic;">[[feedback.created_at]]</td>
+                                    <td > [[feedback.submitted_by]]</td>
+                                    <td v-if="!feedback.show">[[feedback.type_choice]]</td>
+                                    <td v-if="feedback.show" >[[feedback.feedback]]</td>
+                                    <td >[[feedback.created_at]]</td>
 
-                                    <td @click="delete_feedback(feedback)">
+                                    <td onclick="return confirm('Are you sure you want to delete this item?');" @click="delete_feedback(feedback)">
                                             <i class="far fa-trash-alt fa-lg text-danger"></i>
                                     </td>
                                 </tr>
