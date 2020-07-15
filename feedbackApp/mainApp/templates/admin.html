@@ -115,7 +115,7 @@
                                 <td>{% if manager.date_joined %} {{manager.date_joined}} {% endif %}</td>
                                 
                                 <td><a  href="{% url 'manager_update' manager.id %}" class="btn">
-                                    <i style="color:rgb(24, 134, 236)" class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                                    <i style="color:rgb(24, 134, 236)" class="fa fa-pencil-square-o fa-lg float-right" aria-hidden="true"></i>
                                 </a></td>
                                 <td>
                                     <form action="{% url 'manager_delete' manager.id %}" method="post" class="d-inline">
