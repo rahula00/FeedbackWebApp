@@ -199,6 +199,9 @@ let init = (app) => {
             },
             error: function (data) {
                 console.log("failure")
+            },
+            complete: function(data){
+                app.init()
             }
         })
     };
