@@ -6,11 +6,11 @@ let init = (app) => {
     
 
     app.check_delete = () => {
-        app.showDelete = false;
+        app.vue.showDelete = false
         for (feedback of app.vue.feedbacks){
             if(feedback.delete === true){
-                app.showDelete = true;
-                console.log(app.showDelete)
+                app.vue.showDelete = true;
+
             }
         }
     };
@@ -93,7 +93,7 @@ let init = (app) => {
 
     app.data = {
         feedbacks: [],
-        showDelete: true,
+        showDelete: false,
     };
 
    app.methods = {

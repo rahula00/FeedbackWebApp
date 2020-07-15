@@ -86,12 +86,12 @@
 
                     <!-- Table-->
                     <table id="feedbackTable" data-sortable class=" sortable-theme-bootstrap table table-hover " >
-                        <thead>
-                            <th style="cursor: pointer;">Submitted By </th>
-                            <th style="cursor: pointer;">Feedback </th>
-                            <th style="cursor: pointer;">Salesforce Link</th>
-                            <th style="cursor: pointer;">Date Added </th>
-                            <th data-sortable="false" style="cursor: pointer;">      
+                        <thead >
+                            <th class="align-middle text-center" style="cursor: pointer;">Submitted By </th>
+                            <th class="align-middle text-center" style="cursor: pointer;">Feedback </th>
+                            <th class="align-middle text-center" style="cursor: pointer;">Salesforce Link</th>
+                            <th class="align-middle text-center" style="cursor: pointer;">Date Added </th>
+                            <th class="text-center" data-sortable="false" style="cursor: pointer;">      
                                 <a v-if="showDelete" class="btn btn-danger btn-sm" @click="delete_feedbacks">
                                     Delete
                                 </a>
@@ -107,7 +107,7 @@
                                     <td v-if="feedback.show" style="font-weight: bold; font-style: italic;">[[feedback.feedback]]</td>
                                     <td style="font-weight: bold; font-style: italic;">[[feedback.salesforceOp]]</td>
                                     <td style="font-weight: bold; font-style: italic;">[[feedback.created_at]]</td>
-                                    <td>
+                                    <td >
                                         <input @change="check_delete" type="checkbox" id="checkbox" v-model="feedback.delete">
                                     </td>
                                 </tr>
