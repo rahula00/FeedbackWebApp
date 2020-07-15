@@ -151,20 +151,16 @@ def manager_update(request, id=None):
 
 @login_required(login_url='homepage')
 def add_manager(request):
-
     if request.method == "POST":
         form = CreateUserForm(request.POST)
         if form.is_valid():
             form.save()
             return redirect('adminPage') #Not sure 
-
     else:
         form = CreateUserForm()
-
     context = {
         'form': form
     }
-
     return render(request, 'add_manager.html', context)
 
 

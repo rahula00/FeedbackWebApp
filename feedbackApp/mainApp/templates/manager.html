@@ -91,7 +91,7 @@
                             <th style="cursor: pointer;">Date Added </th>
                             <th style="cursor: pointer;">Delete</th>
                         </thead>
-                        <tbody  id="feedbackTable" v-for="feedback in feedbacks" >
+                        <tbody  id="feedbackTable" v-for="feedback in feedbacks">
                                 <tr v-if="!feedback.isRead" @click="feedback.isRead=true; mark_read(feedback); feedback.show = !feedback.show;" style="cursor: pointer; color: rgb(15, 112, 36);">
                                     <td style="font-weight: bold; font-style: italic;"> [[feedback.submitted_by]]</td>
                                     <td v-if="!feedback.show" style="font-weight: bold; font-style: italic;">Type: [[feedback.type_choice]]</td>
@@ -101,7 +101,6 @@
                                             <i class="far fa-trash-alt fa-lg text-danger float-center"></i>
                                     </td>
                                 </tr>
-
                                 <tr v-else @click="feedback.show = !feedback.show" style="">
                                     <td > [[feedback.submitted_by]]</td>
                                     <td v-if="!feedback.show">[[feedback.type_choice]]</td>
@@ -112,7 +111,6 @@
                                             <i class="far fa-trash-alt fa-lg text-danger"></i>
                                     </td>
                                 </tr>
-
                         </tbody>
 
                     </table>

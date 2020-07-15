@@ -1,133 +1,141 @@
 {% load static %}
-<!-- vue import dev version. REPLACE BEFORE RELEASE -->
-<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-<!-- <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11"></script> -->
-<link href="{% static 'mainApp/styles.css' %}" rel="stylesheet" />
+<!DOCTYPE html>
+<html lang="en">
 
-<!-- Bulma + FontAwesome -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.0/css/bulma.min.css">
-<script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Admin Dashboard</title>
 
-
-<!-- Background color -->
-<header class="masthead">
-
-  <div id="vue-target">
-
-    <!-- TITLE -->
-    <section class="section">
-      <h1 style="color:white;" class="text-uppercase text-white font-weight-bold">Submit Anonymous Feedback </h1>
-    </section>
-
-    <section class="section">
-      <div class="">
-        <form method="POST">{% csrf_token %}
-          <p>Manager is: [[feedback_text]]</p>
-          
-          {{form.manager}} <!--How to display the full name, not username-->
-          {{form.type_choice}}
-          {{form.feedback}}
-          {{form.submitted_by}}
-
-
-          <!-- Manager Dropdown -->
-          <div class="field">
-            <div class="control">
-              <div class="select is-danger is-rounded">
-                <select v-model="selectedValue">
-                  <option value="Manager">Select Manager</option>
-                  {% block content %}
-                  {% for manager in managers %}
-                    {% if manager.first_name %}
-                      <option v-model="managerChoice" value="manager">{{manager.first_name}} {{manager.last_name}}</option>
-                    {%endif %}
-                  {% endfor %}
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" href="{% static 'mainApp/img/icon.jpg' %}" />
+    <!-- Font Awesome icons (free version)-->
+    <script src="https://use.fontawesome.com/releases/v5.13.0/js/all.js" crossorigin="anonymous"></script>
+    <!-- Google fonts-->
+    <link href="https://fonts.googleapis.com/css?family=Merriweather+Sans:400,700" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic"
+        rel="stylesheet" type="text/css" />
+    <!-- Third party plugin CSS-->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.min.css"
+        rel="stylesheet" />
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="{% static 'mainApp/styles.css' %}" rel="stylesheet" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 
 
-                </select>
-              </div>
-            </div>
-          </div>
+    <!--Table Sort-->
+    <script src="{% static 'mainApp/sortable.js' %}"></script>
+    <link href="{% static 'mainApp/sortable-theme-bootstrap.css' %}" rel="stylesheet" />
 
-          <!-- Issue type dropdown -->
-          <div v-if="selectedValue !== 'Manager'" class="field">
-            <div class="control">
-              <div class="select is-danger is-rounded">
-                <select v-model="selectedValue2">
-                  <option value="Type of Issue">Select Type of Issue</option>
+</head>
 
-                  {% for choice in type_choice %}
-                  <option value="issue">{{choice.0}}</option>
-                  {% endfor %}
-                  {% endblock content %}
-                </select>
-              </div>
-            </div>
-          </div>
-
-
-          <!-- Feedback submission box -->
-          <div v-if="(selectedValue2 !== 'Type of Issue')&(selectedValue !== 'Manager')" class="is-fullwidth">
-            <div class="field">
-              <textarea v-model="feedback_text" class="textarea is-fullwidth"
-                placeholder="Enter feedback here"></textarea>
-            </div>
-
-            <button type="submit" v-bind:disabled="feedback_text.trim().length == 0"
-              class="button is-danger is-rounded is-size-6">Submit</button>
-            <!--
-          <button  
-              style="
-              border: 1px solid #fc0000;
-              border-radius: 24.5rem;
-              border-top-left-radius: 24.5rem;
-              border-top-right-radius: 24.5rem;
-              border-bottom-right-radius: 24.5rem;
-              border-bottom-left-radius: 24.5rem;
-              font-weight: 600;
-              "@click="post" class="button is-size-6">Submit
-          </button>
-          -->
-          </div>
-
-
-          <!-- button + fontawesome reference
-        <div>
-          <button @click="switchPost" v-if="!showPosts" class="button is-primary is-size-6">
-            <i class="fa fa-plus fa-fw"></i>
-          </button>
+<body id="page-top">
+    {% if messages %}
+    {% for message in messages %}
+    <script>
+        $(document).ready(function () {
+            $('.toast').toast('show');
+        });
+    </script>
+    <div class="toast" data-autohide="false"
+        style="position: absolute; top: 0; right: 0; margin-right: 60px; margin-top: 60px;">
+        <div class="toast-header">
+            <strong class="mr-auto">Message</strong>
+            <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
         </div>
-         -->
+        <div class="toast-body">
+            {{message}}
+        </div>
+    </div>
 
-        </form>
-      </div>
-    </section>
+    {% endfor %}
+    {% endif %}
 
 
-  </div>
-</header>
 
-<script>
-  var app = new Vue({
-    delimiters: ['[[', ']]'],
-    el: '#vue-target',
-    data: {
-      selectedValue: "Manager",
-      selectedValue2: "Type of Issue",
-      showSecond: false,
-      showTextBox: false,
-      feedback_text: "",
-    },
-    methods: {
-      onChange: function (event) {
-        console.log(this.selectedValue);
-      },
-      showSecondFunction: function () {
-        app.showSecond = true;
-      },
-      showTextBoxFunction: function () {
-        app.showTextBox = true;
-      }
-    }
-  });
-</script>
+    <!-- Masthead-->
+    <header class="masthead">
+
+        <div class="container h-100">
+
+            <div class="row h-100 align-items-center justify-content-center text-center">
+                <div class="col-lg-8 align-self-baseline">
+
+                    <form method="POST" style="color:white">{% csrf_token %}
+                        <!--Change this when making login-->
+
+                        <div class="modal-header">
+                            <h4 class="modal-title">Leave your Feedback</h4>
+                        </div>
+
+
+                        
+                        <div class="fieldWrapper form-group" aria-required={% if field.field.required %}"true"{% else %}"false"{% endif %}>
+                            <div>Please Select Your Manager: {{form.manager}}</div>
+                            <br>
+                            <div>What type of feedback are you leaving? {{form.type_choice}}</div>
+                            <br>
+                            <div>Please leave your feedback: {{form.feedback}}</div>
+                            <br>
+                            <div>Provide the Salesforce Oppurtunity link if applicable: {{form.salesforceOp}}</div>
+                            <br>
+                            <div>Let us know who you are: {{form.submitted_by}}</div>
+                        </div>
+                        
+
+                        <input type='hidden' value='{{manager.pk}}' name='id'>
+
+                        <div class="modal-footer justify-content-between">
+                            <input type="submit" class="btn btn-primary" value="Submit">
+                            
+                        </div>
+                        
+                        
+                    </form>
+                    <br>
+                    
+
+                    <a class="btn btn-outline-danger btn-lg waves-effect" href="../"
+                        style="margin-bottom: 30px;">Take me back
+                    </a>
+                    <br>
+
+                    <img src="{% static 'mainApp/img/logo.png' %}" width="50%" height="50%">
+                    <br>
+
+                </div>
+
+            </div>
+        </div>
+    </header>
+
+
+
+
+
+    <!-- Footer-->
+    <footer class="bg-light py-5">
+        <div class="container">
+            <div class="small text-center text-muted">Copyright © 2020 - CrowdStrike</div>
+        </div>
+    </footer>
+    <!-- Bootstrap core JS-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.bundle.min.js"></script>
+    <!-- Third party plugin JS-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>
+    <!-- Core theme JS-->
+    <script src="{% static 'mainApp/scripts.js' %}"></script>
+</body>
+
+</html>

@@ -105,7 +105,7 @@
                         <tbody id="feedbackTable">
                             {% block content %}
                             {% for manager in managers %}
-                            <tr style="cursor: pointer;" href="manager.html" data-toggle="modal" action="manager.html">
+                            <tr style="cursor: pointer;"  action="manager.html">
                                 <td style="display: none;">{% if manager.username %} {{manager.id}} {% endif %}</td>
                                 <td> {% if manager.username %} {{manager.username}} {% endif %}</td>
                                 <td>{% if manager.first_name %} {{manager.first_name}} {% endif %}</td>
