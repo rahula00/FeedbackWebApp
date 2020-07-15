@@ -77,6 +77,20 @@
                     <a class="btn btn-success" href="/add_manager"
                         style="margin-bottom: 30px;">Add Manager
                     </a>
+
+
+                    <!-- Search Bar -->
+                    <div class="input-group md-form form-sm form-2 pl-0">
+                        <input id="myInput" class="form-control my-0 py-1 amber-border" type="text" placeholder="Search"
+                            aria-label="Search">
+                        <div class="input-group-append">
+                            <span class="input-group-text amber lighten-3" id="basic-text1"><i
+                                    class="fas fa-search text-grey" aria-hidden="true"></i></span>
+                        </div>
+                    </div>
+
+                    <br>
+                    
                     <!-- Table-->
                     <table data-sortable class=" sortable-theme-bootstrap table table-hover " style=" display: block; height: 300px; overflow-y: scroll;">
                         <thead>
@@ -133,6 +147,38 @@
     </header>
 
 
+
+    <!--https://stackoverflow.com/questions/9127498/how-to-perform-a-real-time-search-and-filter-on-a-html-table-->
+    <script>
+        var $rows = $('#feedbackTable tr');
+        $('#myInput').keyup(debounce(function () {
+
+            var val = '^(?=.*\\b' + $.trim($(this).val()).split(/\s+/).join('\\b)(?=.*\\b') + ').*$',
+                reg = RegExp(val, 'i'),
+                text;
+
+            $rows.show().filter(function () {
+                text = $(this).text().replace(/\s+/g, ' ');
+                return !reg.test(text);
+            }).hide();
+        }, 100));
+
+        function debounce(func, wait, immediate) {
+            var timeout;
+            return function () {
+                var context = this,
+                    args = arguments;
+                var later = function () {
+                    timeout = null;
+                    if (!immediate) func.apply(context, args);
+                };
+                var callNow = immediate && !timeout;
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+                if (callNow) func.apply(context, args);
+            };
+        };
+    </script>
 
 
 

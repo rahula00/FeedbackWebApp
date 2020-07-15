@@ -67,8 +67,6 @@
                 <div class="col-lg-10 align-self-end">
                     <h1 class="text-uppercase text-white font-weight-bold">Welcome {{request.user.get_full_name}} </h1>
                     <br>
-                    <br>
-                    <br>
                 </div>
                 <div class="col-lg-8 align-self-baseline">
 
@@ -86,14 +84,14 @@
 
 
                     <!-- Table-->
-                    <table data-sortable class=" sortable-theme-bootstrap table table-hover " >
+                    <table data-sortable class="sortable-theme-bootstrap table table-hover " >
                         <thead>
                             <th style="cursor: pointer;">Submitted By </th>
                             <th style="cursor: pointer;">Feedback </th>
                             <th style="cursor: pointer;">Date Added </th>
                             <th style="cursor: pointer;">Delete</th>
                         </thead>
-                        <tbody v-for="feedback in feedbacks" id="feedbackTable">
+                        <tbody  id="feedbackTable" v-for="feedback in feedbacks" >
                                 <tr v-if="!feedback.isRead" @click="feedback.isRead=true; mark_read(feedback); feedback.show = !feedback.show;" style="cursor: pointer; color: rgb(15, 112, 36);">
                                     <td style="font-weight: bold; font-style: italic;"> [[feedback.submitted_by]]</td>
                                     <td v-if="!feedback.show" style="font-weight: bold; font-style: italic;">Type: [[feedback.type_choice]]</td>
@@ -140,17 +138,8 @@
     </header>
 
 
-    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-    <!-- REPLACE THIS LATER <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11"></script> -->
-
-
-    <!-- Vue.js file (Relocated to make this cleaner) -->
-    <script src="{% static 'mainApp/manager_vue.js' %}"></script>
-   
-
-
-    <!--https://stackoverflow.com/questions/9127498/how-to-perform-a-real-time-search-and-filter-on-a-html-table-->
-    <script>
+     <!--https://stackoverflow.com/questions/9127498/how-to-perform-a-real-time-search-and-filter-on-a-html-table-->
+     <script>
         var $rows = $('#feedbackTable tr');
         $('#myInput').keyup(debounce(function () {
 
@@ -180,6 +169,18 @@
             };
         };
     </script>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <!-- REPLACE THIS LATER <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11"></script> -->
+
+
+    <!-- Vue.js file (Relocated to make this cleaner) -->
+    <script src="{% static 'mainApp/manager_vue.js' %}"></script>
+   
+
+
+   
 
     <!-- Footer-->
     <footer class="bg-light py-5">
