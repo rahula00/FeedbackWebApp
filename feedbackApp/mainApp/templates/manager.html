@@ -89,14 +89,14 @@
                     <table data-sortable class=" sortable-theme-bootstrap table table-hover " >
                         <thead>
                             <th style="cursor: pointer;">Submitted By </th>
-                            <th style="cursor: pointer;">Category </th>
+                            <th style="cursor: pointer;">Feedback </th>
                             <th style="cursor: pointer;">Date Added </th>
                             <th style="cursor: pointer;">Delete</th>
                         </thead>
                         <tbody v-for="feedback in feedbacks" id="feedbackTable">
                                 <tr v-if="!feedback.isRead" @click="feedback.isRead=true; mark_read(feedback); feedback.show = !feedback.show;" style="cursor: pointer; color: rgb(15, 112, 36);">
                                     <td style="font-weight: bold; font-style: italic;"> [[feedback.submitted_by]]</td>
-                                    <td v-if="!feedback.show" style="font-weight: bold; font-style: italic;">[[feedback.type_choice]]</td>
+                                    <td v-if="!feedback.show" style="font-weight: bold; font-style: italic;">Type: [[feedback.type_choice]]</td>
                                     <td v-if="feedback.show" style="font-weight: bold; font-style: italic;">[[feedback.feedback]]</td>
                                     <td style="font-weight: bold; font-style: italic;">[[feedback.created_at]]</td>
                                     <td onclick="return confirm('Are you sure you want to delete this item?');" @click="delete_feedback(feedback)">
@@ -141,109 +141,12 @@
 
 
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-    <!-- <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11"></script> -->
+    <!-- REPLACE THIS LATER <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11"></script> -->
 
-    <script>
-let app = {};
 
-let init = (app) => {
-
-    // This is the Vue data.
-    app.data = {
-        feedbacks: [],
-    };
-
-    
-
-    app.get_feedbacks = () => {
-        $.ajax({
-            url: '/ajax/get_feedbacks/',
-            dataType: 'json',
-            success: function (data) {
-
-                app.vue.feedbacks = app.reindex(app.setShow(data))
-
-            },
-            error: function (data) {
-                console.log("failure")
-            }
-        })
-    };
-
-    app.delete_feedback = (data) => {
-        $.ajax({
-            url: '/ajax/delete_feedback/',
-            dataType: 'json',
-            data:{
-                'id':data.id
-            },
-            success: function (data) {
-                console.log("successfully deleted")
-            },
-            error: function (data) {
-                console.log("failure")
-            },
-            complete: function(data){
-                app.init()
-            }
-        })
-    };
-
-    app.mark_read = (data) => {
-        $.ajax({
-            url: '/ajax/mark_read/',
-            dataType: 'json',
-            data:{
-                'id':data.id
-            },
-            success: function (data) {
-                console.log("successfully marked read")
-            },
-            error: function (data) {
-                console.log("failure")
-            }
-        })
-    };
-
-    app.setShow = (data) => {
-        for (feedback of data){
-            feedback.show = false;
-        }
-        return data  
-    };
-
-    app.reindex = (a) => {
-        let idx = 0;
-        for (p of a) {
-            p._idx = idx++;
-        }
-        return a;
-    };
-
-   app.methods = {
-        get_feedbacks: app.get_feedbacks,
-        delete_feedback: app.delete_feedback,
-        mark_read: app.mark_read,
-    };
-
-    app.vue = new Vue({
-        el: "#vue-target",
-        data: app.data,
-        methods: app.methods,
-        delimiters: ['[[', ']]']
-    });
-
-    app.init = () => {
-        app.get_feedbacks();
-    };
-
-    app.init();
-};
-
-init(app);
-
-    </script>
-
+    <!-- Vue.js file (Relocated to make this cleaner) -->
+    <script src="{% static 'mainApp/manager_vue.js' %}"></script>
+   
 
 
     <!--https://stackoverflow.com/questions/9127498/how-to-perform-a-real-time-search-and-filter-on-a-html-table-->
