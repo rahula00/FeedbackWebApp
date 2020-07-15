@@ -12,7 +12,7 @@ class Feedback(models.Model):
 	
 	
 	feedback = models.CharField(blank=False, max_length=2000)
-	salesforceOp = models.CharField(blank=True, max_length=100, null=True)
+	salesforceOp = models.CharField(blank=True, max_length=100, null=True, default='N/A')
 	#manager = models.ForeignKey(Managers, blank=True, null=True, on_delete=models.CASCADE)
 	manager = models.ForeignKey(User, blank=False, null=True, on_delete=models.CASCADE)
 	isRead = models.BooleanField(default=False)

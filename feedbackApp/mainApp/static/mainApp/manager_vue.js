@@ -43,7 +43,16 @@ let init = (app) => {
         })
     };
 
+    app.delete_feedbacks = () => {
+        for (feedback of app.vue.feedbacks){
+            if(feedback.delete === true){
+                app.delete_feedback(feedback)
+            }
+        }
+    };
+
     app.mark_read = (data) => {
+        console.log(data)
         $.ajax({
             url: '/ajax/mark_read/',
             dataType: 'json',
@@ -55,6 +64,7 @@ let init = (app) => {
             },
             error: function (data) {
                 console.log("failure")
+
             }
         })
     };
@@ -62,6 +72,7 @@ let init = (app) => {
     app.setShow = (data) => {
         for (feedback of data){
             feedback.show = false;
+            feedback.delete = false;
         }
         return data  
     };
@@ -78,6 +89,7 @@ let init = (app) => {
         get_feedbacks: app.get_feedbacks,
         delete_feedback: app.delete_feedback,
         mark_read: app.mark_read,
+        delete_feedbacks: app.delete_feedbacks,
     };
 
     app.vue = new Vue({

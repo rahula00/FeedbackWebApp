@@ -89,6 +89,7 @@
                         <thead>
                             <th style="cursor: pointer;">Submitted By </th>
                             <th style="cursor: pointer;">Feedback </th>
+                            <th style="cursor: pointer;">Salesforce Link</th>
                             <th style="cursor: pointer;">Date Added </th>
                             <th style="cursor: pointer;">Delete</th>
                         </thead>
@@ -100,9 +101,10 @@
                                     <td style="font-weight: bold; font-style: italic;"> [[feedback.submitted_by]]</td>
                                     <td v-if="!feedback.show" style="font-weight: bold; font-style: italic;">Type: [[feedback.type_choice]]</td>
                                     <td v-if="feedback.show" style="font-weight: bold; font-style: italic;">[[feedback.feedback]]</td>
+                                    <td style="font-weight: bold; font-style: italic;">[[feedback.salesforceOp]]</td>
                                     <td style="font-weight: bold; font-style: italic;">[[feedback.created_at]]</td>
-                                    <td onclick="return confirm('Are you sure you want to delete this item?');" @click="delete_feedback(feedback)">
-                                            <i class="far fa-trash-alt fa-lg text-danger float-center"></i>
+                                    <td>
+                                        <input type="checkbox" id="checkbox" v-model="feedback.delete">
                                     </td>
                                 </tr>
 
@@ -110,17 +112,24 @@
                                     <td > [[feedback.submitted_by]]</td>
                                     <td v-if="!feedback.show">Type: [[feedback.type_choice]]</td>
                                     <td v-if="feedback.show" >[[feedback.feedback]]</td>
+                                    <td >[[feedback.salesforceOp]]</td>
                                     <td >[[feedback.created_at]]</td>
-
-                                    <td onclick="return confirm('Are you sure you want to delete this item?');" @click="delete_feedback(feedback)">
-                                            <i class="far fa-trash-alt fa-lg text-danger"></i>
+                                    <td>
+                                        <input type="checkbox" id="checkbox" v-model="feedback.delete">
                                     </td>
+                                    
                                 </tr>
 
 
                         </tbody>
 
+
                     </table>
+                    <a class="btn btn-outline-danger btn-lg waves-effect" @click="delete_feedbacks">Delete Selected
+                    </a>
+                    <br>
+                    
+
 
                     <a class="btn btn-outline-danger btn-lg waves-effect" href="logout"
                         style="margin-bottom: 30px;">Logout
