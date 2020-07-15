@@ -12,7 +12,7 @@
     <!-- Favicon-->
     <link rel="icon" type="image/x-icon" href="{% static 'mainApp/img/icon.jpg' %}" />
     <!-- Font Awesome icons (free version)-->
-    <script src="https://use.fontawesome.com/releases/v5.13.0/js/all.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <!-- Google fonts-->
     <link href="https://fonts.googleapis.com/css?family=Merriweather+Sans:400,700" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic"
@@ -113,12 +113,15 @@
                                 <td>{% if manager.email %} {{manager.email}} {% endif %}</td>
                                 <td>{% if manager.last_login %} {{manager.last_login}} {% endif %}</td>
                                 <td>{% if manager.date_joined %} {{manager.date_joined}} {% endif %}</td>
-                                <td><a href="{% url 'manager_update' manager.id %}">Edit</a></td>
+                                
+                                <td><a  href="{% url 'manager_update' manager.id %}" class="btn">
+                                    <i style="color:rgb(24, 134, 236)" class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                                </a></td>
                                 <td>
                                     <form action="{% url 'manager_delete' manager.id %}" method="post" class="d-inline">
                                         {% csrf_token %}
                                         <button onclick="return confirm('Are you sure you want to delete this item?');" type="submit" class="btn">
-                                            <i class="far fa-trash-alt fa-lg text-danger float-right"></i>
+                                            <i class="fa fa-trash fa-lg text-danger float-right"></i>
                                         </button>
                                     </form>
                                 </td>   

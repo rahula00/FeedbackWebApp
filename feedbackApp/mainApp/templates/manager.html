@@ -112,7 +112,7 @@
                                     </td>
                                 </tr>
 
-                                <tr v-for="feedback in feedbacks" v-if="feedback.isRead" @click="feedback.show = !feedback.show" style="">
+                                <tr v-for="feedback in feedbacks" v-if="feedback.isRead" @click="feedback.show = !feedback.show" >
                                     <td > [[feedback.submitted_by]]</td>
                                     <td v-if="!feedback.show">Type: [[feedback.type_choice]]</td>
                                     <td v-if="feedback.show" >[[feedback.feedback]]</td>
