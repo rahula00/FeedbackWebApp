@@ -1,14 +1,60 @@
 import random
 import json
+
 from django.shortcuts import render, redirect
+
+from django.http import JsonResponse
+
+from django.contrib.auth.decorators import login_required, user_passes_test
+from django.contrib.auth.models import User
 from django.contrib.auth.forms import AuthenticationForm, UserChangeForm, UserCreationForm
 from django.contrib.auth import logout, authenticate, login
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required, user_passes_test
+
 from .models import  Feedback
 from mainApp.forms import CreateFeedbackForm, UpdateUserForm, CreateUserForm
-from django.contrib.auth.models import User
 
+from rest_framework import viewsets, filters
+from .serializers import FeedbackSerializer
+from django.views.decorators.csrf import csrf_exempt
+
+@login_required(login_url='homepage')
+def get_feedback(request=None):
+    id = request.GET.get('id', None)
+    obj = Feedback.objects.get(pk=id)
+    fb = obj.feedback
+    data={
+        'feedbacks' : fb
+    }
+    return JsonResponse(data)
+
+@csrf_exempt
+@login_required(login_url='homepage')
+def get_feedbacks(request=None):
+    objs = Feedback.objects.filter(manager=request.user).order_by('-created_at')
+    serializer = FeedbackSerializer(objs, many=True)
+    return JsonResponse(serializer.data, safe=False)
+
+@login_required(login_url='homepage')
+def delete_feedback(request):
+    id = request.GET.get('id', None)
+    obj = Feedback.objects.get(pk=id)
+    obj.delete()
+
+
+@login_required(login_url='homepage')
+def mark_read(request, id=None):
+    id = request.GET.get('id', None)
+    obj = Feedback.objects.get(pk=id)
+    obj.isRead = True
+    obj.save()
+
+@login_required(login_url='homepage')
+def mark_read_old(request, id=None):
+    obj = Feedback.objects.get(pk=id)
+    obj.isRead = True
+    obj.save()
+    return redirect('/manager')
 
 
 def home(request):
@@ -74,20 +120,6 @@ def adminPage(request):
     } 
     return render(request, 'admin.html', context)
 
-@login_required(login_url='homepage')
-def feedback_delete(request, id=None):
-    obj = Feedback.objects.get(pk=id)
-    obj.delete()
-    return redirect('/manager')
-
-
-
-@login_required(login_url='homepage')
-def mark_read(request, id=None):
-    obj = Feedback.objects.get(pk=id)
-    obj.isRead = True
-    obj.save()
-    return redirect('/manager')
 
 @login_required(login_url='homepage')
 def manager_delete(request, id=None):
@@ -101,6 +133,7 @@ def manager_delete(request, id=None):
     else:
         context = {}
         return render(request, 'admin.html', context)
+
 
 @user_passes_test(lambda u: u.is_superuser)
 @login_required(login_url='homepage')

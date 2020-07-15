@@ -13,7 +13,7 @@
     <link rel="icon" type="image/x-icon" href="{% static 'mainApp/img/icon.jpg' %}" />
     <!-- Font Awesome icons (free version)-->
     <script src="https://use.fontawesome.com/releases/v5.13.0/js/all.js" crossorigin="anonymous"></script>
-    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <!-- Google fonts-->
     <link href="https://fonts.googleapis.com/css?family=Merriweather+Sans:400,700" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic"
@@ -34,6 +34,7 @@
     <script src="{% static 'mainApp/sortable.js' %}"></script>
     <link href="{% static 'mainApp/sortable-theme-bootstrap.css' %}" rel="stylesheet" />
 </head>
+
 
 <body id="page-top">
     {% if messages %}
@@ -90,60 +91,32 @@
                             <th style="cursor: pointer;">Submitted By </th>
                             <th style="cursor: pointer;">Category </th>
                             <th style="cursor: pointer;">Date Added </th>
-                            <th style="display:none;">Feedback</th>
+                            <th style="cursor: pointer;">Delete</th>
                         </thead>
-                        <tbody id="feedbackTable">
-                            {% block content %}
-                            {% for feedback in feedbacks %}
-
-                                {% if feedback.isRead %}
-                                <tr style="cursor: pointer; ">
-                                    <td >{{feedback.submitted_by}}</td>
-                                    <td>
-                                        {{feedback.type_choice}}
+                        <tbody v-for="feedback in feedbacks" id="feedbackTable">
+                                <tr v-if="!feedback.isRead" @click="feedback.isRead=true; mark_read(feedback); feedback.show = !feedback.show;" style="cursor: pointer; color: rgb(15, 112, 36);">
+                                    <td style="font-weight: bold; font-style: italic;"> [[feedback.submitted_by]]</td>
+                                    <td v-if="!feedback.show" style="font-weight: bold; font-style: italic;">[[feedback.type_choice]]</td>
+                                    <td v-if="feedback.show" style="font-weight: bold; font-style: italic;">[[feedback.feedback]]</td>
+                                    <td style="font-weight: bold; font-style: italic;">[[feedback.created_at]]</td>
+                                    <td @click="delete_feedback(feedback)">
+                                            <i class="far fa-trash-alt fa-lg text-danger float-center"></i>
                                     </td>
-                                    <td>{{feedback.created_at}}</td>
-                                    <td>
-                                        <form action="{% url 'fb_delete' feedback.id %}" method="post" class="d-inline">
-                                            {% csrf_token %}
-                                            <button type="submit" class="btn">
-                                                <i class="far fa-trash-alt fa-lg text-danger float-right"></i>
-                                            </button>
-                                        </form>
-                                    </td>   
-                                    <td style="display:none;">{{feedback.feedback}}</td>
-                                </tr>
-                                {% else %}
-                                <tr style="cursor: pointer; color: rgb(15, 112, 36);">
-                                    <td style="font-weight: bold; font-style: italic;"> {{feedback.submitted_by}}</td>
-                                    <td style="font-weight: bold; font-style: italic;">{{feedback.type_choice}}</td>
-                                    <td style="font-weight: bold; font-style: italic;">{{feedback.created_at}}</td>
-                                    <td>
-                                        <form action="{% url 'fb_delete' feedback.id %}" method="post" class="d-inline">
-                                            {% csrf_token %}
-                                            <button onclick="return confirm('Are you sure you want to delete this item?');" type="submit" class="btn">
-                                                <i class="far fa-trash-alt fa-lg text-danger float-right"></i>
-                                            </button>
-                                        </form>
-                                    </td>    
-                                    <td>
-                                        <form action="{% url 'mark_fb_read' feedback.id %}" method="post" class="d-inline">
-                                            {% csrf_token %}
-                                            <button type="submit" class="btn">
-                                                <i class="far fa-check-square fa-lg text-danger float-right"></i>
-                                            </button>
-                                        </form>
-                                    </td> 
-                                    <td style="display:none; font-style: italic;">{{feedback.feedback}}</td>
                                 </tr>
 
+                                <tr v-else @click="feedback.show = !feedback.show" style="">
+                                    <td style="font-weight: bold; font-style: italic;"> [[feedback.submitted_by]]</td>
+                                    <td v-if="!feedback.show" style="font-weight: bold; font-style: italic;">[[feedback.type_choice]]</td>
+                                    <td v-if="feedback.show" style="font-weight: bold; font-style: italic;">[[feedback.feedback]]</td>
+                                    <td style="font-weight: bold; font-style: italic;">[[feedback.created_at]]</td>
 
+                                    <td @click="delete_feedback(feedback)">
+                                            <i class="far fa-trash-alt fa-lg text-danger"></i>
+                                    </td>
+                                </tr>
 
-
-                            {% endif %}
-                            {% endfor %}
-                            {% endblock content %}
                         </tbody>
+
                     </table>
 
                     <a class="btn btn-outline-danger btn-lg waves-effect" href="logout"
@@ -171,17 +144,104 @@
     <!-- <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11"></script> -->
 
     <script>
-        var app = new Vue({
-            delimiters: ['[[', ']]'],
-            el: '#vue-target',
-            data: {
-                showFeedback: false,
+let app = {};
+
+let init = (app) => {
+
+    // This is the Vue data.
+    app.data = {
+        feedbacks: [],
+    };
+
+    
+
+    app.get_feedbacks = () => {
+        $.ajax({
+            url: '/ajax/get_feedbacks/',
+            dataType: 'json',
+            success: function (data) {
+
+                app.vue.feedbacks = app.reindex(app.setShow(data))
 
             },
-            methods: {
-
+            error: function (data) {
+                console.log("failure")
             }
-        });
+        })
+    };
+
+    app.delete_feedback = (data) => {
+        $.ajax({
+            url: '/ajax/delete_feedback/',
+            dataType: 'json',
+            data:{
+                'id':data.id
+            },
+            success: function (data) {
+                console.log("successfully deleted")
+            },
+            error: function (data) {
+                console.log("failure")
+            },
+            complete: function(data){
+                app.init()
+            }
+        })
+    };
+
+    app.mark_read = (data) => {
+        $.ajax({
+            url: '/ajax/mark_read/',
+            dataType: 'json',
+            data:{
+                'id':data.id
+            },
+            success: function (data) {
+                console.log("successfully marked read")
+            },
+            error: function (data) {
+                console.log("failure")
+            }
+        })
+    };
+
+    app.setShow = (data) => {
+        for (feedback of data){
+            feedback.show = false;
+        }
+        return data  
+    };
+
+    app.reindex = (a) => {
+        let idx = 0;
+        for (p of a) {
+            p._idx = idx++;
+        }
+        return a;
+    };
+
+   app.methods = {
+        get_feedbacks: app.get_feedbacks,
+        delete_feedback: app.delete_feedback,
+        mark_read: app.mark_read,
+    };
+
+    app.vue = new Vue({
+        el: "#vue-target",
+        data: app.data,
+        methods: app.methods,
+        delimiters: ['[[', ']]']
+    });
+
+    app.init = () => {
+        app.get_feedbacks();
+    };
+
+    app.init();
+};
+
+init(app);
+
     </script>
 
 
@@ -230,6 +290,7 @@
     <!-- Third party plugin JS-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
     <!-- Core theme JS-->
 
 

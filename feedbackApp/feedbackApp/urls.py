@@ -14,6 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
+from django.conf.urls import url 
 from django.urls import path
 from mainApp.views import *
 
@@ -26,8 +27,9 @@ urlpatterns = [
     path('manager/', manager, name="manager"),
     path('manager/logout/', logout_request, name="logout"),
     path('add_manager', add_manager, name="add_manager"),
-    path('delete/<int:id>/',feedback_delete,name='fb_delete'),
-    path('m_delete/<int:id>/',manager_delete,name='manager_delete'),
-    path('m_update/<int:id>/', manager_update,name='manager_update'),
-    path('mr/<int:id>',mark_read,name="mark_fb_read")
+    path('mr/<int:id>',mark_read_old,name="mark_fb_read"),
+    url(r'^ajax/mark_read/$', mark_read, name='mark_read'),
+    url(r'^ajax/get_feedback/$', get_feedback, name='get_feedback'),
+    url(r'^ajax/get_feedbacks/$', get_feedbacks, name='get_feedbacks'),
+    url(r'^ajax/delete_feedback/$', delete_feedback, name='delete_feedback'),
 ]
