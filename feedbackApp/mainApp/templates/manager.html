@@ -96,7 +96,7 @@
                             <th style="display:none;">Feedback</th>
                         </thead>
                         <tbody v-for="feedback in feedbacks" id="feedbackTable">
-                                <tr v-if="!feedback.isRead" @click="feedback.show = !feedback.show; mark_read(feedback);" style="cursor: pointer; color: rgb(15, 112, 36);">
+                                <tr v-if="!feedback.isRead" @click="feedback.isRead=true; mark_read(feedback); feedback.show = !feedback.show;" style="cursor: pointer; color: rgb(15, 112, 36);">
                                     <td style="font-weight: bold; font-style: italic;"> [[feedback.submitted_by]]</td>
                                     <td v-if="!feedback.show" style="font-weight: bold; font-style: italic;">[[feedback.type_choice]]</td>
                                     <td v-if="feedback.show" style="font-weight: bold; font-style: italic;">[[feedback.feedback]]</td>
