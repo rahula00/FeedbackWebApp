@@ -92,16 +92,11 @@
                             <th style="cursor: pointer;">Date Added </th>
                             <th style="cursor: pointer;">Delete</th>
                         </thead>
-<<<<<<< HEAD
-                        <tbody  id="feedbackTable" v-for="feedback in feedbacks">
-                                <tr v-if="!feedback.isRead" @click="feedback.isRead=true; mark_read(feedback); feedback.show = !feedback.show;" style="cursor: pointer; color: rgb(15, 112, 36);">
-=======
 
 
                         <tbody>
 
                                 <tr  v-for="feedback in feedbacks" v-if="!feedback.isRead" @click="feedback.isRead=true; mark_read(feedback); feedback.show = !feedback.show;" style="cursor: pointer; color: rgb(15, 112, 36);">
->>>>>>> 8b9c0e22c349375bea876c6e370cec5ef0476e1c
                                     <td style="font-weight: bold; font-style: italic;"> [[feedback.submitted_by]]</td>
                                     <td v-if="!feedback.show" style="font-weight: bold; font-style: italic;">Type: [[feedback.type_choice]]</td>
                                     <td v-if="feedback.show" style="font-weight: bold; font-style: italic;">[[feedback.feedback]]</td>
@@ -110,12 +105,8 @@
                                             <i class="far fa-trash-alt fa-lg text-danger float-center"></i>
                                     </td>
                                 </tr>
-<<<<<<< HEAD
-                                <tr v-else @click="feedback.show = !feedback.show" style="">
-=======
 
                                 <tr v-for="feedback in feedbacks" v-if="feedback.isRead" @click="feedback.show = !feedback.show" style="">
->>>>>>> 8b9c0e22c349375bea876c6e370cec5ef0476e1c
                                     <td > [[feedback.submitted_by]]</td>
                                     <td v-if="!feedback.show">Type: [[feedback.type_choice]]</td>
                                     <td v-if="feedback.show" >[[feedback.feedback]]</td>
@@ -125,11 +116,8 @@
                                             <i class="far fa-trash-alt fa-lg text-danger"></i>
                                     </td>
                                 </tr>
-<<<<<<< HEAD
-=======
 
 
->>>>>>> 8b9c0e22c349375bea876c6e370cec5ef0476e1c
                         </tbody>
 
                     </table>
