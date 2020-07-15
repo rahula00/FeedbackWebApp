@@ -24,9 +24,13 @@ urlpatterns = [
     path('manager/administrate/', adminPage, name="adminPage"),
     path('', home, name="homepage"),
     path('default/', index, name="default"),
+    
     path('manager/', manager, name="manager"),
     path('manager/logout/', logout_request, name="logout"),
     path('add_manager', add_manager, name="add_manager"),
+    path('m_delete/<int:id>/',manager_delete,name='manager_delete'),
+    path('m_update/<int:id>/', manager_update,name='manager_update'),
+
     path('mr/<int:id>',mark_read_old,name="mark_fb_read"),
     url(r'^ajax/mark_read/$', mark_read, name='mark_read'),
     url(r'^ajax/get_feedback/$', get_feedback, name='get_feedback'),
