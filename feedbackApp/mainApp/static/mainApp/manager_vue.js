@@ -3,11 +3,17 @@ let app = {};
 let init = (app) => {
 
     // This is the Vue data.
-    app.data = {
-        feedbacks: [],
-    };
-
     
+
+    app.check_delete = () => {
+        app.showDelete = false;
+        for (feedback of app.vue.feedbacks){
+            if(feedback.delete === true){
+                app.showDelete = true;
+                console.log(app.showDelete)
+            }
+        }
+    };
 
     app.get_feedbacks = () => {
         $.ajax({
@@ -85,18 +91,25 @@ let init = (app) => {
         return a;
     };
 
+    app.data = {
+        feedbacks: [],
+        showDelete: true,
+    };
+
    app.methods = {
         get_feedbacks: app.get_feedbacks,
         delete_feedback: app.delete_feedback,
         mark_read: app.mark_read,
         delete_feedbacks: app.delete_feedbacks,
+        check_delete: app.check_delete,
     };
 
     app.vue = new Vue({
         el: "#vue-target",
         data: app.data,
         methods: app.methods,
-        delimiters: ['[[', ']]']
+        delimiters: ['[[', ']]'],
+
     });
 
     app.init = () => {
