@@ -88,10 +88,10 @@
                     <table id="feedbackTable" data-sortable class=" sortable-theme-bootstrap table table-hover " >
                         <thead >
                             <th class="align-middle text-center" style="cursor: pointer;">Submitted By </th>
-                            <th class="align-middle text-center" style="cursor: pointer;">Feedback </th>
-                            <th class="align-middle text-center" style="cursor: pointer;">Salesforce Link</th>
+                            <th class="align-middle text-center" data-sortable="false">Feedback </th>
+                            <th class="align-middle text-center" data-sortable="false">Salesforce Link</th>
                             <th class="align-middle text-center" style="cursor: pointer;">Date Added </th>
-                            <th class="text-center" data-sortable="false" style="cursor: pointer;">      
+                            <th class="text-center" data-sortable="false">      
                                 <a v-if="showDelete" class="btn btn-danger btn-sm" @click="delete_feedbacks">
                                     Delete
                                 </a>
