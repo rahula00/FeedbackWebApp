@@ -69,6 +69,9 @@
                     <br>
                     <br>
                     <br>
+                    <a class="btn btn-outline-danger btn-lg waves-effect" href="update"
+                        style="margin-bottom: 30px;">Edit your profile
+                    </a>
                 </div>
                 <div class="col-lg-9 align-self-baseline">
 
@@ -99,8 +102,7 @@
                         </thead>
 
 
-                        <tbody>
-
+                        <tbody >
                                 <tr  v-for="feedback in feedbacks" v-if="!feedback.isRead" @click="feedback.isRead=true; mark_read(feedback); feedback.show = !feedback.show;" style="cursor: pointer; color: rgb(15, 112, 36);">
                                     <td style="font-weight: bold; font-style: italic;"> [[feedback.submitted_by]]</td>
                                     <td v-if="!feedback.show" style="font-weight: bold; font-style: italic;">Type: [[feedback.type_choice]]</td>

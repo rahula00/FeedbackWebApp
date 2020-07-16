@@ -46,3 +46,11 @@ class UpdateUserForm(UserChangeForm):
         model = User
         fields = ('username','first_name', 'last_name',  'email', 'is_superuser')    
         exclude = ('password','groups')
+
+class UpdateCurrentUserForm(UserChangeForm):
+    password = None
+    class Meta:
+        model = User
+        fields = ('username','first_name', 'last_name',  'email')    
+        exclude = ('password','groups')
+

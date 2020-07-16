@@ -30,6 +30,8 @@ urlpatterns = [
     path('add_manager', add_manager, name="add_manager"),
     path('m_delete/<int:id>/',manager_delete,name='manager_delete'),
     path('m_update/<int:id>/', manager_update,name='manager_update'),
+    path('manager/update', current_manager_update, name='update'),
+    path('manager/update/changePass', changePass, name='changePass'),
 
     path('mr/<int:id>',mark_read_old,name="mark_fb_read"),
     url(r'^ajax/mark_read/$', mark_read, name='mark_read'),

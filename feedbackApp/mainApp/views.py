@@ -7,12 +7,12 @@ from django.http import JsonResponse
 
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.models import User
-from django.contrib.auth.forms import AuthenticationForm, UserChangeForm, UserCreationForm
-from django.contrib.auth import logout, authenticate, login
+from django.contrib.auth.forms import AuthenticationForm, UserChangeForm, UserCreationForm, PasswordChangeForm
+from django.contrib.auth import logout, authenticate, login, update_session_auth_hash
 from django.contrib import messages
 
 from .models import  Feedback
-from mainApp.forms import CreateFeedbackForm, UpdateUserForm, CreateUserForm
+from mainApp.forms import CreateFeedbackForm, UpdateUserForm, CreateUserForm, UpdateCurrentUserForm
 
 from rest_framework import viewsets, filters
 from .serializers import FeedbackSerializer
@@ -170,3 +170,31 @@ def logout_request(request):
     logout(request)
     return redirect(home)
 
+@login_required(login_url='homepage')
+def current_manager_update(request):
+    if request.method == "POST":
+        form = UpdateCurrentUserForm(request.POST, instance=request.user)
+        form.save()
+        return redirect('manager')
+    else:
+        form = UpdateCurrentUserForm(instance=request.user)
+        context = {'form': form}
+        return render(request, 'update_current.html', context)
+
+
+@login_required(login_url='homepage')
+def changePass(request):
+    if request.method == 'POST':
+        form = PasswordChangeForm(request.user, request.POST)
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)  # Important!
+            messages.success(request, 'Your password was successfully updated!')
+            return redirect('manager')
+        else:
+            messages.error(request, 'Please correct the error below.')
+    else:
+        form = PasswordChangeForm(request.user)
+    return render(request, 'changePass.html', {
+        'form': form
+    })
