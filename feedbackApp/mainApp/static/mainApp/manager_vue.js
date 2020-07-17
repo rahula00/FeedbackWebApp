@@ -55,6 +55,7 @@ let init = (app) => {
                 app.delete_feedback(feedback)
             }
         }
+        app.vue.showDelete = false
     };
 
     app.mark_read = (data) => {
