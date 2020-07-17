@@ -59,13 +59,11 @@
             font-size: 26px;
         }
 
-      
+
 
         .modal-login .hint-text {
             text-align: center;
         }
-
-       
     </style>
 </head>
 
@@ -81,13 +79,14 @@
             $('.toast').toast('show');
         });
     </script>
-    <div class="toast" data-autohide="false" style="position: absolute; top: 0; right: 0; margin-right: 60px; margin-top: 60px;">
+    <div class="toast" data-autohide="false"
+        style="position: absolute; top: 0; right: 0; margin-right: 60px; margin-top: 60px;">
         <div class="toast-header">
             <strong class="mr-auto">Message</strong>
             <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
+                <span aria-hidden="true">&times;</span>
             </button>
-          </div>
+        </div>
         <div class="toast-body">
             {{message}}
         </div>
@@ -140,7 +139,9 @@
                     </div>
                     <div class="modal-body">
                         <div class="form-group">{{form.as_p}}</div>
+                        <!--<a style="text-align: center; display: block;" data-dismiss="modal" href="#passwordModal" data-toggle="modal"> Forgot your password?</a>-->
                     </div>
+
                     <div class="modal-footer justify-content-between">
                         <input type="submit" class="btn btn-primary" value="Login">
                     </div>
@@ -148,6 +149,31 @@
             </div>
         </div>
     </div>
+
+
+
+    <!-- Forgot Password Modal HTML 
+    <div id="passwordModal" class="modal fade">
+        <div class="modal-dialog modal-login">
+            <div class="modal-content">
+                <form method="POST">{% csrf_token %}
+                    <div class="modal-header">
+                        <h4 class="modal-title">Log in</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">{{passForm.as_p}}</div>
+                    </div>
+
+                    <div class="modal-footer justify-content-between">
+                        
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>-->
+
+
 
     <!-- Footer-->
     <footer class="bg-light py-5">

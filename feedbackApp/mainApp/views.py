@@ -7,7 +7,7 @@ from django.http import JsonResponse
 
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.models import User
-from django.contrib.auth.forms import AuthenticationForm, UserChangeForm, UserCreationForm, PasswordChangeForm
+from django.contrib.auth.forms import AuthenticationForm, UserChangeForm, UserCreationForm, PasswordChangeForm, PasswordResetForm
 from django.contrib.auth import logout, authenticate, login, update_session_auth_hash
 from django.contrib import messages
 
@@ -60,6 +60,7 @@ def mark_read_old(request, id=None):
 def home(request):
     if request.method == 'POST':
         form = AuthenticationForm(request=request, data=request.POST)
+        
         if form.is_valid():
             username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password')
@@ -83,6 +84,8 @@ def index(request):
         F = CreateFeedbackForm(request.POST)
         if F.is_valid():
             new_feedback = F.save()
+            messages.info(request, f"Thank you for the feedback!")
+            return redirect('homepage')
             
     form = CreateFeedbackForm()
     context = {
