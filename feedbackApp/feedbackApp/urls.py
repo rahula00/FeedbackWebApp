@@ -33,7 +33,6 @@ urlpatterns = [
     path('manager/update', current_manager_update, name='update'),
     path('manager/update/changePass', changePass, name='changePass'),
 
-    path('mr/<int:id>',mark_read_old,name="mark_fb_read"),
     url(r'^ajax/mark_read/$', mark_read, name='mark_read'),
     url(r'^ajax/get_feedback/$', get_feedback, name='get_feedback'),
     url(r'^ajax/get_feedbacks/$', get_feedbacks, name='get_feedbacks'),

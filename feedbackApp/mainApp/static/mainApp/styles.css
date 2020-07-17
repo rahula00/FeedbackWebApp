@@ -71,3 +71,15 @@ header.masthead h1 {
 .text-white-75 {
   color: rgba(255, 255, 255, 0.75);
 }
+
+
+.footer {
+  background-color: #003366;
+    text-align: center;
+    color: white;
+    height: 30px;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    position: fixed;
+}

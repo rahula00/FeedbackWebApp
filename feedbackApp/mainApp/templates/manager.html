@@ -77,8 +77,8 @@
 
                     <!-- Search Bar -->
                     <div class="input-group md-form form-sm form-2 pl-0">
-                        <input id="myInput" class="form-control my-0 py-1 amber-border" type="text" onkeyup="myFunction()" type="text" placeholder="Search"
-                            aria-label="Search">
+                        <input id="myInput" class="form-control my-0 py-1 amber-border" type="text"
+                            onkeyup="myFunction()" type="text" placeholder="Search" aria-label="Search">
                         <div class="input-group-append">
                             <span class="input-group-text amber lighten-3" id="basic-text1"><i
                                     class="fas fa-search text-grey" aria-hidden="true"></i></span>
@@ -88,59 +88,67 @@
                     <br>
 
                     <!-- Table-->
-                    <table id="feedbackTable" data-sortable class=" sortable-theme-bootstrap table table-hover " >
-                        <thead >
-                            <th class="align-middle text-center" style="cursor: pointer;">Submitted By </th>
-                            <th class="align-middle text-center" data-sortable="false">Feedback </th>
-                            <th class="align-middle text-center" data-sortable="false">Salesforce Link</th>
-                            <th class="align-middle text-center" style="cursor: pointer;">Date Added </th>
-                            <th class="text-center" data-sortable="false">      
-                                <a v-if="showDelete" class="btn btn-danger btn-sm" @click="delete_feedbacks">
-                                    Delete
-                                </a>
-                                <a v-else class="btn  btn-sm">
-                                    Delete
-                                </a>
-                            </th>
-                        </thead>
+                    <div style="max-height: 300px; overflow-y: scroll;">
+                        <table id="feedbackTable" data-sortable class=" sortable-theme-bootstrap table table-hover">
+                            <thead>
+                                <th class="align-middle text-center" style="cursor: pointer;">Submitted By </th>
+                                <th class="align-middle text-center" data-sortable="false">Feedback </th>
+                                <th class="align-middle text-center" data-sortable="false">Salesforce Link</th>
+                                <th class="align-middle text-center" style="cursor: pointer;">Date Added </th>
+                                <th class="text-center" data-sortable="false">
+                                    <a v-if="showDelete" class="btn btn-danger btn-sm" @click="delete_feedbacks">
+                                        Delete
+                                    </a>
+                                    <a v-else class="btn  btn-sm">
+                                        Delete
+                                    </a>
+                                </th>
+                            </thead>
 
 
-                        <tbody >
-                                <tr  v-for="feedback in feedbacks" v-if="!feedback.isRead" @click="feedback.isRead=true; mark_read(feedback); feedback.show = !feedback.show;" style="cursor: pointer; color: rgb(15, 112, 36);">
+                            <tbody>
+                                <tr v-for="feedback in feedbacks" v-if="!feedback.isRead"
+                                    @click="feedback.isRead=true; mark_read(feedback); feedback.show = !feedback.show;"
+                                    style="cursor: pointer; color: rgb(15, 112, 36);">
                                     <td style="font-weight: bold; font-style: italic;"> [[feedback.submitted_by]]</td>
 
-                                    <td v-if="!feedback.show" style="font-weight: bold; font-style: italic;">Type: [[feedback.type_choice]]</td>
-                                    <td v-if="feedback.show" style="font-weight: bold; font-style: italic;">[[feedback.feedback]]</td>
+                                    <td v-if="!feedback.show" style="font-weight: bold; font-style: italic;">Type:
+                                        [[feedback.type_choice]]</td>
+                                    <td v-if="feedback.show" style="font-weight: bold; font-style: italic;">
+                                        [[feedback.feedback]]</td>
 
                                     <td style="font-weight: bold; font-style: italic;">[[feedback.salesforceOp]]</td>
                                     <td style="font-weight: bold; font-style: italic;">[[feedback.created_at]]</td>
-                                    <td >
-                                        <input style="margin-left: 30px;" @change="check_delete" type="checkbox" id="checkbox" v-model="feedback.delete">
+                                    <td>
+                                        <input style="margin-left: 30px;" @change="check_delete" type="checkbox"
+                                            id="checkbox" v-model="feedback.delete">
                                     </td>
                                 </tr>
 
-                                <tr v-for="feedback in feedbacks" v-if="feedback.isRead" @click="feedback.show = !feedback.show" >
-                                    <td > [[feedback.submitted_by]]</td>
+                                <tr v-for="feedback in feedbacks" v-if="feedback.isRead"
+                                    @click="feedback.show = !feedback.show">
+                                    <td> [[feedback.submitted_by]]</td>
 
                                     <td v-if="!feedback.show">Type: [[feedback.type_choice]]</td>
                                     <td v-if="feedback.show">[[feedback.feedback]]</td>
-                                    <td >[[feedback.salesforceOp]]</td>
+                                    <td>[[feedback.salesforceOp]]</td>
 
-                                    <td >[[feedback.created_at]]</td>
+                                    <td>[[feedback.created_at]]</td>
                                     <td>
-                                        <input style="margin-left: 30px;" @change="check_delete" type="checkbox" id="checkbox" v-model="feedback.delete">
+                                        <input style="margin-left: 30px;" @change="check_delete" type="checkbox"
+                                            id="checkbox" v-model="feedback.delete">
                                     </td>
-                                    
+
                                 </tr>
 
 
-                        </tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                    <br>
 
 
-                    </table>
-                    
-                    
-                    
+
 
 
                     <a class="btn btn-outline-danger btn-lg waves-effect" href="logout"
@@ -148,14 +156,10 @@
                     </a>
                     <br>
                     {% if request.user.is_superuser %}
-                        <a class="btn btn-outline-danger btn-lg waves-effect" href="administrate"
+                    <a class="btn btn-outline-danger btn-lg waves-effect" href="administrate"
                         style="margin-bottom: 30px;">Admin Dashboard</a>
-                        <br>
+                    <br>
                     {%endif%}
-                 
-              
-
-                    <img src="{% static 'mainApp/img/logo.png' %}" width="50%" height="50%">
 
                 </div>
 
@@ -170,7 +174,7 @@
 
     <!-- Vue.js file (Relocated to make this cleaner) -->
     <script src="{% static 'mainApp/manager_vue.js' %}"></script>
-   
+
 
 
     <!--https://stackoverflow.com/questions/9127498/how-to-perform-a-real-time-search-and-filter-on-a-html-table-->
@@ -179,43 +183,44 @@
 
 
 
-function myFunction() {
+        function myFunction() {
 
-  // Declare variables 
-  var input = document.getElementById("myInput");
-  var filter = input.value.toUpperCase();
-  var table = document.getElementById("feedbackTable");
-  var trs = table.tBodies[0].getElementsByTagName("tr");
+            // Declare variables 
+            var input = document.getElementById("myInput");
+            var filter = input.value.toUpperCase();
+            var table = document.getElementById("feedbackTable");
+            var trs = table.tBodies[0].getElementsByTagName("tr");
 
-  // Loop through first tbody's rows
-  for (var i = 0; i < trs.length; i++) {
+            // Loop through first tbody's rows
+            for (var i = 0; i < trs.length; i++) {
 
-    // define the row's cells
-    var tds = trs[i].getElementsByTagName("td");
+                // define the row's cells
+                var tds = trs[i].getElementsByTagName("td");
 
-    // hide the row
-    trs[i].style.display = "none";
+                // hide the row
+                trs[i].style.display = "none";
 
-    // loop through row cells
-    for (var i2 = 0; i2 < tds.length-1; i2++) {
+                // loop through row cells
+                for (var i2 = 0; i2 < tds.length - 1; i2++) {
 
-      // if there's a match
-      if (tds[i2].innerHTML.toUpperCase().indexOf(filter) > -1) {
+                    // if there's a match
+                    if (tds[i2].innerHTML.toUpperCase().indexOf(filter) > -1) {
 
-        // show the row
-        trs[i].style.display = "";
+                        // show the row
+                        trs[i].style.display = "";
 
-        // skip to the next row
-        continue;
+                        // skip to the next row
+                        continue;
 
-      }
-    }
-  }
+                    }
+                }
+            }
 
-}
+        }
 
 
-</script>
+    </script>
+
 
     <!-- Footer-->
     <footer class="bg-light py-5">
@@ -223,6 +228,7 @@ function myFunction() {
             <div class="small text-center text-muted">Copyright © 2020 - CrowdStrike</div>
         </div>
     </footer>
+
     <!-- Bootstrap core JS-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.bundle.min.js"></script>

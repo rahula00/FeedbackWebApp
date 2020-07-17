@@ -40,6 +40,7 @@ def delete_feedback(request):
     id = request.GET.get('id', None)
     obj = Feedback.objects.get(pk=id)
     obj.delete()
+    return render(request, 'manager.html', {})
 
 
 @login_required(login_url='homepage')
@@ -48,13 +49,9 @@ def mark_read(request, id=None):
     obj = Feedback.objects.get(pk=id)
     obj.isRead = True
     obj.save()
+    return render(request, 'manager.html', {})
 
-@login_required(login_url='homepage')
-def mark_read_old(request, id=None):
-    obj = Feedback.objects.get(pk=id)
-    obj.isRead = True
-    obj.save()
-    return redirect('/manager')
+
 
 
 def home(request):
