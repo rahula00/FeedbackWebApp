@@ -31,8 +31,10 @@ def get_feedback(request=None):
 @csrf_exempt
 @login_required(login_url='homepage')
 def get_feedbacks(request=None):
+    testreq = request.GET.get('test', None)
     objs = Feedback.objects.filter(manager=request.user).order_by('-created_at')
     serializer = FeedbackSerializer(objs, many=True)
+    print(testreq)
     return JsonResponse(serializer.data, safe=False)
 
 @login_required(login_url='homepage')

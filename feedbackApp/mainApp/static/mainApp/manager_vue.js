@@ -19,6 +19,7 @@ let init = (app) => {
         $.ajax({
             url: '/ajax/get_feedbacks/',
             dataType: 'json',
+            data:{'test': "last x days"},
             success: function (data) {
 
                 app.vue.feedbacks = app.reindex(app.setShow(data))
@@ -85,10 +86,10 @@ let init = (app) => {
         if (min < 10) {
             min = "0" + min;
         }
-        var ampm = "am";
+        var ampm = "a.m.";
         if( hr > 12 ) {
             hr -= 12;
-            ampm = "pm";
+            ampm = "p.m.";
         }
         var date = d.getDate();
         var month = months[d.getMonth()];
