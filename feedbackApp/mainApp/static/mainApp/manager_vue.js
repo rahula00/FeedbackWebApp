@@ -32,8 +32,6 @@ let init = (app) => {
     };
 
     app.delete_feedback = (data) => {
-        var result = confirm("Are you sure you want to delete this?"); //confirm delete
-        if (result) {
             $.ajax({
                 url: '/ajax/delete_feedback/',
                 dataType: 'json',
@@ -50,19 +48,22 @@ let init = (app) => {
                     app.init()
                 }
             })
-        }
-        else {
-            feedback.delete = false;
-        }
     };
 
     app.delete_feedbacks = () => {
+        var result = confirm("Are you sure you want to delete this?"); //confirm delete
+        if (result) {
             for (feedback of app.vue.feedbacks){
                 if(feedback.delete === true){
                     app.delete_feedback(feedback)
                 }
             }
             app.vue.showDelete = false
+        } else {
+            for (feedback of app.vue.feedbacks){
+                feedback.delete = false;
+            }
+        }
     };
 
     app.mark_read = (data) => {
