@@ -29,7 +29,8 @@
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
-
+    <!-- Vuesax CSS-->
+    <link href="https://cdn.jsdelivr.net/npm/vuesax/dist/vuesax.css" rel="stylesheet">
     <!--Table Sort-->
     <script src="{% static 'mainApp/sortable.js' %}"></script>
     <link href="{% static 'mainApp/sortable-theme-bootstrap.css' %}" rel="stylesheet" />
@@ -93,7 +94,6 @@
                             <thead>
                                 <th class="align-middle text-center" style="cursor: pointer;">Submitted By </th>
                                 <th class="align-middle text-center" data-sortable="false">Feedback </th>
-                                <th class="align-middle text-center" data-sortable="false">Salesforce Link</th>
                                 <th class="align-middle text-center" style="cursor: pointer;">Date Added </th>
                                 <th class="text-center" data-sortable="false">
                                     <a v-if="showDelete" class="btn btn-danger btn-sm" @click="delete_feedbacks">
@@ -107,39 +107,47 @@
 
 
                             <tbody>
-                                <tr v-for="feedback in feedbacks" v-if="!feedback.isRead"
-                                    @click="feedback.isRead=true; mark_read(feedback); feedback.show = !feedback.show;"
-                                    style="cursor: pointer; color: rgb(15, 112, 36);">
-                                    <td style="font-weight: bold; font-style: italic;"> [[feedback.submitted_by]]</td>
 
-                                    <td v-if="!feedback.show" style="font-weight: bold; font-style: italic;">Type:
-                                        [[feedback.type_choice]]</td>
-                                    <td v-if="feedback.show" style="font-weight: bold; font-style: italic;">
-                                        [[feedback.feedback]]</td>
 
-                                    <td style="font-weight: bold; font-style: italic;">[[feedback.salesforceOp]]</td>
-                                    <td style="font-weight: bold; font-style: italic;">[[feedback.created_at]]</td>
-                                    <td>
-                                        <input style="margin-left: 30px;" @change="check_delete" type="checkbox"
-                                            id="checkbox" v-model="feedback.delete">
-                                    </td>
-                                </tr>
+                                <tr 
+                                    v-for="feedback in feedbacks" 
+                                    @click="feedback.isRead=true; mark_read(feedback);"
+                                >
+                                    <td style="display:none">Type: [[feedback.feedback]]</td>
 
-                                <tr v-for="feedback in feedbacks" v-if="feedback.isRead"
-                                    @click="feedback.show = !feedback.show">
-                                    <td> [[feedback.submitted_by]]</td>
 
-                                    <td v-if="!feedback.show">Type: [[feedback.type_choice]]</td>
-                                    <td v-if="feedback.show">[[feedback.feedback]]</td>
-                                    <td>[[feedback.salesforceOp]]</td>
-
-                                    <td>[[feedback.created_at]]</td>
-                                    <td>
-                                        <input style="margin-left: 30px;" @change="check_delete" type="checkbox"
-                                            id="checkbox" v-model="feedback.delete">
+                                    <td v-if="!feedback.isRead" @click="feedback.show=true" style="font-weight: bold; font-style: italic;"> 
+                                        [[feedback.submitted_by]]
                                     </td>
 
+                                    <td v-if="!feedback.isRead" @click="feedback.show=true" style="font-weight: bold; font-style: italic;">
+                                        Type:[[feedback.type_choice]]
+                                    </td>
+
+                                    <td v-if="!feedback.isRead" @click="feedback.show=true" style="font-weight: bold; font-style: italic;">
+                                        [[feedback.created_at]]
+                                    </td>
+
+                                    <td v-if="feedback.isRead" @click="feedback.show=true"> [[feedback.submitted_by]]</td>
+                                    <td v-if="feedback.isRead" @click="feedback.show=true">Type: [[feedback.type_choice]]</td>
+                                    <td v-if="feedback.isRead" @click="feedback.show=true">[[feedback.created_at]]</td>
+                                    <td>
+                                        <input style="margin-left: 40px;" @change="check_delete" type="checkbox"
+                                            id="checkbox" v-model="feedback.delete">
+                                    </td>
+                                    <td>
+                                        <vs-popup class="holamundo" title = "Feedback" :active.sync="feedback.show">
+                                          <p>
+                                            [[feedback.feedback]]
+                                          </p>
+                                          <p v-if="feedback.salesforceOp">
+                                            Salesforce Link: [[feedback.salesforceOp]]
+                                          </p>
+                                        </vs-popup>
+                                    </td>
+
                                 </tr>
+
 
 
                             </tbody>
@@ -168,8 +176,9 @@
     </header>
 
 
-    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-    <!-- REPLACE THIS LATER <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11"></script> -->
+    <!-- Vue source + Vuesax source (for popups) -->
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/vuesax"></script>
 
 
     <!-- Vue.js file (Relocated to make this cleaner) -->

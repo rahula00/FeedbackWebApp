@@ -80,6 +80,9 @@ let init = (app) => {
         for (feedback of data){
             feedback.show = false;
             feedback.delete = false;
+            if(feedback.salesforceOp==="N/A"){
+                feedback.salesforceOp=false;
+            }
         }
         return data  
     };
@@ -95,6 +98,7 @@ let init = (app) => {
     app.data = {
         feedbacks: [],
         showDelete: false,
+        popupActivo:false,
     };
 
    app.methods = {
