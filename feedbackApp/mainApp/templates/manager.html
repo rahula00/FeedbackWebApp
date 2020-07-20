@@ -92,9 +92,9 @@
                     <div style="max-height: 300px; overflow-y: scroll;">
                         <table id="feedbackTable" data-sortable class=" sortable-theme-bootstrap table table-hover">
                             <thead>
-                                <th class="align-middle text-center" style="cursor: pointer;">Submitted By </th>
-                                <th class="align-middle text-center" data-sortable="false">Feedback </th>
-                                <th class="align-middle text-center" style="cursor: pointer;">Date Added </th>
+                                <th class="align-middle text-center" style="cursor: pointer;">Submitted By</th>
+                                <th class="align-middle text-center" data-sortable="false">Category</th>
+                                <th class="align-middle text-center" style="cursor: pointer;">Date Added</th>
                                 <th class="text-center" data-sortable="false">
                                     <a v-if="showDelete" class="btn btn-danger btn-sm" @click="delete_feedbacks">
                                         Delete
@@ -116,21 +116,22 @@
                                     <td style="display:none">Type: [[feedback.feedback]]</td>
 
 
-                                    <td v-if="!feedback.isRead" @click="feedback.show=true" style="font-weight: bold; font-style: italic;"> 
+                                    <td v-if="!feedback.isRead" @click="feedback.show=true" style="cursor: pointer; font-weight: bold; font-style: italic;"> 
                                         [[feedback.submitted_by]]
                                     </td>
 
-                                    <td v-if="!feedback.isRead" @click="feedback.show=true" style="font-weight: bold; font-style: italic;">
+                                    <td v-if="!feedback.isRead" @click="feedback.show=true" style="cursor: pointer; font-weight: bold; font-style: italic;">
                                         Type:[[feedback.type_choice]]
                                     </td>
 
-                                    <td v-if="!feedback.isRead" @click="feedback.show=true" style="font-weight: bold; font-style: italic;">
+                                    <td v-if="!feedback.isRead" @click="feedback.show=true" style="cursor: pointer; font-weight: bold; font-style: italic;">
                                         [[feedback.created_at]]
                                     </td>
 
-                                    <td v-if="feedback.isRead" @click="feedback.show=true"> [[feedback.submitted_by]]</td>
-                                    <td v-if="feedback.isRead" @click="feedback.show=true">Type: [[feedback.type_choice]]</td>
-                                    <td v-if="feedback.isRead" @click="feedback.show=true">[[feedback.created_at]]</td>
+                                    <td v-if="feedback.isRead" @click="feedback.show=true" style="cursor: pointer;"> [[feedback.submitted_by]]</td>
+                                    <td v-if="feedback.isRead" @click="feedback.show=true" style="cursor: pointer;">[[feedback.type_choice]]</td>
+                                    <td v-if="feedback.isRead" @click="feedback.show=true" style="cursor: pointer;">[[feedback.created_at]]</td>
+                                    
                                     <td>
                                         <input style="margin-left: 40px;" @change="check_delete" type="checkbox"
                                             id="checkbox" v-model="feedback.delete">
