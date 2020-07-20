@@ -75,14 +75,40 @@ let init = (app) => {
             }
         })
     };
+    app.setDate = (data) => {
+        var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+        var days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+        var d = new Date(data);
+        var day = days[d.getDay()];
+        var hr = d.getHours();
+        var min = d.getMinutes();
+        if (min < 10) {
+            min = "0" + min;
+        }
+        var ampm = "am";
+        if( hr > 12 ) {
+            hr -= 12;
+            ampm = "pm";
+        }
+        var date = d.getDate();
+        var month = months[d.getMonth()];
+        var year = d.getFullYear();
+        var x = month + " " + date + " " + year + ", " + hr + ":" + min + ampm
+        //var x = day + " " + hr + ":" + min + ampm + " " + date + " " + month + " " + year;
+        return x;
+    }
 
     app.setShow = (data) => {
+        MM = ["January", "February","March","April","May","June","July","August","September","October","November", "December"]
+
         for (feedback of data){
             feedback.show = false;
             feedback.delete = false;
+            feedback.created_at = app.setDate(feedback.created_at);
             if(feedback.salesforceOp==="N/A"){
                 feedback.salesforceOp=false;
-            }
+            };
+
         }
         return data  
     };

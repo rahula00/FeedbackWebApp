@@ -95,7 +95,7 @@
                                 <th class="align-middle text-center" style="cursor: pointer;">Submitted By</th>
                                 <th class="align-middle text-center" data-sortable="false">Category</th>
                                 <th class="align-middle text-center" style="cursor: pointer;">Date Added</th>
-                                <th class="text-center" data-sortable="false">
+                                <th class="align-middle text-center" data-sortable="false">
                                     <a v-if="showDelete" class="btn btn-danger btn-sm" @click="delete_feedbacks">
                                         Delete
                                     </a>
@@ -112,10 +112,12 @@
                                 <tr 
                                     v-for="feedback in feedbacks" 
                                     @click="feedback.isRead=true; mark_read(feedback);"
+                                    style="text-align: center"
                                 >
+                                    <!-- Invisible Feedback for searching-->
                                     <td style="display:none">Type: [[feedback.feedback]]</td>
 
-
+                                    <!-- Bolded, unread feedback-->
                                     <td v-if="!feedback.isRead" @click="feedback.show=true" style="cursor: pointer; font-weight: bold; font-style: italic;"> 
                                         [[feedback.submitted_by]]
                                     </td>
@@ -124,18 +126,22 @@
                                         Type:[[feedback.type_choice]]
                                     </td>
 
-                                    <td v-if="!feedback.isRead" @click="feedback.show=true" style="cursor: pointer; font-weight: bold; font-style: italic;">
+                                    <td class="align-middle text-center" v-if="!feedback.isRead" @click="feedback.show=true" style="cursor: pointer; font-weight: bold; font-style: italic;">
                                         [[feedback.created_at]]
                                     </td>
 
+                                    <!-- Not bold, already read feedback-->
                                     <td v-if="feedback.isRead" @click="feedback.show=true" style="cursor: pointer;"> [[feedback.submitted_by]]</td>
                                     <td v-if="feedback.isRead" @click="feedback.show=true" style="cursor: pointer;">[[feedback.type_choice]]</td>
-                                    <td v-if="feedback.isRead" @click="feedback.show=true" style="cursor: pointer;">[[feedback.created_at]]</td>
+                                    <td class="align-middle text-center" v-if="feedback.isRead" @click="feedback.show=true" style="cursor: pointer;">[[feedback.created_at]]</td>
                                     
+                                    <!-- Delete button-->
                                     <td>
                                         <input style="margin-left: 40px;" @change="check_delete" type="checkbox"
                                             id="checkbox" v-model="feedback.delete">
                                     </td>
+
+                                    <!-- Feedback popup with SalesForce link-->
                                     <td>
                                         <vs-popup class="holamundo" title = "Feedback" :active.sync="feedback.show">
                                           <p>

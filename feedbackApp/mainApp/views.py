@@ -95,10 +95,7 @@ def index(request):
 
 @login_required(login_url='homepage')
 def manager(request, fb=None):
-    
-    context = {
-        'feedbacks': Feedback.objects.filter(manager=request.user)
-    } 
+    context = {} 
     return render(request, 'manager.html', context)
 
 
