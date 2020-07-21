@@ -7,9 +7,10 @@ let init = (app) => {
     app.check_delete = () => {
         app.vue.showDelete = false
         for (feedback of app.vue.feedbacks){
-            if(feedback.delete === true){
-                app.vue.showDelete = true;
-
+            if(feedback.in_range === true){
+                if(feedback.delete === true){
+                    app.vue.showDelete = true
+                }
             }
         }
     };
@@ -46,6 +47,8 @@ let init = (app) => {
                 feedback.in_range = true
             }
         }
+        app.vue.showDelete = false
+        check_delete()
     };
 
 
@@ -91,7 +94,7 @@ let init = (app) => {
                 app.delete_feedback(feedback)
             }
         }
-        app.vue.showDelete = false
+        c
     };
 
     app.mark_read = (data) => {
