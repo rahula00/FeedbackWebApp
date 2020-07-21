@@ -90,11 +90,11 @@
                     <br>
 
                     <div style="position: relative; left: -315px;">
-                        <label style="color:white" for="sel1">Sort by: </label>
-                        <select class="btn btn-primary dropdown-toggle" id="sel1">
-                          <option>Last 7 Days</option>
-                          <option>Last Month</option>
-                          <option>All Time</option>
+                        <label style="color:white" for="sel1">View feedback for: </label>
+                        <select @change="set_range"class="btn btn-primary dropdown-toggle" id="sel1">
+                          <option value="7">Last 7 Days</option>
+                          <option value="30">Last Month</option>
+                          <option value="0">All Time</option>
                         </select>
                     </div>
                     <br>                      
@@ -129,34 +129,57 @@
                                     style="text-align: center"
                                 >
                                     <!-- Invisible Feedback for searching-->
-                                    <td style="display:none">Type: [[feedback.feedback]]</td>
+                                    <td v-if="feedback.in_range" style="display:none">Type: [[feedback.feedback]]</td>
 
                                     <!-- Bolded, unread feedback-->
-                                    <td v-if="!feedback.isRead" @click="feedback.show=true" style="cursor: pointer; font-weight: bold; font-style: italic;"> 
+                                    <td v-if="!feedback.isRead && feedback.in_range" @click="feedback.show=true" style="cursor: pointer; font-weight: bold; font-style: italic;"> 
                                         [[feedback.submitted_by]]
                                     </td>
 
-                                    <td v-if="!feedback.isRead" @click="feedback.show=true" style="cursor: pointer; font-weight: bold; font-style: italic;">
+                                    <td v-if="!feedback.isRead && feedback.in_range" @click="feedback.show=true" style="cursor: pointer; font-weight: bold; font-style: italic;">
                                         [[feedback.type_choice]]
                                     </td>
 
-                                    <td class="align-middle text-center" v-if="!feedback.isRead" @click="feedback.show=true" style="cursor: pointer; font-weight: bold; font-style: italic;">
-                                        [[feedback.created_at]]
+                                    <td class="align-middle text-center" v-if="!feedback.isRead && feedback.in_range" @click="feedback.show=true" style="cursor: pointer; font-weight: bold; font-style: italic;">
+                                        [[feedback.show_date]]
                                     </td>
 
                                     <!-- Not bold, already read feedback-->
-                                    <td v-if="feedback.isRead" @click="feedback.show=true" style="cursor: pointer;">[[feedback.submitted_by]]</td>
-                                    <td v-if="feedback.isRead" @click="feedback.show=true" style="cursor: pointer;">[[feedback.type_choice]]</td>
-                                    <td class="align-middle text-center" v-if="feedback.isRead" @click="feedback.show=true" style="cursor: pointer;">[[feedback.created_at]]</td>
+                                    <td 
+                                    v-if="feedback.isRead && feedback.in_range" 
+                                    @click="feedback.show=true" 
+                                    style="cursor: pointer;">
+                                        [[feedback.submitted_by]]
+                                    </td>
+
+                                    <td 
+                                    v-if="feedback.isRead && feedback.in_range" 
+                                    @click="feedback.show=true" 
+                                    style="cursor: pointer;">
+                                        [[feedback.type_choice]]
+                                    </td>
+
+                                    <td 
+                                    class="align-middle text-center" 
+                                    v-if="feedback.isRead && feedback.in_range" 
+                                    @click="feedback.show=true" 
+                                    style="cursor: pointer;">
+                                        [[feedback.show_date]]
+                                    </td>
                                     
+
                                     <!-- Delete button-->
-                                    <td>
-                                        <input style="margin-left: 40px;" @change="check_delete" type="checkbox"
-                                            id="checkbox" v-model="feedback.delete">
+                                    <td v-if="feedback.in_range">
+                                        <input 
+                                        style="margin-left: 50px;" 
+                                        @change="check_delete" 
+                                        type="checkbox"
+                                        id="checkbox" 
+                                        v-model="feedback.delete">
                                     </td>
 
                                     <!-- Feedback popup with SalesForce link-->
-                                    <td>
+                                    <td v-if="feedback.in_range">
                                         <vs-popup class="holamundo" title = "Feedback" :active.sync="feedback.show">
                                           <p>
                                             [[feedback.feedback]]

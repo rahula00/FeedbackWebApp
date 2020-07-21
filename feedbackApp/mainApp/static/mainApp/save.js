@@ -3,6 +3,13 @@ let app = {};
 let init = (app) => {
 
     // This is the Vue data.
+    app.test = () => {
+        var a = document.getElementById("sel1")
+        var b = a.options[a.selectedIndex].value;
+
+        console.log(b)
+        console.log("hi")
+    };
 
     app.check_delete = () => {
         app.vue.showDelete = false
@@ -14,40 +21,9 @@ let init = (app) => {
         }
     };
 
-    app.set_range = () => {
-        var id = document.getElementById("sel1")
-        var newRange = id.options[id.selectedIndex].value;
-        app.vue.dateRange = newRange
-        console.log(app.vue.dateRange === '0')
-        app.check_range()
-    };
+    app.filter_feedbacks = (data) => {
 
-    app.check_range = () => {
-        var range = app.vue.dateRange
-        if(range !== '0'){
-            var today = new Date()
-            today.setDate(today.getDate()-app.vue.dateRange)
-            today.setHours(0, 0, 0, 0)
-            var check_against = today
-            for (feedback of app.vue.feedbacks){
-                var date = new Date(feedback.created_at)
-                if (date >= check_against){
-                    feedback.in_range = true
-                }
-                else{
-                    feedback.in_range = false
-                    feedback.delete = false
-                }
-                // console.log(feedback.in_range)
-            }
-        }
-        else{
-            for (feedback of app.vue.feedbacks){
-                feedback.in_range = true
-            }
-        }
-    };
-
+    }
 
     app.get_feedbacks = () => {
         $.ajax({
@@ -57,7 +33,8 @@ let init = (app) => {
             success: function (data) {
 
                 app.vue.feedbacks = app.reindex(app.setShow(data))
-                app.check_range()
+                app.vue.filter_feedbacks = app.vue.feedbacks
+                
 
             },
             error: function (data) {
@@ -140,8 +117,7 @@ let init = (app) => {
         for (feedback of data){
             feedback.show = false;
             feedback.delete = false;
-            feedback.show_date = app.setDate(feedback.created_at);
-            feedback.in_range = false;
+            feedback.created_at = app.setDate(feedback.created_at);
             if(feedback.salesforceOp==="N/A"){
                 feedback.salesforceOp=false;
             };
@@ -160,18 +136,19 @@ let init = (app) => {
 
     app.data = {
         feedbacks: [],
+        feedbacks_filtered:[],
         showDelete: false,
         popupActivo:false,
-        dateRange:7,
+        dateRange:0,
     };
 
    app.methods = {
         get_feedbacks: app.get_feedbacks,
         delete_feedback: app.delete_feedback,
-        set_range: app.set_range,
         mark_read: app.mark_read,
         delete_feedbacks: app.delete_feedbacks,
         check_delete: app.check_delete,
+        test: app.test,
     };
 
     app.vue = new Vue({
