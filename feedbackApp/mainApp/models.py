@@ -16,7 +16,7 @@ class Feedback(models.Model):
 	#manager = models.ForeignKey(Managers, blank=True, null=True, on_delete=models.CASCADE)
 	manager = models.ForeignKey(User, blank=False, null=True, on_delete=models.CASCADE)
 	isRead = models.BooleanField(default=False)
-	created_at = models.DateTimeField()
+	created_at = models.DateTimeField(auto_now_add=True)
 	TYPE_CHOICES = [
         ('Sales', 'Sales'),
         ('Technical', 'Technical'),

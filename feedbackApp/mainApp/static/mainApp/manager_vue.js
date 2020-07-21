@@ -97,12 +97,13 @@ let init = (app) => {
                     app.delete_feedback(feedback)
                 }
             }
-            app.vue.showDelete = false
         } else {
             for (feedback of app.vue.feedbacks){
                 feedback.delete = false;
             }
+            
         }
+        app.vue.showDelete = false
     };
 
     app.mark_read = (data) => {
