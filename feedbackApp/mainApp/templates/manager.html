@@ -90,7 +90,7 @@
                     <br>
                     
                     <!--Dropdown-->
-                    <div style="position: relative; left: -277px;">
+                    <div class="float-left">
                         <label style="color:white" for="sel1">View feedback for: </label>
                         <select @change="set_range"class="btn btn-outline-danger  dropdown-toggle" id="sel1">
                           <option value="7">Last 7 Days</option>
@@ -98,13 +98,16 @@
                           <option value="0">All Time</option>
                         </select>
                     </div>
-                    <br>                      
+
+                    
+                    <br>       
+                    <br>                  
 
 
 
 
                     <!-- Table-->
-                    <div style="max-height: 300px; overflow-y: scroll;">
+                    <div class="float-none" style="clear: both; max-height: 300px; overflow-y: scroll;">
                         <table id="feedbackTable" data-sortable class=" sortable-theme-bootstrap table table-hover">
                             <thead>
                                 <th class="align-middle text-center" style="cursor: pointer;">Submitted By</th>
