@@ -1,6 +1,6 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" style="min-height: 100%;">
 
 <head>
     <meta charset="utf-8" />
@@ -37,14 +37,10 @@
 </head>
 
 
-<body id="page-top">
+<body id="page-top" style="min-height: 100%;">
     {% if messages %}
     {% for message in messages %}
-    <script>
-        $(document).ready(function () {
-            $('.toast').toast('show');
-        });
-    </script>
+    
     <div class="toast" data-delay="2000"
         style="position: absolute; top: 0; right: 0; margin-right: 60px; margin-top: 60px; ">
         <div class="toast-header">
@@ -75,7 +71,7 @@
                     </a>
                 </div>
 
-                <div class="col-lg-9 align-self-baseline">
+                <div class="col-lg-10 align-self-baseline">
 
                     <!-- Search Bar -->
                     <div class="input-group md-form form-sm form-2 pl-0">
@@ -103,12 +99,16 @@
                     <br>       
                     <br>                  
 
+
+
+
                     <!-- Table-->
                     <div class="float-none" style="clear: both; max-height: 300px; overflow-y: scroll;">
-                        <table id="feedbackTable" data-sortable class=" sortable-theme-bootstrap table table-hover">
+                        <table id="feedbackTable" data-sortable class=" sortable-theme-bootstrap table table-hover"
+                        style="max-height: 300px; ">
                             <thead>
                                 <th class="align-middle text-center" style="cursor: pointer;">Submitted By</th>
-                                <th class="align-middle text-center" data-sortable="false">Category</th>
+                                <th class="align-middle text-center" >Category</th>
                                 <th class="align-middle text-center" style="cursor: pointer;">Date Added</th>
                                 <th class="align-middle text-center" data-sortable="false">
                                     <a v-if="showDelete" class="btn btn-danger btn-sm" @click="delete_feedbacks">
@@ -170,9 +170,8 @@
                                     
 
                                     <!-- Delete button-->
-                                    <td v-if="feedback.in_range">
+                                    <td v-if="feedback.in_range" class="align-middle text-center">
                                         <input 
-                                        style="margin-left: 50px;" 
                                         @change="check_delete" 
                                         type="checkbox"
                                         id="checkbox" 
@@ -196,30 +195,30 @@
                     </div>
                     <br>
 
-                    <a class="btn btn-outline-danger btn-lg waves-effect" href="logout"
-                        style="margin-bottom: 30px;">Logout
-                    </a>
-
-                    <br>
-
                     {% if request.user.is_superuser %}
                     <a class="btn btn-outline-danger btn-lg waves-effect" href="administrate"
                         style="margin-bottom: 30px;">Admin Dashboard
                     </a>
                     {%endif%}
+
+                    <br>
+
+                    <a class="btn btn-outline-danger btn-lg waves-effect" href="logout"
+                        style="margin-bottom: 30px;">Logout
+                    </a>
+
                 </div>
             </div>
         </div>
     </header>
+</body>
+</html>
 
-    <!-- Footer-->
-    <body>
-        <footer class="bg-light py-5">
-            <div class="container">
-                <div class="small text-center text-muted">Copyright © 2020 - CrowdStrike</div>
-            </div>
-        </footer>
-    </body>
+    <script>
+        $(document).ready(function () {
+            $('.toast').toast('show');
+        });
+    </script>
 
 
     <!-- Vue source + Vuesax source (for popups) -->
@@ -284,6 +283,3 @@
     <!-- Core theme JS-->
 
 
-</body>
-
-</html>

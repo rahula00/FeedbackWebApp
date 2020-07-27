@@ -37,7 +37,7 @@ class CreateFeedbackForm(ModelForm):
 class CreateUserForm(UserCreationForm):
     class Meta:
         model = User
-        fields = ('username', 'first_name', 'last_name', 'email', 'is_superuser')
+        fields = ('username', 'first_name', 'last_name', 'email', 'is_superuser', 'password1', )
         
         
 class UpdateUserForm(UserChangeForm):

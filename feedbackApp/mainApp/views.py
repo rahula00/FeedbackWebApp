@@ -67,6 +67,8 @@ def home(request):
             if user is not None:
                 login(request, user)
                 messages.info(request, f"You are now logged in as {username}")
+                if user.is_superuser:
+                    return redirect('manager/administrate/')
                 return redirect('manager/') #Not sure 
             else:
                 messages.error(request, "Invalid username or password.")
