@@ -49,7 +49,7 @@ let init = (app) => {
             }
         }
         app.vue.showDelete = false
-        check_delete()
+        app.check_delete()
     };
 
 
