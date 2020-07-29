@@ -20,7 +20,7 @@ let init = (app) => {
         var id = document.getElementById("sel1")
         var newRange = id.options[id.selectedIndex].value;
         app.vue.dateRange = newRange
-        console.log(app.vue.dateRange === '0')
+        //console.log(app.vue.dateRange === '0')
         app.check_range()
     };
 
@@ -65,7 +65,7 @@ let init = (app) => {
 
             },
             error: function (data) {
-                console.log("failure")
+                //console.log("failure")
             }
         })
     };
@@ -78,10 +78,10 @@ let init = (app) => {
                     'id':data.id
                 },
                 success: function (data) {
-                    console.log("successfully deleted")
+                    //console.log("successfully deleted")
                 },
                 error: function (data) {
-                    console.log("failure")
+                    //console.log("failure")
                 },
                 complete: function(data){
                     app.init()
@@ -107,7 +107,7 @@ let init = (app) => {
     };
 
     app.mark_read = (data) => {
-        console.log(data)
+        //console.log(data)
         $.ajax({
             url: '/ajax/mark_read/',
             dataType: 'json',
@@ -115,10 +115,10 @@ let init = (app) => {
                 'id':data.id
             },
             success: function (data) {
-                console.log("successfully marked read")
+                //console.log("successfully marked read")
             },
             error: function (data) {
-                console.log("failure")
+                //console.log("failure")
 
             }
         })
