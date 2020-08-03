@@ -74,9 +74,9 @@ WSGI_APPLICATION = 'feedbackApp.wsgi.application'
 
 
 
-
+# SESSION MANAGEMENT
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
-SESSION_COOKIE_AGE = 300 # 5 seconds for testing
+SESSION_COOKIE_AGE = 300 #in seconds
 SESSION_SAVE_EVERY_REQUEST = True
 
 # Database

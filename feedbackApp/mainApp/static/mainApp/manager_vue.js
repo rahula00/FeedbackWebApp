@@ -5,6 +5,9 @@ let init = (app) => {
 
     // This is the Vue data.
 
+
+    // Loops through feedback array to determine 
+    // if delete button should be highlighted
     app.check_delete = () => {
         app.vue.showDelete = false
         for (feedback of app.vue.feedbacks){
@@ -16,14 +19,18 @@ let init = (app) => {
         }
     };
 
+
+    // Sets new date range (after dropdown selection changed)
     app.set_range = () => {
         var id = document.getElementById("sel1")
+        // newRange = value of dropdown
         var newRange = id.options[id.selectedIndex].value;
         app.vue.dateRange = newRange
         //console.log(app.vue.dateRange === '0')
         app.check_range()
     };
 
+    // Displays/hides feedback depending on selected date range
     app.check_range = () => {
         var range = app.vue.dateRange
         if(range !== '0'){
@@ -53,6 +60,7 @@ let init = (app) => {
     };
 
 
+    // AJAX request to GET all feedback entries from db
     app.get_feedbacks = () => {
         $.ajax({
             url: '/ajax/get_feedbacks/',
@@ -60,7 +68,7 @@ let init = (app) => {
             data:{'test': "last x days"},
             success: function (data) {
 
-                app.vue.feedbacks = app.reindex(app.setShow(data))
+                app.vue.feedbacks = app.setShow(data)
                 app.check_range()
 
             },
@@ -70,13 +78,16 @@ let init = (app) => {
         })
     };
 
+    // AJAX request to delete a single feedback entry based on id
     app.delete_feedback = (data) => {
+            // data = feedback entry
             $.ajax({
                 url: '/ajax/delete_feedback/',
                 dataType: 'json',
                 data:{
                     'id':data.id
                 },
+                // data.id = feedbackEntry.id
                 success: function (data) {
                     //console.log("successfully deleted")
                 },
@@ -89,8 +100,10 @@ let init = (app) => {
             })
     };
 
+    // Calls delete function on all selected feedbacks
     app.delete_feedbacks = () => {
-        var result = confirm("Are you sure you want to delete this?"); //confirm delete
+        // delete confirmation
+        var result = confirm("Are you sure you want to delete this?"); 
         if (result) {
             for (feedback of app.vue.feedbacks){
                 if(feedback.delete === true){
@@ -106,6 +119,7 @@ let init = (app) => {
         app.vue.showDelete = false
     };
 
+    // AJAX request to mark a single feedback entry as read
     app.mark_read = (data) => {
         //console.log(data)
         $.ajax({
@@ -123,6 +137,8 @@ let init = (app) => {
             }
         })
     };
+
+    // Formats date from Django's iso-8601 format to something legible
     app.setDate = (data) => {
         var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
         var days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
@@ -146,6 +162,11 @@ let init = (app) => {
         return x;
     }
 
+
+    // Adds a new variable to each fb entry
+    // feedback.show = show popup
+    // feedback.show_date = formatted date
+    // feedback.in_range = show feedback based on dropdown
     app.setShow = (data) => {
         MM = ["January", "February","March","April","May","June","July","August","September","October","November", "December"]
 
@@ -154,6 +175,8 @@ let init = (app) => {
             feedback.delete = false;
             feedback.show_date = app.setDate(feedback.created_at);
             feedback.in_range = false;
+            // Will hide SalesForceOp link if there is none
+            // 'N/A' = default value in DB (models.py)
             if(feedback.salesforceOp==="N/A"){
                 feedback.salesforceOp=false;
             };
@@ -162,30 +185,28 @@ let init = (app) => {
         return data  
     };
 
-    app.reindex = (a) => {
-        let idx = 0;
-        for (p of a) {
-            p._idx = idx++;
-        }
-        return a;
-    };
 
+    // Global Vue vars
     app.data = {
+        // Array of feedbacks in JSON format(GET from AJAX req)
         feedbacks: [],
+        // Show/Hide delete button
         showDelete: false,
-        popupActivo:false,
+        // How far back to show fb entries in days
+        // Default is 7 days
         dateRange:7,
     };
 
-   app.methods = {
+    // Methods called from within manager.html
+    app.methods = {
         get_feedbacks: app.get_feedbacks,
-        delete_feedback: app.delete_feedback,
         set_range: app.set_range,
         mark_read: app.mark_read,
         delete_feedbacks: app.delete_feedbacks,
         check_delete: app.check_delete,
     };
 
+    // Changed delimiters to '[[',']]' from '{{','}}'
     app.vue = new Vue({
         el: "#vue-target",
         data: app.data,
@@ -194,10 +215,12 @@ let init = (app) => {
 
     });
 
+    // Initialize page with GET request for feedbacks
     app.init = () => {
         app.get_feedbacks();
     };
 
+    // Call init() on page load
     app.init();
 };
 
