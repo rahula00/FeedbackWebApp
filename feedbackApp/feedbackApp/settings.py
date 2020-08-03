@@ -74,6 +74,11 @@ WSGI_APPLICATION = 'feedbackApp.wsgi.application'
 
 
 
+
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+SESSION_COOKIE_AGE = 300 # 5 seconds for testing
+SESSION_SAVE_EVERY_REQUEST = True
+
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
@@ -122,3 +127,4 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, "static/")
