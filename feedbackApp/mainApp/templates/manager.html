@@ -191,7 +191,7 @@
                                           </p>
                                         </vs-popup>
                                     </td>
-                                    
+
                                 </tr>
                             </tbody>
                         </table>
@@ -230,11 +230,14 @@
 
 
     <!-- Vue.js file (Relocated to make this cleaner) -->
-    <script src="{% static 'mainApp/manager_vue.js' %}"></script>
+    <!-- <script src="{% static 'mainApp/manager_vue.js' %}"></script> -->
+    <!-- Above is original js source. Below is a minified version for performance -->
+    <script src="{% static 'mainApp/manager_vue_mini.js' %}"></script>
 
 
 
     <!--https://stackoverflow.com/questions/9127498/how-to-perform-a-real-time-search-and-filter-on-a-html-table-->
+    <!--
     <script>
         function myFunction() {
 
@@ -272,6 +275,11 @@
         }
 
 
+    </script>
+    -->
+    <!-- Minified version -->
+    <script>
+        function myFunction(){for(var e=document.getElementById("myInput").value.toUpperCase(),t=document.getElementById("feedbackTable").tBodies[0].getElementsByTagName("tr"),n=0;n<t.length;n++){var a=t[n].getElementsByTagName("td");t[n].style.display="none";for(var l=0;l<a.length-1;l++)a[l].innerHTML.toUpperCase().indexOf(e)>-1&&(t[n].style.display="")}}
     </script>
 
     

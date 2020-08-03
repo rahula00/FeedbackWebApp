@@ -192,7 +192,7 @@ let init = (app) => {
         feedbacks: [],
         // Show/Hide delete button
         showDelete: false,
-        // How far back to show fb entries in days
+        // How far back to show feedback entries in days
         // Default is 7 days
         dateRange:7,
     };
