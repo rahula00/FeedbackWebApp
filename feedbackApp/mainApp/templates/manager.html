@@ -40,7 +40,7 @@
 <body id="page-top" style="min-height: 100%;">
     {% if messages %}
     {% for message in messages %}
-    
+    <!-- Notification messages -->
     <div class="toast" data-delay="2000"
         style="position: absolute; top: 0; right: 0; margin-right: 60px; margin-top: 60px; ">
         <div class="toast-header">
@@ -85,7 +85,7 @@
 
                     <br>
                     
-                    <!--Dropdown-->
+                    <!--Feedback Range Dropdown-->
                     <div class="float-left">
                         <label style="color:white" for="sel1">View feedback for: </label>
                         <select @change="set_range"class="btn btn-outline-danger  dropdown-toggle" id="sel1">
@@ -102,7 +102,7 @@
 
 
 
-                    <!-- Table-->
+                    <!-- Feedback Table-->
                     <div class="float-none" style="clear: both; max-height: 300px; overflow-y: scroll; ">
                         <table id="feedbackTable" data-sortable class=" sortable-theme-bootstrap table table-hover"
                         style="max-height: 300px;margin-bottom: 0px; ">
@@ -122,8 +122,7 @@
 
 
                             <tbody>
-
-
+                                <!-- using Vue.js for loop to GET feedback-->
                                 <tr 
                                     v-for="feedback in feedbacks" 
                                     @click="feedback.isRead=true; mark_read(feedback);"
@@ -132,7 +131,7 @@
                                     <!-- Invisible Feedback for searching-->
                                     <td v-if="feedback.in_range" style="display:none">Type: [[feedback.feedback]]</td>
 
-                                    <!-- Bolded, unread feedback-->
+                                    <!-- Bolded, unread feedback --start-- -->
                                     <td v-if="!feedback.isRead && feedback.in_range" @click="feedback.show=true" style="cursor: pointer; font-weight: bold; font-style: italic;"> 
                                         [[feedback.submitted_by]]
                                     </td>
@@ -144,8 +143,9 @@
                                     <td class="align-middle text-center" v-if="!feedback.isRead && feedback.in_range" @click="feedback.show=true" style="cursor: pointer; font-weight: bold; font-style: italic;">
                                         [[feedback.show_date]]
                                     </td>
+                                    <!-- Bolded, unread feedback --end-- -->
 
-                                    <!-- Not bold, already read feedback-->
+                                    <!-- Not bold, already read feedback --start-- -->
                                     <td 
                                     v-if="feedback.isRead && feedback.in_range" 
                                     @click="feedback.show=true" 
@@ -167,9 +167,10 @@
                                     style="cursor: pointer;">
                                         [[feedback.show_date]]
                                     </td>
+                                    <!-- Not bold, already read feedback --end-- -->
                                     
 
-                                    <!-- Delete button-->
+                                    <!-- Delete checkbox -->
                                     <td v-if="feedback.in_range" class="align-middle text-center">
                                         <input 
                                         @change="check_delete" 
@@ -190,6 +191,7 @@
                                           </p>
                                         </vs-popup>
                                     </td>
+                                    
                                 </tr>
                             </tbody>
                         </table>
