@@ -100,6 +100,7 @@
                                 <th class="align-middle text-center" style="cursor: pointer;">Admin</th>
                                 <th class="align-middle text-center" style="cursor: pointer;">Last Login</th>
                                 <th class="align-middle text-center" style="cursor: pointer;">Date Joined</th>
+                                <th></th>
                             </thead>
                             <tbody id="feedbackTable">
                                 {% block content %}
@@ -121,8 +122,9 @@
                                     <td><a href="{% url 'manager_update' manager.id %}" class="btn">
                                             <i style="color:rgb(24, 134, 236)"
                                                 class="fa fa-pencil-square-o fa-lg float-right" aria-hidden="true"></i>
-                                        </a></td>
-                                    <td>
+                                        </a>
+                                        
+
                                         <form action="{% url 'manager_delete' manager.id %}" method="post"
                                             class="d-inline">
                                             {% csrf_token %}
