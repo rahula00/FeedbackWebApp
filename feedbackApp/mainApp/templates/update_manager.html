@@ -34,6 +34,10 @@
     <script src="{% static 'mainApp/sortable.js' %}"></script>
     <link href="{% static 'mainApp/sortable-theme-bootstrap.css' %}" rel="stylesheet" />
 
+    <!-- Vue source + Vuesax source (for popups) -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11"></script>
+    <script src="https://unpkg.com/vuesax"></script>
+
 </head>
 
 <body id="page-top">
@@ -59,6 +63,34 @@
 
     {% endfor %}
     {% endif %}
+
+
+     <!-- Modal HTML -->
+     <div id="myModal" class="modal fade">
+        <div class="modal-dialog modal-login">
+            <div class="modal-content">
+                <form method="POST">{% csrf_token %}
+                    <!--Change this when making login-->
+
+                    <div class="modal-header">
+                        <h4 class="modal-title">Change Password</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <p>This will reset this users password</p>
+                        <P style="display: none;">{{passForm.new_password1}}</P>
+                        <P style="display: none;">{{passForm.new_password2}}</P>
+                        <p>One time Password: </p>
+                        <p id="onetimePass"></p>
+                    </div>
+
+                    <div class="modal-footer justify-content-between">
+                        <input type="submit" class="btn btn-primary" value="Confirm?">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 
 
 
@@ -92,6 +124,13 @@
 
                         <input type='hidden' value='{{manager.pk}}' name='id'>
 
+                        <p href="#myModal" data-toggle="modal" onclick="gfg_Run()" class="btn btn-outline-danger btn-lg waves-effect">Generate a One Time Password</p>
+
+                       
+
+                        <hr class="divider my-4" />
+                        <br>
+
                         <div class="modal-footer justify-content-between">
                             <input type="submit" class="btn btn-primary" value="Submit">
                             <a class="btn btn-warning" href="/manager/administrate"
@@ -100,17 +139,12 @@
                         
                         
                     </form>
+
+                    
                     <br>
                     
 
-                    <br>
-                    <a class="btn btn-outline-danger btn-lg waves-effect" href="../logout"
-                        style="margin-bottom: 30px;">Logout
-                    </a>
-                    <br>
-
-                    <img src="{% static 'mainApp/img/logo.png' %}" width="50%" height="50%">
-                    <br>
+                
 
                 </div>
 
@@ -118,6 +152,32 @@
         </div>
     </header>
 
+    <script> 
+        var el_down = document.getElementById("onetimePass"); 
+  
+        /* Function to generate combination of password */ 
+        function generateP() { 
+            var pass = ''; 
+            var str = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ' +  
+                    'abcdefghijklmnopqrstuvwxyz0123456789@#$'; 
+            var num = Math.floor(Math.random() * 15) + 8; 
+              
+            for (i = 1; i <= num; i++) { 
+                var char = Math.floor(Math.random() 
+                            * str.length + 1); 
+                  
+                pass += str.charAt(char) 
+            } 
+            document.getElementById("id_new_password1").value = pass;
+            document.getElementById("id_new_password2").value = pass;
+            return pass; 
+        } 
+  
+        function gfg_Run() { 
+            el_down.innerHTML = generateP(); 
+            
+        } 
+    </script> 
 
 
 

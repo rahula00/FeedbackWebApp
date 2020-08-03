@@ -7,7 +7,7 @@ from django.http import JsonResponse
 
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.models import User
-from django.contrib.auth.forms import AuthenticationForm, UserChangeForm, UserCreationForm, PasswordChangeForm, PasswordResetForm
+from django.contrib.auth.forms import AuthenticationForm, UserChangeForm, UserCreationForm, PasswordChangeForm, PasswordResetForm, SetPasswordForm
 from django.contrib.auth import logout, authenticate, login, update_session_auth_hash
 from django.contrib import messages
 
@@ -59,7 +59,6 @@ def mark_read(request, id=None):
 def home(request):
     if request.method == 'POST':
         form = AuthenticationForm(request=request, data=request.POST)
-        
         if form.is_valid():
             username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password')
@@ -142,12 +141,18 @@ def manager_update(request, id=None):
     user = User.objects.get(pk=id)
     user.save()
     if request.method == "POST":
+        passForm = SetPasswordForm(user=user, data=request.POST)
+        if passForm.is_valid():
+            passForm.save()
+            messages.info(request, f"Password Changed")
+            return redirect('adminPage')
         form = UpdateUserForm(request.POST, instance=user)
         form.save()
         return redirect('adminPage')
     else:
+        passForm = SetPasswordForm(user=user)
         form = UpdateUserForm(instance=user)
-        context = {'form': form}
+        context = {'form': form, 'passForm': passForm}
         return render(request, 'update_manager.html', context)
 
 @login_required(login_url='homepage')
