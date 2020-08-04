@@ -110,7 +110,7 @@
                         v-cloak 
                     >
                         <table id="feedbackTable" data-sortable class=" sortable-theme-bootstrap table table-hover"
-                        style="max-height: 300px;margin-bottom: 0px; ">
+                        style="max-height: 300px;margin-bottom: 0px; margin-right: 0px">
                             <thead>
                                 <th class="align-middle text-center" style="cursor: pointer;">Submitted By</th>
                                 <th class="align-middle text-center" >Category</th>
@@ -186,7 +186,7 @@
 
                                     <!-- Feedback popup with SalesForce link-->
                                     <!-- Documentation: https://lusaxweb.github.io/vuesax/components/popup.html -->
-                                    <td v-if="feedback.in_range">
+                                    <td style="display:none" v-if="feedback.in_range">
                                         <vs-popup class="holamundo" title = "Feedback" :active.sync="feedback.show">
                                           <p>
                                             [[feedback.feedback]]
