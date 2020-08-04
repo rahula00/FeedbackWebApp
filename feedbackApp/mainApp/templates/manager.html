@@ -3,6 +3,7 @@
 <html lang="en" style="min-height: 100%;">
 
 <head>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/vcloak.css' %}" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
@@ -38,6 +39,8 @@
 
 
 <body id="page-top" style="min-height: 100%;">
+
+
     {% if messages %}
     {% for message in messages %}
     <!-- Notification messages -->
@@ -103,7 +106,9 @@
 
 
                     <!-- Feedback Table-->
-                    <div class="float-none" style="clear: both; max-height: 300px; overflow-y: scroll; ">
+                    <div class="float-none" style="clear: both; max-height: 300px; overflow-y: scroll;"
+                        v-cloak 
+                    >
                         <table id="feedbackTable" data-sortable class=" sortable-theme-bootstrap table table-hover"
                         style="max-height: 300px;margin-bottom: 0px; ">
                             <thead>
