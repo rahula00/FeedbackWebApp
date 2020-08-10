@@ -168,7 +168,7 @@
 
 
     <!--https://stackoverflow.com/questions/9127498/how-to-perform-a-real-time-search-and-filter-on-a-html-table-->
-    <script>
+    <!-- <script>
         var $rows = $('#feedbackTable tr');
         $('#myInput').keyup(debounce(function () {
 
@@ -197,6 +197,12 @@
                 if (callNow) func.apply(context, args);
             };
         };
+    </script>
+ -->
+
+    <!-- Minified -->
+    <script>
+        var $rows=$("#feedbackTable tr");function debounce(t,e,n){var i;return function(){var r=this,u=arguments,o=n&&!i;clearTimeout(i),i=setTimeout(function(){i=null,n||t.apply(r,u)},e),o&&t.apply(r,u)}}$("#myInput").keyup(debounce(function(){var t,e="^(?=.*\\b"+$.trim($(this).val()).split(/\s+/).join("\\b)(?=.*\\b")+").*$",n=RegExp(e,"i");$rows.show().filter(function(){return t=$(this).text().replace(/\s+/g," "),!n.test(t)}).hide()},100));
     </script>
 
 
