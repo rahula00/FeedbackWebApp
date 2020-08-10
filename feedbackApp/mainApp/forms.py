@@ -12,6 +12,11 @@ class UserFullnameChoiceField(forms.ModelChoiceField):
         return smart_text(obj.get_full_name())
 
 class CreateFeedbackForm(ModelForm):
+
+    def __init__(self, *args, **kwargs):
+        super(CreateFeedbackForm, self).__init__(*args, **kwargs)   
+        self.fields['manager'].queryset = User.objects.order_by('last_name')
+
     manager = UserFullnameChoiceField(queryset=User.objects.exclude(first_name__exact='', last_name__exact=''))
     class Meta:
         model = Feedback
