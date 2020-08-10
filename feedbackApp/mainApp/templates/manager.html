@@ -203,6 +203,8 @@
                     </div>
                     <br>
 
+
+                    <!-- Show button to access admin dash if user is admin -->
                     {% if request.user.is_superuser %}
                     <a class="btn btn-outline-danger btn-lg waves-effect" href="administrate"
                         style="margin-bottom: 30px;">Admin Dashboard
@@ -211,6 +213,7 @@
 
                     <br>
 
+                    <!-- Logout Button -->
                     <a class="btn btn-outline-danger btn-lg waves-effect" href="logout"
                         style="margin-bottom: 30px;">Logout
                     </a>
@@ -222,10 +225,19 @@
 </body>
 </html>
 
+
+    <!-- Notification script
+
     <script>
         $(document).ready(function () {
             $('.toast').toast('show');
         });
+    </script> 
+    -->
+
+    <!-- Minified -->
+    <script>
+        $(document).ready(function(){$(".toast").toast("show")});
     </script>
 
 
@@ -236,13 +248,12 @@
 
     <!-- Vue.js file (Relocated to make this cleaner) -->
     <!-- <script src="{% static 'mainApp/manager_vue.js' %}"></script> -->
+    
     <!-- Above is original js source. Below is a minified version for performance -->
     <script src="{% static 'mainApp/manager_vue_mini.js' %}"></script>
 
-
-
-    <!--https://stackoverflow.com/questions/9127498/how-to-perform-a-real-time-search-and-filter-on-a-html-table-->
     <!--
+    https://stackoverflow.com/questions/9127498/how-to-perform-a-real-time-search-and-filter-on-a-html-table
     <script>
         function myFunction() {
 
@@ -279,9 +290,9 @@
 
         }
 
-
     </script>
     -->
+
     <!-- Minified version -->
     <script>
         function myFunction(){for(var e=document.getElementById("myInput").value.toUpperCase(),t=document.getElementById("feedbackTable").tBodies[0].getElementsByTagName("tr"),n=0;n<t.length;n++){var a=t[n].getElementsByTagName("td");t[n].style.display="none";for(var l=0;l<a.length-1;l++)a[l].innerHTML.toUpperCase().indexOf(e)>-1&&(t[n].style.display="")}}
