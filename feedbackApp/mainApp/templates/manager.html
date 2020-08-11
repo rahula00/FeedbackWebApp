@@ -110,7 +110,7 @@
                         v-cloak 
                     >
                         <table id="feedbackTable" data-sortable class=" sortable-theme-bootstrap table table-hover"
-                        style="max-height: 300px;margin-bottom: 0px; margin-right: 0px">
+                        style="max-height: 300px;margin-bottom: 0px; margin-right: 0px;">
                             <thead>
                                 <th class="align-middle text-center" style="cursor: pointer;">Submitted By</th>
                                 <th class="align-middle text-center" >Category</th>
@@ -176,15 +176,14 @@
                                     
 
                                     <!-- Delete checkbox -->
-                                    <td v-if="feedback.in_range" 
-                                    style="float: left;
-                                    margin-left:31%;
-                                    width: 100%;">
-                                        <input 
-                                        @change="check_delete" 
-                                        type="checkbox"
-                                        id="checkbox" 
-                                        v-model="feedback.delete">
+                                    <td v-if="feedback.in_range">
+                                        <div style="float: left; margin-left:40%;width: 50%;">
+                                            <input 
+                                            @change="check_delete" 
+                                            type="checkbox"
+                                            id="checkbox" 
+                                            v-model="feedback.delete">
+                                        </div>
                                     </td>
 
                                     <!-- Feedback popup with SalesForce link-->
