@@ -13,11 +13,9 @@ class UserFullnameChoiceField(forms.ModelChoiceField):
 
 class CreateFeedbackForm(ModelForm):
 
-    def __init__(self, *args, **kwargs):
-        super(CreateFeedbackForm, self).__init__(*args, **kwargs)   
-        self.fields['manager'].queryset = User.objects.order_by('last_name')
+    
 
-    manager = UserFullnameChoiceField(queryset=User.objects.exclude(first_name__exact='', last_name__exact=''))
+    manager = UserFullnameChoiceField(queryset=User.objects.exclude(first_name__exact='', last_name__exact='').order_by('last_name'))
     class Meta:
         model = Feedback
         fields = ['manager', 'feedback', 'type_choice', 'salesforceOp', 'submitted_by']
