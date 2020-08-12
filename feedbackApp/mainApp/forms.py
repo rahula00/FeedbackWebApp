@@ -24,13 +24,24 @@ class CreateFeedbackForm(ModelForm):
 				),
             'feedback': forms.Textarea(
 				attrs={
-					'class': 'form-control',
-                    'placeholder': 'Leave your feedback here'
+					'class': 'form-control border-danger rounded',
+                    'placeholder': 'Leave your feedback here',
+                    'rows': '5',
 					}
 				),
                 'type_choice': forms.Select(
 				attrs={
 					'class': 'btn btn-outline-danger dropdown-toggle'
+					}
+				),
+                'salesforceOp': forms.Textarea(
+				attrs={
+					'class': 'form-control-sm border-danger rounded'
+					}
+				),
+                'submitted_by': forms.Textarea(
+				attrs={
+					'class': 'form-control-sm border-danger rounded'
 					}
 				),
 			}
