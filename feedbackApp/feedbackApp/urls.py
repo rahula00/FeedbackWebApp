@@ -20,7 +20,7 @@ from mainApp.views import *
 
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('ee10c315eba2c75b403ea99136f5b48d/', admin.site.urls),
     path('manager/administrate/', adminPage, name="adminPage"),
     path('', home, name="homepage"),
     path('default/', index, name="default"),
