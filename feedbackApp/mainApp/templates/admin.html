@@ -94,7 +94,6 @@
                         <table data-sortable class=" sortable-theme-bootstrap table table-hover"
                             style="max-height: 300px;margin-bottom: 0px; margin-right: 0px">
                             <thead>
-                                <th style="display: none;" ;>ID</th>
                                 <th class="align-middle text-center" style="cursor: pointer;">Username</th>
                                 <th class="align-middle text-center" style="cursor: pointer;">First Name</th>
                                 <th class="align-middle text-center" style="cursor: pointer;">Last Name</th>
@@ -107,21 +106,24 @@
                             <tbody id="feedbackTable">
                                 {% block content %}
                                 {% for manager in managers %}
+
                                 <tr style="cursor: pointer;" action="manager.html">
-                                    <td style="display: none;">{% if manager.username %} {{manager.id}} {% endif %}</td>
                                     <td> {% if manager.username %} {{manager.username}} {% endif %}</td>
                                     <td>{% if manager.first_name %} {{manager.first_name}} {% endif %}</td>
                                     <td>{% if manager.last_name %} {{manager.last_name}} {% endif %}</td>
                                     <td>{% if manager.email %} {{manager.email}} {% endif %}</td>
                                     <td > 
-                                        <div style="width: 100%;
-                                    float: left;
-                                    margin-left:31%;">
-                                        {%if manager.is_superuser%}
-                                        <i class="fa fa-check" aria-hidden="true"></i>
-                                        {% else %}
-                                        <i class="fa fa-times" aria-hidden="true"></i>
-                                        {%endif%}
+                                        <div 
+                                        style="color:#ffffff00; width: 90%;
+                                        float: left;
+                                        margin-left:10%;">
+                                            {%if manager.is_superuser%}
+                                            a
+                                            <i class="fa fa-check" aria-hidden="true" style="color:black;"></i>
+                                            {% else %}
+                                            u
+                                            <i class="fa fa-times" aria-hidden="true" style="color:black;"></i>
+                                            {%endif%}
                                         </div>
                                     </td>
                                     <td>{% if manager.last_login %} {{manager.last_login}} {% endif %}</td>
