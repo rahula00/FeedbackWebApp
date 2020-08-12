@@ -19,21 +19,23 @@ class CreateFeedbackForm(ModelForm):
         widgets = {
             'manager': forms.Select(
 				attrs={
-					'class': 'btn btn-danger dropdown-toggle'
+					'class': 'btn btn-outline-danger dropdown-toggle'
 					}
 				),
             'feedback': forms.Textarea(
 				attrs={
-					'class': 'form-control'
+					'class': 'form-control',
+                    'placeholder': 'Leave your feedback here'
 					}
 				),
                 'type_choice': forms.Select(
 				attrs={
-					'class': 'btn btn-danger dropdown-toggle'
+					'class': 'btn btn-outline-danger dropdown-toggle'
 					}
 				),
 			}
     manager = UserFullnameChoiceField(queryset=User.objects.exclude(first_name__exact='', last_name__exact='').order_by('last_name'))
+    manager.widget.attrs.update({'class': 'btn btn-outline-danger dropdown-toggle'})
 
 class CreateUserForm(UserCreationForm):
     class Meta:

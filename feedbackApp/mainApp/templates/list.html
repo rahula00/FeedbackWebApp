@@ -67,8 +67,8 @@
 
         <div class="container h-100">
 
-            <div class="row h-100 align-items-center justify-content-center text-center">
-                <div class="col-lg-8 align-self-baseline">
+            <div class="row h-100 align-items-center justify-content-center text-left">
+                <div class="col-lg-10 align-self-baseline">
 
                     <form method="POST" style="color:white">{% csrf_token %}
                         <!--Change this when making login-->
@@ -85,37 +85,43 @@
                             <br>
                             <div>What type of feedback are you leaving? {{form.type_choice}}</div>
                             <br>
-                            <div>Please leave your feedback: {{form.feedback}}</div>
+                            <div ><p style="opacity: 0.8;"> {{form.feedback}}</p></div>
                             <br>
-                            <div>Provide the Salesforce Oppurtunity link if applicable: {{form.salesforceOp}}</div>
+                            <div style="overflow: hidden;">
+                                <p style="float: left;">Provide the Salesforce Opportunity link if applicable: </p>
+                                <p style=" opacity: 0.7;"> {{form.salesforceOp}}</p>
+                            </div>
                             <br>
-                            <div>Let us know who you are: {{form.submitted_by}}</div>
+                            <div style="overflow: hidden;">
+                                <p style="float: left;">Let us know who you are: </p>
+                                <p style=" opacity: 0.7;"> {{form.submitted_by}}</p>
+                            </div>
                         </div>
                         <br>
 
                         <input type='hidden' value='{{manager.pk}}' name='id'>
 
                         <div class="modal-footer justify-content-between">
-                            <input type="submit" class="btn btn-primary" value="Submit">
+                            <input type="submit" class="btn btn-outline-danger" value="Submit">
                             
                         </div>
                         
                         
                     </form>
-                    <br>
-                    
-
-                    <a class="btn btn-outline-danger btn-lg waves-effect" href="../"
-                        style="margin-bottom: 30px;">Take me back
-                    </a>
-                    <br>
-
-                    <img src="{% static 'mainApp/img/logo.png' %}" width="50%" height="50%">
-                    <br>
+                    <div class="text-center">
+                        <a class="btn btn-outline-danger btn-lg waves-effect" href="../"
+                                style="margin-bottom: 30px;">Take me back
+                            </a>
+                            <br>
+        
+                            <img src="{% static 'mainApp/img/logo.png' %}" width="50%" height="50%">
+                            <br>
+                    </div>
 
                 </div>
 
             </div>
+            
         </div>
     </header>
 
