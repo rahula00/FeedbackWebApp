@@ -148,6 +148,7 @@ let init = (app) => {
                 }
             }
             app.vue.showDelete = false
+            app.vue.checkAll = false
         }
         
     };
