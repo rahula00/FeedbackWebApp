@@ -147,13 +147,9 @@ let init = (app) => {
                     app.delete_feedback(feedback)
                 }
             }
-        } else {
-            for (feedback of app.vue.feedbacks){
-                feedback.delete = false;
-            }
-            
+            app.vue.showDelete = false
         }
-        app.vue.showDelete = false
+        
     };
 
     // AJAX request to mark a single feedback entry as read
