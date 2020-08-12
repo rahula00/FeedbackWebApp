@@ -27,6 +27,7 @@ class CreateFeedbackForm(ModelForm):
 					'class': 'form-control border-danger rounded',
                     'placeholder': 'Leave your feedback here',
                     'rows': '5',
+                    'style': 'resize: none;'
 					}
 				),
                 'type_choice': forms.Select(
@@ -36,12 +37,14 @@ class CreateFeedbackForm(ModelForm):
 				),
                 'salesforceOp': forms.Textarea(
 				attrs={
-					'class': 'form-control-sm border-danger rounded'
+					'class': 'form-control-sm border-danger rounded',
+                    'style': 'resize: none; overflow-y:hidden;'
 					}
 				),
                 'submitted_by': forms.Textarea(
 				attrs={
-					'class': 'form-control-sm border-danger rounded'
+					'class': 'form-control-sm border-danger rounded',
+                    'style': 'resize: none; overflow-y:hidden;'
 					}
 				),
 			}
