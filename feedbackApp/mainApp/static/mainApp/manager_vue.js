@@ -5,6 +5,43 @@ let init = (app) => {
 
     // This is the Vue data.
 
+    app.sel_or_del = () => {
+        if(app.vue.checkAll){
+            app.select_all()
+        }
+        else{
+            app.deselect_all()
+        }
+    };
+
+    app.select_all = () => {
+        for (feedback of app.vue.feedbacks){
+            if(feedback.in_range === true){
+                feedback.delete = true
+            }
+        }
+    };
+
+    app.deselect_all = () => {
+        for (feedback of app.vue.feedbacks){
+            if(feedback.in_range === true){
+                feedback.delete = false
+            }
+        }
+    };
+
+    app.check_sel = () => {
+        var all = true
+        for (feedback of app.vue.feedbacks){
+            if(feedback.in_range === true){
+                if(feedback.delete === false){
+                    all = false
+                }
+            }
+        }
+        app.vue.checkAll = all
+    }
+
 
     // Loops through feedback array to determine 
     // if delete button should be highlighted
@@ -195,6 +232,7 @@ let init = (app) => {
         // How far back to show feedback entries in days
         // Default is 7 days
         dateRange:7,
+        checkAll: false,
     };
 
     // Methods called from within manager.html
@@ -204,6 +242,10 @@ let init = (app) => {
         mark_read: app.mark_read,
         delete_feedbacks: app.delete_feedbacks,
         check_delete: app.check_delete,
+        sel_or_del: app.sel_or_del,
+        select_all: app.select_all,
+        deselect_all: app.deselect_all,
+        check_sel: app.check_sel,
     };
 
     // Changed delimiters to '[[',']]' from '{{','}}'

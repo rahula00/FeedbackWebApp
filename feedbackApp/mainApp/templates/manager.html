@@ -1,3 +1,6 @@
+
+                                    
+                                
 {% load static %}
 <!DOCTYPE html>
 <html lang="en" style="min-height: 100%;">
@@ -98,6 +101,15 @@
                         </select>
                     </div>
 
+                    <div class="float-right" style="margin-right: 20px">
+                        <a v-if="showDelete" class="btn btn-danger btn-sm" @click="delete_feedbacks">
+                            Delete Selected
+                        </a>
+                        <a v-else class="btn btn-sm" style="cursor: default; color:#ffffff00;">
+                            Delete Selected
+                        </a>
+                    </div>
+
 
                     <br>       
                     <br>                  
@@ -117,12 +129,14 @@
                                 <th class="align-middle text-center" >Category</th>
                                 <th class="align-middle text-center" style="cursor: pointer;">Date Added</th>
                                 <th class="align-middle text-center" data-sortable="false">
-                                    <a v-if="showDelete" class="btn btn-danger btn-sm" @click="delete_feedbacks">
-                                        Delete
-                                    </a>
-                                    <a v-else style="cursor: default;" class="btn  btn-sm">
-                                        Delete
-                                    </a>
+
+                                    <input 
+                                        @change="sel_or_del(); check_delete();" 
+                                        type="checkbox"
+                                        id="checkbox" 
+                                        v-model="checkAll"
+                                    >
+                                    
                                 </th>
                             </thead>
 
@@ -182,9 +196,9 @@
 
                                     <!-- Delete checkbox -->
                                     <td v-if="feedback.in_range">
-                                        <div class="align-middle text-center" style="float: left;width: 84%;">
+                                        <div class="align-middle text-center" style="float: left;width: 78%;">
                                             <input 
-                                            @change="check_delete" 
+                                            @change="check_delete(); check_sel();" 
                                             type="checkbox"
                                             id="checkbox" 
                                             v-model="feedback.delete">
@@ -254,10 +268,9 @@
 
 
     <!-- Vue.js file (Relocated to make this cleaner) -->
-    <!-- <script src="{% static 'mainApp/manager_vue.js' %}"></script> -->
-
+    <script src="{% static 'mainApp/manager_vue.js' %}"></script> 
     <!-- Above is original js source. Below is a minified version for performance -->
-    <script src="{% static 'mainApp/manager_vue_mini.js' %}"></script>
+    <!-- <script src="{% static 'mainApp/manager_vue_mini.js' %}"></script> -->
 
     <!--
     https://stackoverflow.com/questions/9127498/how-to-perform-a-real-time-search-and-filter-on-a-html-table
@@ -314,5 +327,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
     <!-- Core theme JS-->
+
 
 
