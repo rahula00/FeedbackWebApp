@@ -13,29 +13,27 @@ class UserFullnameChoiceField(forms.ModelChoiceField):
 
 class CreateFeedbackForm(ModelForm):
 
-    
-
-    manager = UserFullnameChoiceField(queryset=User.objects.exclude(first_name__exact='', last_name__exact='').order_by('last_name'))
     class Meta:
         model = Feedback
         fields = ['manager', 'feedback', 'type_choice', 'salesforceOp', 'submitted_by']
         widgets = {
             'manager': forms.Select(
 				attrs={
-					'class': 'btn btn-lg btn-primary dropdown-toggle'
+					'class': 'btn btn-danger dropdown-toggle'
 					}
 				),
             'feedback': forms.Textarea(
 				attrs={
-					'class': 'form-control green-border-focus  form-control-sm'
+					'class': 'form-control'
 					}
 				),
                 'type_choice': forms.Select(
 				attrs={
-					'class': ''
+					'class': 'btn btn-danger dropdown-toggle'
 					}
 				),
 			}
+    manager = UserFullnameChoiceField(queryset=User.objects.exclude(first_name__exact='', last_name__exact='').order_by('last_name'))
 
 class CreateUserForm(UserCreationForm):
     class Meta:

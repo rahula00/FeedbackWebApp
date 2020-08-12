@@ -77,10 +77,11 @@
                             <h4 class="modal-title">Leave your Feedback</h4>
                         </div>
 
-
+                        <br>
                         
-                        <div class="fieldWrapper form-group" aria-required={% if field.field.required %}"true"{% else %}"false"{% endif %}>
-                            <div>Please Select Your Manager: {{form.manager}}</div>
+                        <div class="fieldWrapper form-group"  aria-required={% if field.field.required %}"true"{% else %}"false"{% endif %}>
+                            
+                            <div >Which manager would you like to provide feedback for?: {{form.manager}}</div>
                             <br>
                             <div>What type of feedback are you leaving? {{form.type_choice}}</div>
                             <br>
@@ -90,7 +91,7 @@
                             <br>
                             <div>Let us know who you are: {{form.submitted_by}}</div>
                         </div>
-                        
+                        <br>
 
                         <input type='hidden' value='{{manager.pk}}' name='id'>
 
