@@ -32,14 +32,21 @@ let init = (app) => {
 
     app.check_sel = () => {
         var all = true
+        var oneInRange = false
         for (feedback of app.vue.feedbacks){
             if(feedback.in_range === true){
-                if(feedback.delete === false){
+                oneInRange = true
+                if(feedback.delete !== true){
                     all = false
                 }
             }
         }
-        app.vue.checkAll = all
+        if(oneInRange){
+            app.vue.checkAll = all
+        }
+        else{
+            app.vue.checkAll = false
+        }
     }
 
 
