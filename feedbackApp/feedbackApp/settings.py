@@ -79,6 +79,12 @@ SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 SESSION_COOKIE_AGE = 300 #in seconds
 SESSION_SAVE_EVERY_REQUEST = True
 
+
+# EMAIL SETTIGNS
+EMAIL_HOST = '10.100.0.12'
+EMAIL_PORT = '25'
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 

@@ -18,6 +18,9 @@ from rest_framework import viewsets, filters
 from .serializers import FeedbackSerializer
 from django.views.decorators.csrf import csrf_exempt
 
+from django.core.mail import send_mail
+
+
 @login_required(login_url='homepage')
 def get_feedback(request=None):
     id = request.GET.get('id', None)
@@ -82,6 +85,15 @@ def index(request):
         F = CreateFeedbackForm(request.POST)
         if F.is_valid():
             new_feedback = F.save()
+            # Send email
+            if new_feedback.manager.email != None:
+                send_mail(
+                    'You have new feedback from ' + new_feedback.submitted_by,
+                    'You recieved a new feedback item, log in to https://04lpsalesweb01.crowdstrike.sys/ to view',
+                    'CSfeedbackPortal@crowdstrike.com',
+                    [new_feedback.manager.email],
+                    fail_silently=False,
+                )
             messages.info(request, f"Thank you for the feedback!")
             return redirect('homepage')
             
