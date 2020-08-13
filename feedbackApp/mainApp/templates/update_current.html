@@ -80,17 +80,17 @@
                         </div>
 
 
-                        <div style="text-align: center;" class="modal-body" >
+                        <div style="text-align: left;" class="modal-body" >
                             {{form.as_p}}
                             <!--<p>{{form.username.label_tag}} {{form.username}}</p>
                             <p>{{form.first_name.label_tag}} {{form.first_name}}</p>
                             <p>{{form.last_name.label_tag}} {{form.last_name}}</p>
                             <p>{{form.email.label_tag}} {{form.email}}</p>>-->
-                            <a class="btn btn-warning" href="/manager/update/changePass"
-                        style="margin-top:15px; margin-bottom: 15px;">Change Your Password</a>
+                            
 
                         </div>
-
+                        <a class="btn btn-warning" href="/manager/update/changePass"
+                        style="margin-top:15px; margin-bottom: 15px;">Change Your Password</a>
                         <input type='hidden' value='{{manager.pk}}' name='id'>
 
                         <div class="modal-footer justify-content-between">
