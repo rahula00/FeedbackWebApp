@@ -85,6 +85,9 @@ EMAIL_HOST = '10.100.0.12'
 EMAIL_PORT = '25'
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
+# GOOGLE RECAPTCHA
+GOOGLE_RECAPTCHA_SECRET_KEY = '6LdFfb4ZAAAAAJmG7cfyn_2Gj_iRmGXuUjkG1vqo'
+
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 

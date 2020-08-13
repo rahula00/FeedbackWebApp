@@ -34,6 +34,9 @@
     <script src="{% static 'mainApp/sortable.js' %}"></script>
     <link href="{% static 'mainApp/sortable-theme-bootstrap.css' %}" rel="stylesheet" />
 
+    <!--Google ReCaptcha-->
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
 </head>
 
 <body id="page-top">
@@ -112,11 +115,17 @@
                             </div>
 
                         </div>
+                        <script src='https://www.google.com/recaptcha/api.js'></script>
+                        <div class="g-recaptcha" data-sitekey="6LdFfb4ZAAAAANWOnsj4S4wpBkH8jQEhb3ZKQ1Sj"></div>
+                        <br>
+                        
                         <div class="modal-footer justify-content-between">
                             <input type="submit" class="btn btn-outline-danger" value="Submit">
                             
                         </div>
                     </form>
+
+                    
                     <div class="text-center">
                         <a class="btn btn-outline-danger btn-lg waves-effect" href="../"
                                 style="margin-bottom: 30px;">Take me back
