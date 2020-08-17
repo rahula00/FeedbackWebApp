@@ -239,6 +239,7 @@ let init = (app) => {
         // How far back to show feedback entries in days
         // Default is 7 days
         dateRange:7,
+        // Whether or not all checkboxes are checked
         checkAll: false,
     };
 
