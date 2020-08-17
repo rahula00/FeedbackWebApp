@@ -139,37 +139,43 @@
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     </div>
                     <div class="modal-body">
-                        <div style="text-align: center;">{{form.as_p}}</div>
-                        <a class="btn btn-outline-danger btn-lg waves-effect" href="resetPass"
-                        style="margin-bottom: 20px;">Forgot Password?
-                    </a>
+                        <div style="text-align: center;">
+                            {{form.as_p}}
+                        </div>
+                        <div class="text-center">
+                            <a href="#changePass" data-dismiss="modal" data-toggle="modal">
+                                Forgot Password?
+                            </a>
+                        </div>
                     </div>
 
                     <div class="modal-footer justify-content-between">
-                        <input type="submit" class="btn btn-primary" value="Login">
+                        <input type="submit" name="login" class="btn btn-primary" value="Login">
                     </div>
                 </form>
             </div>
         </div>
     </div>
 
-
-
-    <!--Forgot Password Modal HTML -->
-    <div id="passwordModal" class="modal fade">
+    <!-- Login Modal HTML -->
+    <div id="changePass" class="modal fade">
         <div class="modal-dialog modal-login">
             <div class="modal-content">
                 <form method="POST">{% csrf_token %}
+                    <!--Change this when making login-->
+
                     <div class="modal-header">
-                        <h4 class="modal-title">Forgot Password</h4>
+                        <h4 class="modal-title">Forgot Password?</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     </div>
                     <div class="modal-body">
-                        <div class="form-group">{{changePassForm.as_p}}</div>
+                        <div style="text-align: center;">
+                            {{changePassForm.as_p}}
+                        </div>
                     </div>
-                    <input type="submit" class="btn btn-primary" value="Send">
+
                     <div class="modal-footer justify-content-between">
-                        
+                        <input type="submit" name="pass" class="btn btn-primary" value="Send OTP">
                     </div>
                 </form>
             </div>

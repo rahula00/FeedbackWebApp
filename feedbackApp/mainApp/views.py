@@ -90,25 +90,51 @@ def resetPass(request):
 def home(request):
     
     if request.method == 'POST':
-        form = AuthenticationForm(request=request, data=request.POST)
-        if form.is_valid():
-            username = form.cleaned_data.get('username')
-            password = form.cleaned_data.get('password')
-            user = authenticate(username=username, password=password)
-            if user is not None:
-                login(request, user)
-                messages.info(request, f"You are now logged in as {username}")
-                if user.is_superuser:
-                    return redirect('manager/administrate/')
-                return redirect('manager/') #Not sure 
-        else:
-            messages.error(request, "Invalid username or password")
-        
-        
+        if 'login' in request.POST:
+            form = AuthenticationForm(request=request, data=request.POST)
+            if form.is_valid():
+                username = form.cleaned_data.get('username')
+                password = form.cleaned_data.get('password')
+                user = authenticate(username=username, password=password)
+                if user is not None:
+                    login(request, user)
+                    messages.info(request, f"You are now logged in as {username}")
+                    if user.is_superuser:
+                        return redirect('manager/administrate/')
+                    return redirect('manager/') #Not sure 
+            else:
+                messages.error(request, "Invalid username or password")
+        elif 'pass' in request.POST:
+            if request.method == 'POST':
+                changePassForm = ForgotPassForm(request.POST)
+                if changePassForm.is_valid():
+                        email = changePassForm.cleaned_data['email']
+                        for user in User.objects.all():
+                            if user.email == email:
+                                newPass = generatePassword()
+                                u = User.objects.get(email=email)
+                                u.set_password(newPass)
+                                u.save()
+                                send_mail(
+                                'You requested a one time password',
+                                'Your new password is: ' + newPass + ', please change your password immediately',
+                                'feedback@04lpsalesweb01.crowdstrike.sys',
+                                [email],
+                                fail_silently=False,
+                                )
+                                return redirect('homepage')
+                        
+                        messages.error(request, "Email does not exist. OTP not sent")
+                        return redirect('homepage')
+    changePassForm = ForgotPassForm()
     form = AuthenticationForm()
     return render(request = request,
                   template_name = "index.html",
-                  context={"form":form})
+                  context={
+                  "changePassForm":changePassForm,
+                  "form":form
+                  }
+                 )
 
 
 def index(request):
