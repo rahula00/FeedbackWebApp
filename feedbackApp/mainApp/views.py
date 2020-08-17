@@ -23,6 +23,9 @@ from django.views.decorators.csrf import csrf_exempt
 
 from django.core.mail import send_mail
 
+from django.core.validators import URLValidator
+from django.core.exceptions import ValidationError
+
 
 @login_required(login_url='homepage')
 def get_feedback(request=None):
@@ -138,10 +141,31 @@ def home(request):
 
 
 def index(request):
+    http = False
+    validated = True
     if request.method == 'POST':
         F = CreateFeedbackForm(request.POST)
         if F.is_valid():
+            #Validate URL - start
+            data = F.cleaned_data['salesforceOp']
+            if(data != None):
+                validated = False
+                validate = URLValidator()
+                if "http" in data:
+                    http = True
+                else:
+                    http = False
+                try:
+                    if(http):
+                        validate(data)
+                    else:
+                        validate("http://" + data)
+                    validated = True
+                except ValidationError:
+                    messages.error(request, 'Invalid URL. Please try again.')
+                #Validate URL - end
 
+        if(validated):
             ''' Begin reCAPTCHA validation '''
             recaptcha_response = request.POST.get('g-recaptcha-response')
             url = 'https://www.google.com/recaptcha/api/siteverify'
