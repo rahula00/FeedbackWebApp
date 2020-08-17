@@ -213,7 +213,9 @@
                                             [[feedback.feedback]]
                                           </p>
                                           <p v-if="feedback.salesforceOp">
-                                            Salesforce Link: [[feedback.salesforceOp]]
+                                            Salesforce Link: <a >
+                                                [[feedback.salesforceOp]]
+                                            </a>
                                           </p>
                                         </vs-popup>
                                     </td>
@@ -245,6 +247,12 @@
     </header>
 </body>
 </html>
+
+<style>
+  .con-vs-popup .vs-popup {
+    width: auto !important;
+  }
+</style>
 
 
     <!-- Notification script
