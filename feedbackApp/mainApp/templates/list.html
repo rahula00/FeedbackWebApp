@@ -85,13 +85,13 @@
                         <div class="fieldWrapper form-group"  aria-required={% if field.field.required %}"true"{% else %}"false"{% endif %}>
                             
                             <div >
-                                <p>Which manager would you like to provide feedback for? {{form.manager}}</p>
+                                <p>Select the manager (team) to provide feedback for: {{form.manager}}</p>
                             </div>
 
                             <br>
 
                             <div>
-                                <p>What type of feedback are you leaving? {{form.type_choice}}</p>
+                                <p>Feedback Category: {{form.type_choice}}</p>
                             </div>
 
                             <br>
@@ -103,14 +103,14 @@
                             <br>
 
                             <div style="overflow: hidden;">
-                                <p style="float: left;">Provide the Salesforce Opportunity link if applicable: </p>
-                                <p style=" opacity: 0.7;"> {{form.salesforceOp}}</p>
+                                <p style="float: left;">Salesforce Opportunity link (if applicable): </p>
+                                <a style=" opacity: 0.7;"> {{form.salesforceOp}}</a>
                             </div>
 
                             <br>
 
                             <div style="overflow: hidden;">
-                                <p style="float: left;">Let us know who you are: </p>
+                                <p style="float: left;">Let us know who you are (optional): </p>
                                 <p style=" opacity: 0.7;"> {{form.submitted_by}}</p>
                             </div>
 

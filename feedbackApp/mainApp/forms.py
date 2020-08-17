@@ -8,7 +8,8 @@ from django.utils.encoding import smart_text
 
 
 class ForgotPassForm(forms.Form):
-    email = forms.EmailField(required=True,max_length=254)
+    email = forms.EmailField(required=True,max_length=254, label="Enter the email associated with your account")
+    
     
 
 class UserFullnameChoiceField(forms.ModelChoiceField):
@@ -42,13 +43,15 @@ class CreateFeedbackForm(ModelForm):
                 'salesforceOp': forms.Textarea(
 				attrs={
 					'class': 'form-control-sm border-danger rounded',
-                    'style': 'resize: none; overflow-y:hidden;'
+                    'style': 'resize: none; overflow-y:hidden;',
+                    'placeholder': 'Link Here',
 					}
 				),
                 'submitted_by': forms.Textarea(
 				attrs={
 					'class': 'form-control-sm border-danger rounded',
-                    'style': 'resize: none; overflow-y:hidden;'
+                    'style': 'resize: none; overflow-y:hidden;',
+                    'placeholder': 'Your name',
 					}
 				),
 			}
