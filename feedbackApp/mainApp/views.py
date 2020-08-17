@@ -82,40 +82,15 @@ def home(request):
                   template_name = "index.html",
                   context={"form":form})
 
-
 def index(request):
     if request.method == 'POST':
         F = CreateFeedbackForm(request.POST)
         if F.is_valid():
-
-            ''' Begin reCAPTCHA validation '''
-            recaptcha_response = request.POST.get('g-recaptcha-response')
-            url = 'https://www.google.com/recaptcha/api/siteverify'
-            values = {
-                'secret': settings.GOOGLE_RECAPTCHA_SECRET_KEY,
-                'response': recaptcha_response
-            }
-            data = urllib.parse.urlencode(values).encode()
-            req =  urllib.request.Request(url, data=data)
-            response = urllib.request.urlopen(req)
-            result = json.loads(response.read().decode())
-            ''' End reCAPTCHA validation '''
-
-            if result['success']:
-                new_feedback = F.save()
-                # Send email
-                if new_feedback.manager.email != None:
-                    send_mail(
-                        'You have new feedback waiting for you',
-                        'You recieved a new feedback item, log in to https://04lpsalesweb01.crowdstrike.sys/ to view',
-                        'CSfeedbackPortal@crowdstrike.com',
-                        [new_feedback.manager.email],
-                        fail_silently=False,
-                    )
-                messages.info(request, f"Thank you for the feedback!")
-                return redirect('homepage')
-            else:
-                messages.error(request, 'Invalid reCAPTCHA. Please try again.')
+            new_feedback = F.save()
+            messages.info(request, f"Thank you for the feedback!")
+            return redirect('homepage')
+        else:
+            messages.info(request, f"Error submitting feedback")
             
     form = CreateFeedbackForm()
     context = {
