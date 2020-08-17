@@ -280,12 +280,19 @@ def logout_request(request):
 def current_manager_update(request):
     if request.method == "POST":
         form = UpdateCurrentUserForm(request.POST, instance=request.user)
-        form.save()
-        return redirect('manager')
+        if form.is_valid():
+
+            data = form.cleaned_data['email']
+        if "@crowdstrike.com" in data:
+            form.save()
+            return redirect('manager') #Not sure
+        else:
+            msg = 'Please use a crowdstrike email'
+            form._errors['email'] = form.error_class([msg])
     else:
         form = UpdateCurrentUserForm(instance=request.user)
-        context = {'form': form}
-        return render(request, 'update_current.html', context)
+    context = {'form': form}
+    return render(request, 'update_current.html', context)
 
 
 @login_required(login_url='homepage')
