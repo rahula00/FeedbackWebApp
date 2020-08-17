@@ -218,8 +218,11 @@ let init = (app) => {
             feedback.in_range = false;
             // Will hide SalesForceOp link if there is none
             // 'N/A' = default value in DB (models.py)
-            if(feedback.salesforceOp==="N/A"){
+            if(feedback.salesforceOp===""){
                 feedback.salesforceOp=false;
+            };
+            if(feedback.submitted_by===""){
+                feedback.submitted_by="Anonymous";
             };
 
         }
