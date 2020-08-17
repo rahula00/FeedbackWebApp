@@ -233,19 +233,21 @@ def manager_update(request, id=None):
             messages.info(request, f"Password Changed")
             return redirect('adminPage')
         form = UpdateUserForm(request.POST, instance=user)
-        data = form.cleaned_data['email']
+        if form.is_valid():
+
+            data = form.cleaned_data['email']
         if "@crowdstrike.com" in data:
             form.save()
             return redirect('adminPage') #Not sure
         else:
             msg = 'Please use a crowdstrike email'
             form._errors['email'] = form.error_class([msg])
-        return redirect('adminPage')
+        
     else:
         passForm = SetPasswordForm(user=user)
         form = UpdateUserForm(instance=user)
-        context = {'form': form, 'passForm': passForm}
-        return render(request, 'update_manager.html', context)
+    context = {'form': form, 'passForm': passForm}
+    return render(request, 'update_manager.html', context)
 
 @login_required(login_url='homepage')
 def add_manager(request):
