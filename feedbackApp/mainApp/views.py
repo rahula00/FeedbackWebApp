@@ -1,4 +1,4 @@
-import random
+import random, string
 import json
 import urllib
 from django.conf import settings
@@ -15,7 +15,7 @@ from django.contrib.auth import logout, authenticate, login, update_session_auth
 from django.contrib import messages
 
 from .models import  Feedback
-from mainApp.forms import CreateFeedbackForm, UpdateUserForm, CreateUserForm, UpdateCurrentUserForm
+from mainApp.forms import CreateFeedbackForm, UpdateUserForm, CreateUserForm, UpdateCurrentUserForm, ForgotPassForm
 
 from rest_framework import viewsets, filters
 from .serializers import FeedbackSerializer
@@ -60,7 +60,35 @@ def mark_read(request, id=None):
     return render(request, 'manager.html', {})
 
 
+def resetPass(request):
+    if request.method == 'POST':
+        changePassForm = ForgotPassForm(request.POST)
+        if changePassForm.is_valid():
+                email = changePassForm.cleaned_data['email']
+                for user in User.objects.all():
+                    if user.email == email:
+                        newPass = generatePassword()
+                        u = User.objects.get(email=email)
+                        u.set_password(newPass)
+                        u.save()
+                        send_mail(
+                        'You requested a one time password',
+                        'Your new password is: ' + newPass + ', please change your password immediately',
+                        'feedback@04lpsalesweb01.crowdstrike.sys',
+                        [email],
+                        fail_silently=False,
+                        )
+                        return redirect('homepage')
+                
+                messages.error(request, "Email does not exist")
+                return redirect('homepage')
+        
+    changePassForm = ForgotPassForm()
+    context = {"changePassForm":changePassForm}
+    return render(request, 'resetPass.html', context)
+
 def home(request):
+    
     if request.method == 'POST':
         form = AuthenticationForm(request=request, data=request.POST)
         if form.is_valid():
@@ -75,18 +103,12 @@ def home(request):
                 return redirect('manager/') #Not sure 
         else:
             messages.error(request, "Invalid username or password")
-
-        changePassForm = PasswordResetForm(None, request.POST)
-        if changePassForm.is_valid():
-            changePassForm.save(from_email='feedback@04lpsalesweb01.crowdstrike.sys')
-            messages.error(request, "Succc")
-        else:
-            messages.error(request, "Email does not exist")
+        
+        
     form = AuthenticationForm()
-    changePassForm = PasswordResetForm()
     return render(request = request,
                   template_name = "index.html",
-                  context={"form":form, "changePassForm":changePassForm})
+                  context={"form":form})
 
 
 def index(request):
@@ -240,3 +262,8 @@ def changePass(request):
     return render(request, 'changePass.html', {
         'form': form
     })
+
+def generatePassword():
+    letters_and_digits = string.ascii_letters + string.digits
+    result_str = ''.join((random.choice(letters_and_digits) for i in range(random.randint(8,15))))
+    return result_str

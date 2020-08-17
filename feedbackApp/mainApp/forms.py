@@ -1,11 +1,15 @@
 from django.forms import ModelForm
 from mainApp.models import Feedback
-from django.contrib.auth.forms import UserChangeForm, UserCreationForm
+from django.contrib.auth.forms import UserChangeForm, UserCreationForm, PasswordResetForm
 from django.contrib.auth.models import User
 from django import forms
 from django.utils.encoding import smart_text
 
 
+
+class ForgotPassForm(forms.Form):
+    email = forms.EmailField(required=True,max_length=254)
+    
 
 class UserFullnameChoiceField(forms.ModelChoiceField):
     def label_from_instance(self, obj):
