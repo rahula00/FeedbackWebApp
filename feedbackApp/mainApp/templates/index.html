@@ -127,7 +127,7 @@
         </div>
     </header>
 
-    <!-- Modal HTML -->
+    <!-- Login Modal HTML -->
     <div id="myModal" class="modal fade">
         <div class="modal-dialog modal-login">
             <div class="modal-content">
@@ -140,7 +140,7 @@
                     </div>
                     <div class="modal-body">
                         <div style="text-align: center;">{{form.as_p}}</div>
-                        <!--<a style="text-align: center; display: block;" data-dismiss="modal" href="#passwordModal" data-toggle="modal"> Forgot your password?</a>-->
+                        <a style="text-align: center; display: block;" data-dismiss="modal" href="#passwordModal" data-toggle="modal"> Forgot your password?</a>
                     </div>
 
                     <div class="modal-footer justify-content-between">
@@ -153,26 +153,26 @@
 
 
 
-    <!-- Forgot Password Modal HTML 
+    <!--Forgot Password Modal HTML -->
     <div id="passwordModal" class="modal fade">
         <div class="modal-dialog modal-login">
             <div class="modal-content">
                 <form method="POST">{% csrf_token %}
                     <div class="modal-header">
-                        <h4 class="modal-title">Log in</h4>
+                        <h4 class="modal-title">Forgot Password</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     </div>
                     <div class="modal-body">
-                        <div class="form-group">{{passForm.as_p}}</div>
+                        <div class="form-group">{{changePassForm.as_p}}</div>
                     </div>
-
+                    <input type="submit" class="btn btn-primary" value="Send">
                     <div class="modal-footer justify-content-between">
                         
                     </div>
                 </form>
             </div>
         </div>
-    </div>-->
+    </div>
 
 
 

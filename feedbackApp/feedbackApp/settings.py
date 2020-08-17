@@ -25,7 +25,7 @@ SECRET_KEY = '(7s7ksze^&766fzd0b*5@n=mzysia5^$0ooy@(1s=!2t59vfiv'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['04lpsalesweb01.crowdstrike.sys']
+ALLOWED_HOSTS = []
 
 
 # Application definition

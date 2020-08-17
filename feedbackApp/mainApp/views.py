@@ -60,8 +60,6 @@ def mark_read(request, id=None):
     return render(request, 'manager.html', {})
 
 
-
-
 def home(request):
     if request.method == 'POST':
         form = AuthenticationForm(request=request, data=request.POST)
@@ -75,12 +73,20 @@ def home(request):
                 if user.is_superuser:
                     return redirect('manager/administrate/')
                 return redirect('manager/') #Not sure 
-            else:
-                messages.error(request, "Invalid username or password.")
+        else:
+            messages.error(request, "Invalid username or password")
+
+        changePassForm = PasswordResetForm(None, request.POST)
+        if changePassForm.is_valid():
+            changePassForm.save(from_email='feedback@04lpsalesweb01.crowdstrike.sys')
+            messages.error(request, "Succc")
+        else:
+            messages.error(request, "Email does not exist")
     form = AuthenticationForm()
+    changePassForm = PasswordResetForm()
     return render(request = request,
                   template_name = "index.html",
-                  context={"form":form})
+                  context={"form":form, "changePassForm":changePassForm})
 
 
 def index(request):
@@ -108,7 +114,7 @@ def index(request):
                     send_mail(
                         'You have new feedback waiting for you',
                         'You recieved a new feedback item, log in to https://04lpsalesweb01.crowdstrike.sys/ to view',
-                        'CSfeedbackPortal@crowdstrike.com',
+                        'feedback@04lpsalesweb01.crowdstrike.sys',
                         [new_feedback.manager.email],
                         fail_silently=False,
                     )
