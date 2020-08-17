@@ -7,7 +7,7 @@ from django.conf import settings
 from django.shortcuts import render, redirect
 
 from django.http import JsonResponse
-
+from django.core.exceptions import ValidationError
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import AuthenticationForm, UserChangeForm, UserCreationForm, PasswordChangeForm, PasswordResetForm, SetPasswordForm
@@ -233,7 +233,13 @@ def manager_update(request, id=None):
             messages.info(request, f"Password Changed")
             return redirect('adminPage')
         form = UpdateUserForm(request.POST, instance=user)
-        form.save()
+        data = form.cleaned_data['email']
+        if "@crowdstrike.com" in data:
+            form.save()
+            return redirect('adminPage') #Not sure
+        else:
+            msg = 'Please use a crowdstrike email'
+            form._errors['email'] = form.error_class([msg])
         return redirect('adminPage')
     else:
         passForm = SetPasswordForm(user=user)
@@ -246,8 +252,14 @@ def add_manager(request):
     if request.method == "POST":
         form = CreateUserForm(request.POST)
         if form.is_valid():
-            form.save()
-            return redirect('adminPage') #Not sure 
+            data = form.cleaned_data['email']
+            if "@crowdstrike.com" in data:
+                form.save()
+                return redirect('adminPage') #Not sure
+            else:
+                msg = 'Please use a crowdstrike email'
+                form._errors['email'] = form.error_class([msg])
+                
     else:
         form = CreateUserForm()
     context = {
