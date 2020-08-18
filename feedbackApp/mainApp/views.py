@@ -118,7 +118,7 @@ def home(request):
                                 send_mail(
                                 'You requested a one time password',
                                 'Your new password is: ' + newPass + ', please change your password immediately',
-                                'feedback@04lpsalesweb01.crowdstrike.sys',
+                                'Corporate Sales Feedback <csfeedback@crowdstrike.sys>',
                                 [email],
                                 fail_silently=False,
                                 )
@@ -164,7 +164,7 @@ def index(request):
                     send_mail(
                         'You have new feedback waiting for you',
                         'You recieved a new feedback item, log in to https://04lpsalesweb01.crowdstrike.sys/ to view',
-                        'feedback@04lpsalesweb01.crowdstrike.sys',
+                        'Corporate Sales Feedback <csfeedback@crowdstrike.sys>',
                         [new_feedback.manager.email],
                         fail_silently=False,
                     )
