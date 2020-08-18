@@ -69,8 +69,10 @@
 
 
 
+<!-- Home Page -->
 
 
+<!-- Error Messages -->
 <body id="page-top">
     {% if messages %}
     {% for message in messages %}
@@ -132,7 +134,6 @@
         <div class="modal-dialog modal-login">
             <div class="modal-content">
                 <form method="POST">{% csrf_token %}
-                    <!--Change this when making login-->
 
                     <div class="modal-header">
                         <h4 class="modal-title">Log in</h4>
@@ -157,12 +158,11 @@
         </div>
     </div>
 
-    <!-- Login Modal HTML -->
+    <!-- Change Password Modal HTML -->
     <div id="changePass" class="modal fade">
         <div class="modal-dialog modal-login">
             <div class="modal-content">
                 <form method="POST">{% csrf_token %}
-                    <!--Change this when making login-->
 
                     <div class="modal-header">
                         <h4 class="modal-title">Forgot Password?</h4>

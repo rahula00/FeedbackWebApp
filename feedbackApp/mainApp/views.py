@@ -6,10 +6,13 @@ from django.conf import settings
 
 from django.shortcuts import render, redirect
 
-from django.http import JsonResponse
+
 from django.core.exceptions import ValidationError
 from django.contrib.auth.decorators import login_required, user_passes_test
+
+#user model for authentication
 from django.contrib.auth.models import User
+
 from django.contrib.auth.forms import AuthenticationForm, UserChangeForm, UserCreationForm, PasswordChangeForm, PasswordResetForm, SetPasswordForm
 from django.contrib.auth import logout, authenticate, login, update_session_auth_hash
 from django.contrib import messages
@@ -17,16 +20,22 @@ from django.contrib import messages
 from .models import  Feedback
 from mainApp.forms import CreateFeedbackForm, UpdateUserForm, CreateUserForm, UpdateCurrentUserForm, ForgotPassForm
 
+#Used for AJAX request, JsonResponse in manager.html, manager_vue.js
+from django.http import JsonResponse
 from rest_framework import viewsets, filters
 from .serializers import FeedbackSerializer
 from django.views.decorators.csrf import csrf_exempt
 
+#SMTP 
 from django.core.mail import send_mail
 
+#URL Validation
 from django.core.validators import URLValidator
 from django.core.exceptions import ValidationError
 
-
+# Used to perform an ajax request to GET a single feedback entry
+# for manager.html
+# Unused
 @login_required(login_url='homepage')
 def get_feedback(request=None):
     id = request.GET.get('id', None)
@@ -37,6 +46,8 @@ def get_feedback(request=None):
     }
     return JsonResponse(data)
 
+# Used to perform an ajax request to GET all feedback entries
+# for manager.html
 @csrf_exempt
 @login_required(login_url='homepage')
 def get_feedbacks(request=None):
@@ -46,6 +57,8 @@ def get_feedbacks(request=None):
     print(testreq)
     return JsonResponse(serializer.data, safe=False)
 
+# Used by ajax request to delete a specific feedback entry by id
+# for manager.html
 @login_required(login_url='homepage')
 def delete_feedback(request):
     id = request.GET.get('id', None)
@@ -53,7 +66,8 @@ def delete_feedback(request):
     obj.delete()
     return render(request, 'manager.html', {})
 
-
+# Used by ajax request to mark a specific feedback entry by id as read
+# for manager.html
 @login_required(login_url='homepage')
 def mark_read(request, id=None):
     id = request.GET.get('id', None)
@@ -62,13 +76,12 @@ def mark_read(request, id=None):
     obj.save()
     return render(request, 'manager.html', {})
 
-
+#Home Page
 def home(request):
-    
-    if request.method == 'POST':
-        if 'login' in request.POST:
+    if request.method == 'POST': #If a form is submitted
+        if 'login' in request.POST: # What to do for the login form
             form = AuthenticationForm(request=request, data=request.POST)
-            if form.is_valid():
+            if form.is_valid(): #Log in user if credntials are valid. 
                 username = form.cleaned_data.get('username')
                 password = form.cleaned_data.get('password')
                 user = authenticate(username=username, password=password)
@@ -78,12 +91,12 @@ def home(request):
                     if user.is_superuser:
                         return redirect('manager/administrate/')
                     return redirect('manager/') #Not sure 
-            else:
+            else: #If credentials are invalid, send an error message
                 messages.error(request, "Invalid username or password")
-        elif 'pass' in request.POST:
-            if request.method == 'POST':
+        elif 'pass' in request.POST: # What to do for the password reset form
+            if request.method == 'POST': #Redundant but i dont want to remove and reformat
                 changePassForm = ForgotPassForm(request.POST)
-                if changePassForm.is_valid():
+                if changePassForm.is_valid(): #Send email to change pass if email entered is valid
                         email = changePassForm.cleaned_data['email']
                         for user in User.objects.all():
                             if user.email == email:
@@ -112,16 +125,17 @@ def home(request):
                   }
                  )
 
-
+#Feedback submission form/page
 def index(request):
-    http = False
+    http = False #Used to verify URL differently depending on whether or not it contains "http" in link
     validated = True
     if request.method == 'POST':
         F = CreateFeedbackForm(request.POST)
         if F.is_valid():
             #Validate URL - start
             data = F.cleaned_data['salesforceOp']
-            if(data != None):
+            #Check URL only if it is not empty or contains '...' below
+            if(data != None) and ("crowdstrike.lightning.force.com" in data): 
                 validated = False
                 validate = URLValidator()
                 if "http" in data:
@@ -135,10 +149,10 @@ def index(request):
                         validate("http://" + data)
                     validated = True
                 except ValidationError:
-                    messages.error(request, 'Invalid URL. Please try again.')
-                #Validate URL - end
+                    messages.error(request, 'Invalid Salesforce URL. Please try again.')
+            #Validate URL - end
 
-        if(validated):
+        if(validated): #if the URL is either empty or valid
             ''' Begin reCAPTCHA validation '''
             recaptcha_response = request.POST.get('g-recaptcha-response')
             url = 'https://www.google.com/recaptcha/api/siteverify'
@@ -152,7 +166,7 @@ def index(request):
             result = json.loads(response.read().decode())
             ''' End reCAPTCHA validation '''
 
-            if result['success']:
+            if result['success']: #If captcha validated
                 new_feedback = F.save()
                 # Send email
                 if new_feedback.manager.email != None:
@@ -176,13 +190,13 @@ def index(request):
     }
     return render(request, 'list.html', context)
 
-
+#Manager feedback view page. All functionality is done through js (mainApp/static/mainApp/manager_vue.js) or other methods above
 @login_required(login_url='homepage')
 def manager(request, fb=None):
     context = {} 
     return render(request, 'manager.html', context)
 
-
+#Admin page to view/edit managers
 @login_required(login_url='homepage')
 def adminPage(request):
 
@@ -201,7 +215,7 @@ def adminPage(request):
     } 
     return render(request, 'admin.html', context)
 
-
+#For the form to delete manager
 @login_required(login_url='homepage')
 def manager_delete(request, id=None):
     if request.method == "POST":
@@ -215,7 +229,8 @@ def manager_delete(request, id=None):
         context = {}
         return render(request, 'admin.html', context)
 
-
+#For the form to update manager by manager
+#Used in manager.html 
 @user_passes_test(lambda u: u.is_superuser)
 @login_required(login_url='homepage')
 def manager_update(request, id=None):
@@ -244,6 +259,7 @@ def manager_update(request, id=None):
     context = {'form': form, 'passForm': passForm}
     return render(request, 'update_manager.html', context)
 
+#For the form to add manager by admin 
 @login_required(login_url='homepage')
 def add_manager(request):
     if request.method == "POST":
@@ -265,12 +281,13 @@ def add_manager(request):
     return render(request, 'add_manager.html', context)
 
 
-
+#log out with message
 def logout_request(request):
     messages.info(request, f"{request.user.username} has been logged out")
     logout(request)
     return redirect(home)
 
+#Update manager by admin
 @login_required(login_url='homepage')
 def current_manager_update(request):
     if request.method == "POST":
@@ -289,7 +306,7 @@ def current_manager_update(request):
     context = {'form': form}
     return render(request, 'update_current.html', context)
 
-
+#Used to change the user's password if they are already logged in
 @login_required(login_url='homepage')
 def changePass(request):
     if request.method == 'POST':
@@ -307,6 +324,7 @@ def changePass(request):
         'form': form
     })
 
+#Random one time password generator
 def generatePassword():
     letters_and_digits = string.ascii_letters + string.digits
     result_str = ''.join((random.choice(letters_and_digits) for i in range(random.randint(8,15))))
