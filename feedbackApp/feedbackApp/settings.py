@@ -23,9 +23,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '(7s7ksze^&766fzd0b*5@n=mzysia5^$0ooy@(1s=!2t59vfiv'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['04lpsalesweb01.crowdstrike.sys']
 
 
 # Application definition
@@ -83,7 +83,6 @@ SESSION_SAVE_EVERY_REQUEST = True
 # EMAIL SETTIGNS
 EMAIL_HOST = '10.100.0.12'
 EMAIL_PORT = '25'
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 
 # GOOGLE RECAPTCHA
