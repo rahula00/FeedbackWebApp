@@ -146,6 +146,10 @@
                             <a href="#changePass" data-dismiss="modal" data-toggle="modal">
                                 Forgot Password?
                             </a>
+                            <br>
+                            <a href="#forgotUsername" data-dismiss="modal" data-toggle="modal">
+                                Forgot Username?
+                            </a>
                         </div>
                     </div>
 
@@ -157,7 +161,7 @@
         </div>
     </div>
 
-    <!-- Login Modal HTML -->
+    <!-- Forgot Password Modal HTML -->
     <div id="changePass" class="modal fade">
         <div class="modal-dialog modal-login">
             <div class="modal-content">
@@ -181,6 +185,33 @@
             </div>
         </div>
     </div>
+
+    <!-- Forgot Password Modal HTML -->
+    <div id="forgotUsername" class="modal fade">
+        <div class="modal-dialog modal-login">
+            <div class="modal-content">
+                <form method="POST">{% csrf_token %}
+                    <!--Change this when making login-->
+
+                    <div class="modal-header">
+                        <h4 class="modal-title">Forgot Username?</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <div style="text-align: center;">
+                            {{forgotUserForm.as_p}}
+                        </div>
+                    </div>
+
+                    <div class="modal-footer justify-content-between">
+                        <input type="submit" name="user" class="btn btn-primary" value="Send Username">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
 
 
 

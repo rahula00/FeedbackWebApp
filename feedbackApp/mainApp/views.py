@@ -102,11 +102,31 @@ def home(request):
                         
                         messages.error(request, "Email does not exist. OTP not sent")
                         return redirect('homepage')
+        elif 'user' in request.POST:
+            if request.method == 'POST':
+                forgotUserForm = ForgotPassForm(request.POST)
+                if forgotUserForm.is_valid():
+                        email = forgotUserForm.cleaned_data['email']
+                        for user in User.objects.all():
+                            if user.email == email:
+                                send_mail(
+                                'You requested your username',
+                                'Your username is: ' + user.username + ', log in to https://04lpsalesweb01.crowdstrike.sys/',
+                                'Corporate Sales Feedback <csfeedback@crowdstrike.sys>',
+                                [email],
+                                fail_silently=False,
+                                )
+                                return redirect('homepage')
+                        
+                        messages.error(request, "Email does not exist. Try again")
+                        return redirect('homepage')
+    forgotUserForm = ForgotPassForm()
     changePassForm = ForgotPassForm()
     form = AuthenticationForm()
     return render(request = request,
                   template_name = "index.html",
                   context={
+                  "forgotUserForm":forgotUserForm,    
                   "changePassForm":changePassForm,
                   "form":form
                   }
