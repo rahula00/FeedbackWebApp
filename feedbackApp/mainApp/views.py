@@ -63,33 +63,6 @@ def mark_read(request, id=None):
     return render(request, 'manager.html', {})
 
 
-def resetPass(request):
-    if request.method == 'POST':
-        changePassForm = ForgotPassForm(request.POST)
-        if changePassForm.is_valid():
-                email = changePassForm.cleaned_data['email']
-                for user in User.objects.all():
-                    if user.email == email:
-                        newPass = generatePassword()
-                        u = User.objects.get(email=email)
-                        u.set_password(newPass)
-                        u.save()
-                        send_mail(
-                        'You requested a one time password',
-                        'Your new password is: ' + newPass + ', please change your password immediately',
-                        'feedback@04lpsalesweb01.crowdstrike.sys',
-                        [email],
-                        fail_silently=False,
-                        )
-                        return redirect('homepage')
-                
-                messages.error(request, "Email does not exist")
-                return redirect('homepage')
-        
-    changePassForm = ForgotPassForm()
-    context = {"changePassForm":changePassForm}
-    return render(request, 'resetPass.html', context)
-
 def home(request):
     
     if request.method == 'POST':
@@ -120,7 +93,7 @@ def home(request):
                                 u.save()
                                 send_mail(
                                 'You requested a one time password',
-                                'Your new password is: ' + newPass + ', please change your password immediately',
+                                'Your new password is: ' + newPass + ', log in to https://04lpsalesweb01.crowdstrike.sys/ and change your password immediately',
                                 'Corporate Sales Feedback <csfeedback@crowdstrike.sys>',
                                 [email],
                                 fail_silently=False,

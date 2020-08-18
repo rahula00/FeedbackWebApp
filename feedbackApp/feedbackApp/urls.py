@@ -24,7 +24,6 @@ urlpatterns = [
     path('manager/administrate/', adminPage, name="adminPage"),
     path('', home, name="homepage"),
     path('default/', index, name="default"),
-    path('resetPass', resetPass, name="resetPass"),
     
     path('manager/', manager, name="manager"),
     path('manager/logout/', logout_request, name="logout"),
