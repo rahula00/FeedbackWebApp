@@ -180,8 +180,6 @@ def index(request):
             ''' End reCAPTCHA validation '''
 
             if result['success']:
-                if new_feedback.submitted_by == None:
-                    new_feedback.submitted_by = 'Anonymous'
                 new_feedback = F.save()
                 # Send email
                 if new_feedback.manager.email != None:
