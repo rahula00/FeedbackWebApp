@@ -128,29 +128,34 @@ def home(request):
 #Feedback submission form/page
 def index(request):
     http = False #Used to verify URL differently depending on whether or not it contains "http" in link
-    validated = True
+    validated = False
     if request.method == 'POST':
         F = CreateFeedbackForm(request.POST)
         if F.is_valid():
             #Validate URL - start
             data = F.cleaned_data['salesforceOp']
             #Check URL only if it is not empty or contains '...' below
-            if(data != None) and ("crowdstrike.lightning.force.com" in data): 
+            if(data == None):
+                validated = True
+            if(data != None): 
                 validated = False
-                validate = URLValidator()
-                if "http" in data:
-                    http = True
-                else:
-                    http = False
-                try:
-                    if(http):
-                        validate(data)
+                if("crowdstrike.lightning.force.com") in data:
+                    validate = URLValidator()
+                    if "http" in data:
+                        http = True
                     else:
-                        validate("http://" + data)
-                    validated = True
-                except ValidationError:
-                    messages.error(request, 'Invalid Salesforce URL. Please try again.')
-            #Validate URL - end
+                        http = False
+                    try:
+                        if(http):
+                            validate(data)
+                        else:
+                            validate("http://" + data)
+                        validated = True
+                    except ValidationError:
+                        messages.error(request, 'Invalid Salesforce URL. Please try again.')
+            else:
+                messages.error(request, 'Invalid Salesforce URL. Please try again.')
+                #Validate URL - end
 
         if(validated): #if the URL is either empty or valid
             ''' Begin reCAPTCHA validation '''
