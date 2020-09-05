@@ -1,24 +1,25 @@
-# FeedbackWebApp
+# Corporate Sales Feedback App
 
-## Commands
-These are just some helpful commands you might want to use when branching
-### `git checkout branchName`
-Switch to a branch by this name that is locally stored
+## Functions
+Submitter: Submit anonymous feedback with an associated SalesForce opportunity link
+Manager: Receive and manage feedback
+Admin: Add, remove, and edit manager accounts
 
-### `git pull origin/branchName`
-### `git checkout branchName`
-This pulls a branch from the repo, then you switch to it locally
+## Technologies
+Front-end: Vue.js, jQuery
+Back-end: Django
 
-### `git branch -D branchName`
-This deletes a branch
+## Features
+Email notifications for managers when feedback is submitted
+Password reset and username recoveery via email
+All forms secured through Django
+Encrypted passwords. Passwords cannot be viewed or edited, only reset.
 
-### `git status`
-This displays if the branch you're in is up to date
+## Deployment
+Via Apache and mod_wsgi on an Ubuntu 18.04 LTS server on Amazon EC2
 
-## Checking code in on console
-1. `cd ..` to root directory...
-2. `git add .`
-3. `git commit -m "MESSAGE DESCRIBING WHAT YOU DID"`
-4. `git push`... sometimes you may need to copy the upstream command because it hasn't been created yet, just copy and paste the prompted one in console
-
-Django edit edit
+## Challenges
+Learning how to use Django
+Building a REST API using Django and integrating this API with Vue.js
+Deploying using Apache and mod_wsgi for the first time
+JS and CSS anoyances
