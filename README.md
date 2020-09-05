@@ -15,11 +15,11 @@ Back-end: Django
 ## Features
 Email notifications for managers when feedback is submitted
 
-Password reset and username recoveery via email
+Password reset and username recovery via email
 
 All forms secured through Django
 
-Encrypted passwords. Passwords cannot be viewed or edited, only reset.
+Encrypted passwords. Passwords cannot be viewed or edited, only reset
 
 
 ## Deployment
@@ -31,5 +31,3 @@ Learning how to use Django
 Building a REST API using Django and integrating this API with Vue.js
 
 Deploying using Apache and mod_wsgi for the first time
-
-JS and CSS anoyances
