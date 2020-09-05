@@ -2,7 +2,9 @@
 
 ## Functions
 Submitter: Submit anonymous feedback with an associated SalesForce opportunity link
+
 Manager: Receive and manage feedback
+
 Admin: Add, remove, and edit manager accounts
 
 ## Technologies
