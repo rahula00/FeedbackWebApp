@@ -23,7 +23,7 @@ Encrypted passwords. Passwords cannot be viewed or edited, only reset
 
 
 ## Deployment
-Via Apache and mod_wsgi on an Ubuntu 18.04 LTS server on Amazon EC2
+Via Apache and mod_wsgi on an Ubuntu 18.04 LTS server on Amazon EC2. SQLite database due to convenience and small user base.
 
 ## Challenges
 Learning how to use Django
