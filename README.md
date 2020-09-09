@@ -28,6 +28,8 @@ Via Apache and mod_wsgi on an Ubuntu 18.04 LTS server on Amazon EC2. SQLite data
 ## Challenges
 Learning how to use Django
 
+Learning Unix commands and working on a Linux VM for the first time
+
 Building a REST API using Django and integrating this API with Vue.js
 
 Deploying using Apache and mod_wsgi for the first time
